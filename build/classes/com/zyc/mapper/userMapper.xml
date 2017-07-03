@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyc.mapper.UserMapper">
+
+    <select id="findUserName" parameterType="Integer" resultType="String">
+      	select username from User where id = #{id}
+    </select>
+    <select id="findUser" parameterType="Integer" resultType="User">
+    	select * from User where id = #{id}
+    </select>
+    
+    <insert id="insertUser" keyProperty="id" parameterType="com.zyc.model.User" useGeneratedKeys="true">
+    	insert into `User`(`User`.username,`User`.userpassword,usertype) values(#{username},#{userpassword},1)
+    </insert>
+    
+    <select id="logIn" parameterType="com.zyc.model.User" resultType="User">
+    	select * from `User` where `User`.username=#{username} and `User`.userpassword=#{userpassword};
+    </select>
+    <select id="findByName" parameterType="String" resultType="User">
+    	select * from `User` where `User`.username=#{name}
+    </select>
+</mapper>
