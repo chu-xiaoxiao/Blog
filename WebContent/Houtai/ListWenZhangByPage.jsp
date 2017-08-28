@@ -7,9 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +19,6 @@
 <!-- Bootstrap Core CSS -->
 <link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-
 <!-- MetisMenu CSS -->
 <link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
@@ -62,7 +59,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/SSM/css/fileupload/Huploadify.css"/>
+<script src="/SSM/js/fileupload/jquery.Huploadify.js"></script>
 <script type="text/javascript">
 //修改富文本编辑器初始化						
 $(function() {
@@ -70,10 +68,12 @@ $(function() {
 	editor.config.uploadImgUrl = '/SSM/Houtai/upLoadImg.do';
 	editor.config.mapAk = 'ByDEc7m5D1gKYKOGTqiltNNjqHvqQmmj';
 	editor.create();
+	
 	var editor1 = new wangEditor('editor-trigger');
 	editor1.config.uploadImgUrl = '/SSM/Houtai/upLoadImg.do';
 	editor1.config.mapAk = 'ByDEc7m5D1gKYKOGTqiltNNjqHvqQmmj';
 	editor1.create();
+
 	//加载分页
 	var options = {
          bootstrapMajorVersion:3,
@@ -120,6 +120,52 @@ $(function() {
      		}); 
        }
 	 });*/
+	 $('#upload').Huploadify({
+			auto:true,
+			multi:true,
+			formData:{"wenzhangbiaoti":$("#wenzhangbiaoti").val()},
+			fileSizeLimit:999999,
+			showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+			showUploadedSize:true,
+			removeTimeout: 1000,
+			uploader:'/SSM/Houtai/addFile.do',
+			buttonText:'添加附件',
+			onUploadStart:function(){
+				//alert('开始上传');
+				},
+			onInit:function(){
+				},
+			onUploadComplete:function(file,data){
+					editor1.$txt.append("<p>"+data+"</p>");
+				},
+			onDelete:function(file){
+				console.log('删除的文件：'+file);
+				console.log(file);
+			}
+		});
+	 $('#modify').Huploadify({
+			auto:true,
+			multi:true,
+			formData:{"wenzhangbiaoti1":$("#wenzhangbiaoti1").val()},
+			fileSizeLimit:999999,
+			showUploadedPercent:true,//是否实时显示上传的百分比，如20%
+			showUploadedSize:true,
+			removeTimeout: 1000,
+			uploader:'/SSM/Houtai/addFile.do?',
+			buttonText:'添加附件',
+			onUploadStart:function(){
+				//alert('开始上传');
+				},
+			onInit:function(){
+				},
+			onUploadComplete:function(file,data){
+					editor.$txt.append("<p>"+data+"</p>");
+				},
+			onDelete:function(file){
+				console.log('删除的文件：'+file);
+				console.log(file);
+			}
+		});
 	$("#sieze").change(function() {
 				$("#frompage").submit();
 	});
@@ -181,7 +227,7 @@ $(function() {
 
 <body>
 	<div id="outp	"></div>
-	<jsp:include page="nav.html"></jsp:include>
+	<jsp:include page="nav.jsp"></jsp:include>
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -283,5 +329,4 @@ $(function() {
 	<script type="text/javascript" src="/SSM/js/bootstrap-paginator.min.js"></script>
 	<script src="/SSM/js/jqueryForm.js"></script>
 </body>
-
 </html>

@@ -13,17 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.zyc.util.GetIpAddr;
-
 /**
  * Servlet Filter implementation class UserFilter
  */
 @WebFilter(filterName="UserFilter",urlPatterns={"/Houtai/*"})
 public class UserFilter implements Filter {
-
     /**
      * Default constructor. 
      */
@@ -46,6 +40,7 @@ public class UserFilter implements Filter {
 		// place your code here
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+		
 		HttpSession	session= httpServletRequest.getSession();
 		if(session.getAttribute("user")==null){
 			if(httpServletRequest.getRequestURI().contains("logIn.do")){

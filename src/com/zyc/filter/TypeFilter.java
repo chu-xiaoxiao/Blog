@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.zyc.model.User;
-import com.zyc.util.GetIpAddr;
 
 @WebFilter(filterName="UserFilterType",urlPatterns={"/Houtai/*"})
 public class TypeFilter implements Filter{

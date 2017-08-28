@@ -22,7 +22,7 @@
     </update>
     <!-- 条件查询文章 -->
     <select id="findAllWenZhang" parameterType="com.zyc.model.WenZhangSearch" resultMap="WenZhangList">
-    	select * from wenzhang where 1=1
+    	select wenzhangid,wenzhangleixing,wenzhangbiaoti,left(wenzhangneirong,100),left(wenzhangchunwenben,100) as wenzhangchunwenben ,wenzhangriqi from wenzhang where 1=1
     	<if test="name!=null"> and wenzhangbiaoti like concat(concat('%',#{name}),'%')</if>
     	<if test="type!=null"> and wenzhangleixing like concat(concat('%',#{type}),'%')</if>
     	order by (wenzhangid) desc
@@ -42,7 +42,7 @@
     </select>
     <!-- 条件分页查询文章 -->
     <select id="findWenZhangByPage" parameterType="com.zyc.model.Page" resultType="com.zyc.model.WenZhang">
-    	select * from wenzhang where 1=1
+    	select wenzhangid,wenzhangleixing,wenzhangbiaoti,left(wenzhangneirong,100),left(wenzhangchunwenben,100) as wenzhangchunwenben ,wenzhangriqi  from wenzhang where 1=1
     	<if test="wenZhangSearch.name!=null"> and wenzhangbiaoti like concat(concat('%',#{wenZhangSearch.name}),'%')</if>
     	<if test="wenZhangSearch.type!=null"> and wenzhangleixing like concat(concat('%',#{wenZhangSearch.type}),'%')</if>
     	order by (wenzhangid) desc
@@ -57,6 +57,6 @@
     </select>
     <!-- 查询文章总数 -->
     <select id="countWenzhang" resultType="Integer">
-    	select count(*) from wenzhang;
+    	select count(wenzhangid) from wenzhang;
     </select>
 </mapper>

@@ -50,19 +50,22 @@
 <!-- Icomoon Icon Fonts-->
 <link rel="stylesheet" href="/SSM/wenzhang/mar/css/icomoon.css">
 <!-- Bootstrap  -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/bootstrap.css">
+<!-- <link rel="stylesheet" href="/SSM/wenzhang/mar/css/bootstrap.css"> -->
+<link rel="stylesheet" href="/SSM/css/bootstrap.css">
 <!-- Flexslider  -->
 <link rel="stylesheet" href="/SSM/wenzhang/mar/css/flexslider.css">
 <!-- Theme style  -->
 <link rel="stylesheet" href="/SSM/wenzhang/mar/css/style.css">
-
+<!-- wangeditor --> 
+<link rel="stylesheet" type="text/css"
+	href="/SSM//dist/css/wangEditor.min.css">
 <!-- Modernizr JS -->
 <script src="/SSM/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
 <!-- FOR IE9 below -->
 <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+ 
 </head>
 <body>
 	<div id="fh5co-page">

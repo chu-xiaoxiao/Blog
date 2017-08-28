@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyc.mapper.WenZhangMapper">
+	<!-- 添加文章 -->
+	<insert id="addWenZhang" keyProperty="id" parameterType="com.zyc.model.WenZhang" useGeneratedKeys="true">
+			insert into wenzhang(wenzhang.wenzhangleixing,wenzhang.wenzhangbiaoti,wenzhang.wenzhangneirong,wenzhang.wenzhangchunwenben,wenzhang.wenzhangriqi)
+				values(#{wenzhangleixing},#{wenzhangbiaoti},#{wenzhangneirong},#{wenzhangchunwenben},SYSDATE())
+	</insert>
+	<!-- 删除文章 -->
+	<delete id="deleteWenzhang" parameterType="Integer" >
+		delete from wenzhang where wenzhangid = #{wenzhangid}
+	</delete>
+	<!-- 修改文章 -->
+    <update id="modifyWenZhang" parameterType="com.zyc.model.WenZhang">
+    	update wenzhang set
+    		<if test="wenzhangneirong!=null">wenzhangneirong = #{wenzhangneirong},</if>
+    		<if test="wenzhangbiaoti!=null">wenzhangbiaoti=#{wenzhangbiaoti},</if>
+    		<if test="wenzhangleixing!=null">wenzhangleixing=#{wenzhangleixing},</if>
+    		<if test="wenzhangchunwenben!=null">wenzhangchunwenben=#{wenzhangchunwenben}</if>
+    	where wenzhangid = #{wenzhangid}
+    </update>
+    <!-- 条件查询文章 -->
+    <select id="findAllWenZhang" parameterType="com.zyc.model.WenZhangSearch" resultMap="WenZhangList">
+    	select * from wenzhang where 1=1
+    	<if test="name!=null"> and wenzhangbiaoti like concat(concat('%',#{name}),'%')</if>
+    	<if test="type!=null"> and wenzhangleixing like concat(concat('%',#{type}),'%')</if>
+    	order by (wenzhangid) desc
+    </select>
+    <!-- 构造wenzhanglist映射 -->
+    <resultMap type="com.zyc.model.WenZhang" id="WenZhangList">  
+                <result property="wenzhangid" column="wenzhangid"/>  
+                <result property="wenzhangneirong" column="wenzhangneirong"/>  
+                <result property="wenzhangbiaoti" column="wenzhangbiaoti"/>  
+                <result property="wenzhangleixing" column="wenzhangleixing"/>  
+                <result  property="wenzhangchunwenben" column="wenzhangchunwenben"/>
+                <result property="wenzhangriqi" column="wenzhangriqi"/>  
+    </resultMap>  
+    <!-- 通过id查找文章 -->
+    <select id="findWenZhangById" parameterType="Integer" resultType="com.zyc.model.WenZhang">
+    	select * from wenzhang where wenzhangid = #{wenzhangid}
+    </select>
+    <!-- 条件分页查询文章 -->
+    <select id="findWenZhangByPage" parameterType="com.zyc.model.Page" resultType="com.zyc.model.WenZhang">
+    	select * from wenzhang where 1=1
+    	<if test="wenZhangSearch.name!=null"> and wenzhangbiaoti like concat(concat('%',#{wenZhangSearch.name}),'%')</if>
+    	<if test="wenZhangSearch.type!=null"> and wenzhangleixing like concat(concat('%',#{wenZhangSearch.type}),'%')</if>
+    	order by (wenzhangid) desc
+    	<if test="currentPage!=null"> LIMIT #{start}</if>
+    	<if test="sieze!=null">,#{sieze}</if>
+    </select>
+    <!-- 随机选择一篇文章 -->
+    <select id="findWenZhangRand" parameterType="Integer" resultMap="WenZhangList">
+    	select * from wenzhang
+			where wenzhangid>=(select FLOOR(MAX(wenzhangid)*RAND())from wenzhang)
+			LIMIT #{rAndSize};
+    </select>
+    <!-- 查询文章总数 -->
+    <select id="countWenzhang" resultType="Integer">
+    	select count(*) from wenzhang;
+    </select>
+</mapper>

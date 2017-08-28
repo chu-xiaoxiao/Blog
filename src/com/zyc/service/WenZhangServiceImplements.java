@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zyc.mapper.WenZhangMapper;
@@ -21,26 +22,32 @@ public class WenZhangServiceImplements implements WenZhangService{
 	@Resource
 	WenZhangMapper wenZhangMapper;
 	@Override
+	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
 	public int addWenZhang(WenZhang wenZhang) {
 		return wenZhangMapper.addWenZhang(wenZhang);
 	}
 	@Override
+	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
 	public int modifyWenZhang(WenZhang wenZhang) {
 		return wenZhangMapper.modifyWenZhang(wenZhang);
 	}
 	@Override
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<WenZhang> findAllWenZhang() {
 		return wenZhangMapper.findAllWenZhang(null);
 	}
 	@Override
+	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
 	public void deleteWenZhang(Integer id) {
 		wenZhangMapper.deleteWenzhang(id);
 	}
 	@Override
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public WenZhang findWenZhangByid(Integer id) {
 		return wenZhangMapper.findWenZhangById(id);
 	}
 	@Override
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public Page<WenZhang>findWenZhangBySearch(Page<WenZhang> page) {
 		page.setAllPage((findWenZhangBySearch(page.getWenZhangSearch()).size()+page.getSieze()-1)/page.getSieze());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss 'CST' yyyy", Locale.ENGLISH);
@@ -58,14 +65,17 @@ public class WenZhangServiceImplements implements WenZhangService{
 		return page;
 	}
 	@Override
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<WenZhang> findWenZhangBySearch(WenZhangSearch wenZhangSearch) {
 		return wenZhangMapper.findAllWenZhang(wenZhangSearch);
 	}
 	@Override
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<WenZhang> randWenZhang(Integer randSize) {
 		return wenZhangMapper.findWenZhangRand(1);
 	}
 	@Override
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public Integer countWenzhang() {
 		return wenZhangMapper.countWenzhang();
 	}

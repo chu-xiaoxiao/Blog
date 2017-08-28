@@ -3,17 +3,29 @@ package com.zyc.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.fabric.xmlrpc.base.Data;
+import com.mysql.jdbc.Field;
 import com.zyc.model.User;
 import com.zyc.service.UserService;
 import com.zyc.service.WenZhangService;
@@ -44,6 +56,7 @@ public class UserController {
 	}
 	@RequestMapping(value="/user/logIn.do")
 	public ModelAndView login(HttpServletRequest request){
+		
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setPssword(EncodeMD5.encodeMD5(request.getParameter("password")));
@@ -99,6 +112,56 @@ public class UserController {
 		ModelAndView modelAndView = new ModelAndView();
 		request.getSession().removeAttribute("user");
 		modelAndView.setViewName("/user/logIn");
+		return modelAndView;
+	}
+	@RequestMapping("/user/uploadTemp.do")
+	public void upload(@RequestParam(value="tempTouxiang",required=false) MultipartFile tempTouxiang,HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException{
+		  //创建一个通用的多部分解析器   
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
+        //判断 request 是否有文件上传,即多部分请求   
+        if(multipartResolver.isMultipart(request)){  
+            //转换成多部分request     
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;  
+            //取得request中的所有文件名   
+            Iterator<String> iter = multiRequest.getFileNames();  
+            ServletOutputStream output = response.getOutputStream();
+            while(iter.hasNext()){  
+                //取得上传文件   
+                MultipartFile file1 = multiRequest.getFile(iter.next());  
+                if(file1 != null){  
+                    //取得当前上传文件的文件名称   
+                    String myFileName = file1.getOriginalFilename();  
+                    //如果名称不为“”,说明该文件存在，否则说明该文件不存在   
+                    if(myFileName.trim() !=""){  
+                        //重命名上传后的文件名
+                        String path =request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png";
+                        File pathf = new File(path);  
+                        if(!pathf.exists()){
+                        	pathf.mkdirs();
+                        }
+                        path = request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png";
+                        File localFile = new File(path);  
+                        try {
+							file1.transferTo(localFile);
+							System.out.println(localFile.getAbsolutePath());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+                        output.print("/SSM/imgs/tempTouxiang.png?T="+new Date().getTime());
+                    }  
+                }  
+            }  
+        }
+	}
+	@RequestMapping("/user/xiugaitouxiang.do")
+	public ModelAndView queren(ServletRequest request,ModelAndView modelAndView) throws IOException{
+		File file = new File(request.getServletContext().getRealPath("imgs")+"/touxiang.png");
+		File file2 = new File(request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png");
+		file.delete();
+		file = new File(request.getServletContext().getRealPath("imgs")+"/touxiang.png");
+		file2.renameTo(file);
+		modelAndView.setViewName("redirect:/Houtai/index.jsp");
 		return modelAndView;
 	}
 }

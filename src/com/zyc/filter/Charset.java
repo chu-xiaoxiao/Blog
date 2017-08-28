@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.zyc.util.GetIpAddr;
+import com.zyc.util.IPUtils;
 
 /**
  * Servlet Filter implementation class Charset
@@ -53,7 +53,9 @@ public class Charset implements Filter {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		HttpServletRequest request1 = (HttpServletRequest) request;
-		logger.info("IP:"+GetIpAddr.getIpaddr(request1)+"\t"+request1.getRequestURL());
+		if(request1.getRequestURL().toString().contains("do")||request1.getRequestURL().toString().contains("action")){
+			logger.info("IP:"+IPUtils.getIpaddr(request1)+"\t"+request1.getRequestURL());
+		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}

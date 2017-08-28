@@ -58,55 +58,11 @@
 	<div id="fh5co-page">
 	<jsp:include page="nav.html"></jsp:include>
 		<div id="fh5co-main">
-			<jsp:include page="yemian.html"></jsp:include>
+			<jsp:include page="yemian.jsp"></jsp:include>
 			<div class="fh5co-narrow-content">
 				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Services</h2>
 				<div class="row">
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="icon-settings"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Strategy</h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="icon-search4"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Explore</h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="icon-paperplane"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Direction</h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
-							<div class="fh5co-icon">
-								<i class="icon-params"></i>
-							</div>
-							<div class="fh5co-text">
-								<h3>Expertise</h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-							</div>
-						</div>
-					</div>
+					<jsp:include page="/wenzhang/4tubiao.jsp"></jsp:include>
 				</div>
 			</div>
 			<div class="fh5co-narrow-content">

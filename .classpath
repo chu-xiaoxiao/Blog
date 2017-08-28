@@ -22,5 +22,20 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-cache-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-win-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpmime-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/webmagic-core-0.5.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/webmagic-extension-0.5.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xsoup-0.2.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/guava-15.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.7.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-log4j12-1.7.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-smart-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsoup-1.7.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
