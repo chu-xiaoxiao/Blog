@@ -9,34 +9,25 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.zyc.model.IP;
 import com.zyc.model.IPExample;
-import com.zyc.model.Page2;
 import com.zyc.model.Juzi;
 import com.zyc.model.JuziExample;
+import com.zyc.model.Page2;
 import com.zyc.service.IPService;
 import com.zyc.service.JuZiTypeService;
 import com.zyc.spider.JuziService;
-
-import sun.tools.jar.resources.jar;
 
 @Controller("houtaiController")
 @RequestMapping("/Houtai")
