@@ -33,7 +33,10 @@ import com.zyc.model.Page2;
 import com.zyc.model.Juzi;
 import com.zyc.model.JuziExample;
 import com.zyc.service.IPService;
+import com.zyc.service.JuZiTypeService;
 import com.zyc.spider.JuziService;
+
+import sun.tools.jar.resources.jar;
 
 @Controller("houtaiController")
 @RequestMapping("/Houtai")
@@ -52,6 +55,9 @@ public class HoutaiController {
 	@Qualifier("juZiSpider")
 	private JuziService juziservice;
 	
+	@Autowired
+	@Qualifier("juZITypeServiceImplements")
+	private JuZiTypeService juZiTypeService;
 	/**
 	 * 文件树状图
 	 * @param response
@@ -216,20 +222,30 @@ public class HoutaiController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/listjuzi.do")
+	@RequestMapping("/listjuzi.do") 
 	public ModelAndView listjuzi(ModelAndView modelAndView,HttpServletRequest request){
 		Integer currentPage = null;
 		Integer size = null;
-		JuziExample juziExample = new JuziExample();
-		if(request.getParameter(("currentpage"))!=null){
+		String juzi = request.getParameter("juzi");
+		String juziType = request.getParameter("juzileixing");
+		if(request.getParameter("currentpage")!=null&&!"".equals(request.getParameter("currentpage").trim())){
 			currentPage = Integer.parseInt(request.getParameter("currentpage"));
 		}
-		if(request.getParameter(("size"))!=null){
+		if(request.getParameter("size")!=null&&!"".equals(request.getParameter("size").trim())){
 			size = Integer.parseInt(request.getParameter("size"));
+		}
+		JuziExample juziExample = new JuziExample();
+		if(juzi!=null&&!"".equals(juzi)){
+			juziExample.getOredCriteria().add(juziExample.createCriteria().andJuzineirongLike(juzi));
+		}
+		if(juziType!=null&&!"".equals(juziType)){
+			Integer temp = Integer.parseInt(juziType);
+			juziExample.getOredCriteria().set(0,juziExample.createCriteria().andJuzileixingEqualTo(temp));
 		}
 		Page2<Juzi, JuziExample> page2 = new Page2<Juzi, JuziExample>(juziExample, currentPage, size);
 		page2=juziservice.findJuziByPage(page2);
-		modelAndView.addObject(page2);
+		modelAndView.addObject("page2",page2);
+		modelAndView.addObject("juzileixing",juZiTypeService.finAll());
 		modelAndView.setViewName("/Houtai/juzi");
 		return modelAndView;
 	}

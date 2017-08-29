@@ -124,13 +124,24 @@ $(function(){
 				<!-- <div id="fenye"></div> -->
 				<ul id='fenye'></ul>
 			<form id="frompage" method="post" action="">
-			
 			</form>
 		 <form action="/SSM/Houtai/updataJuzi.do">
 	        
 	         爬取网站<input type="text" name="juziurl" />
 	        <input type="submit" value="更新句库" />
          </form>
+        </div>
+        <!-- 条件查询 -->
+        <div>
+            <form action="/SSM/Houtai/listjuzi.do" method="post" >
+                <input name="juzi" type="text"/>
+                <select>
+                    <c:forEach items="${requestScope.juzileixing}" var="juzileixing">
+                        <option value="${juzileixing.leixingid }">${juzileixing.leixingming}
+                    </c:forEach>
+                </select>
+                <input type="submit" value="查询">
+            </form>    
         </div>
        </div>
      </div>

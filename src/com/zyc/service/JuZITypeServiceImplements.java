@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.zyc.mapper.JuziTypeMapper;
+import com.zyc.model.JuziExample;
 import com.zyc.model.JuziTypeCount;
 import com.zyc.model.JuziTypeExample;
+import com.zyc.model.JuziTypeKey;
 @Service("juZITypeServiceImplements")
 public class JuZITypeServiceImplements implements JuZiTypeService{
 	@Autowired
@@ -22,6 +24,10 @@ public class JuZITypeServiceImplements implements JuZiTypeService{
 	@Override
 	public Integer countbyExample(JuziTypeExample juziTypeExample) {
 		return juzitypeMapper.countByExample(juziTypeExample);
+	}
+	@Override
+	public List<JuziTypeKey> finAll() {
+		return juzitypeMapper.selectByExample(new JuziTypeExample());
 	}
 
 }

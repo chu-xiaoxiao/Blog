@@ -1,11 +1,12 @@
 package com.zyc.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.zyc.model.Juzi;
 import com.zyc.model.JuziExample;
 import com.zyc.model.JuziTypeKey;
-
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface JuziMapper {
     int countByExample(JuziExample example);

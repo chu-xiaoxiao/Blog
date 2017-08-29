@@ -62,5 +62,4 @@ public class Juzi {
 	public void setJuziTypeKey(JuziTypeKey juziTypeKey) {
 		this.juziTypeKey = juziTypeKey;
 	}
-    
 }
