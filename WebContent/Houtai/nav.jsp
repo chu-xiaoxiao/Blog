@@ -273,7 +273,7 @@
                                     <a href="/SSM/Houtai/iplist.do">查看访问ip</a>
                                 </li>
                                 <li>
-                                    <a href="/SSM/Houtai/listjuzi.do?size=10"> 查看句库</a>
+                                    <a href="/SSM/Houtai/listjuzi.do"> 查看句库</a>
                                    
                                 </li>
                                 <li>

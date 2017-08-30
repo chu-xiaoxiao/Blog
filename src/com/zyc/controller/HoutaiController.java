@@ -231,12 +231,14 @@ public class HoutaiController {
 		}
 		if(juziType!=null&&!"".equals(juziType)){
 			Integer temp = Integer.parseInt(juziType);
+			
 			juziExample.getOredCriteria().set(0,juziExample.createCriteria().andJuzileixingEqualTo(temp));
 		}
 		Page2<Juzi, JuziExample> page2 = new Page2<Juzi, JuziExample>(juziExample, currentPage, size);
 		page2=juziservice.findJuziByPage(page2);
 		modelAndView.addObject("page2",page2);
 		modelAndView.addObject("juzileixing",juZiTypeService.finAll());
+		modelAndView.addObject("juzitype",juziType);
 		modelAndView.setViewName("/Houtai/juzi");
 		return modelAndView;
 	}

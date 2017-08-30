@@ -2,14 +2,14 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!--     <typeAliases>
+     <typeAliases>
         <typeAlias alias="User" type="com.zyc.model.User"/>
         <typeAlias alias="WenZhang" type = "com.zyc.model.WenZhang"/>
         <typeAlias alias="IP" type = "com.zyc.model.IP"/>
-    </typeAliases>
+    </typeAliases> 
     <mappers>
         <mapper resource="com/zyc/mapper/userMapper.xml" />
         <mapper resource="com/zyc/mapper/wenZhangMapper.xml" />
         <mapper resource="com/zyc/mapper/IPMapper.xml" />
-    </mappers> -->
+    </mappers> 
 </configuration>
