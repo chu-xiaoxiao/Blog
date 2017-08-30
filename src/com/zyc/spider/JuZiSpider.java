@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -24,7 +23,6 @@ import com.zyc.mapper.JuziMapper;
 import com.zyc.mapper.JuziTypeMapper;
 import com.zyc.model.Juzi;
 import com.zyc.model.JuziExample;
-import com.zyc.model.JuziTypeExample;
 import com.zyc.model.JuziTypeKey;
 import com.zyc.model.Page2;
 
