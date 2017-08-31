@@ -8,8 +8,8 @@
         <typeAlias alias="IP" type = "com.zyc.model.IP"/>
     </typeAliases> 
     <mappers>
-        <mapper resource="com/zyc/mapper/userMapper.xml" />
-        <mapper resource="com/zyc/mapper/wenZhangMapper.xml" />
+        <mapper resource="com/zyc/mapper/UserMapper.xml" />
+        <mapper resource="com/zyc/mapper/WenZhangMapper.xml" />
         <mapper resource="com/zyc/mapper/IPMapper.xml" />
     </mappers> 
 </configuration>
