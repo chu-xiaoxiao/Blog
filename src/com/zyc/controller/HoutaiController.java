@@ -220,6 +220,7 @@ public class HoutaiController {
 		Integer size = null;
 		String juzi = request.getParameter("juzi");
 		String juziType = request.getParameter("juzileixing");
+		String chuchu = request.getParameter("chuchu");
 		if(request.getParameter("currentpage")!=null&&!"".equals(request.getParameter("currentpage").trim())){
 			currentPage = Integer.parseInt(request.getParameter("currentpage"));
 		}
@@ -236,12 +237,16 @@ public class HoutaiController {
 			Integer temp = Integer.parseInt(juziType);
 			criteria=criteria.andJuzileixingEqualTo(temp);
 		}
+		if(chuchu!=null&&!"".equals(chuchu)){
+			criteria=criteria.andJuzichuchuLike("%"+chuchu+"%");
+		}
 		juziExample.getOredCriteria().add(criteria);
 		Page2<Juzi, JuziExample> page2 = new Page2<Juzi, JuziExample>(juziExample, currentPage, size);
 		page2=juziservice.findJuziByPage(page2);
 		modelAndView.addObject("page2",page2);
 		modelAndView.addObject("juzileixing",juZiTypeService.finAll());
 		modelAndView.addObject("juzitype",juziType);
+		modelAndView.addObject("chuchu",chuchu);
 		modelAndView.addObject("juzi",juzi);
 		modelAndView.setViewName("/Houtai/juzi");
 		return modelAndView;
