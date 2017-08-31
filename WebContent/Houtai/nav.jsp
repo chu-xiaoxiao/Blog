@@ -242,11 +242,9 @@
                                 <li>
                                     <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改头像</a>
                                 </li>
+
                                 <li>
-                                    <a href="/SSM/Houtai/modifyJuzi.do">修改页面句子</a>
-                                </li>
-                                <li>
-                                    <a href="/SSM/Houtai/modifyJuziImg.do">修改页面句子图片</a>
+                                    <a href="/SSM/Houtai/modifyJuziImg.do">修改页面句子和图片</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

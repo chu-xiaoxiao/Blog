@@ -72,84 +72,94 @@ $(function(){
 		<jsp:include page="nav.jsp"></jsp:include>
 	</div>
 	<div id="page-wrapper">
-       <div class="panel panel-default">
-        <div class="panel-heading">
-        	句库
-        	<div class="pull-right">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                      	 数量
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right" role="menu">
-                     <li><a href="#" id="listsize_10">10</a>
-                        </li>
-                        <li><a href="#" id="listsize_30">30</a>
-                        </li>
-                        <li><a href="#" id="listsize_60">60</a>
-                        </li>
-                        <li><a href="#" id="listsize_100">100</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                        	<td>序号</td>
-                            <th>句子内容</th>
-                            <th>句子出处</th>
-                            <th>句子类型</th>
-                        </tr>
-                    </thead> 
-                    <tbody>
-                    <c:set value="1" var="count"></c:set>
-                    <c:forEach items="${requestScope.page2.lists}" var="juzis">
-                        <tr>
-                        	<td>${count}</td>
-                            <td>${juzis.juzineirong}</td>
-                            <td>${juzis.juzichuchu }</td>
-                            <td>${juzis.juziTypeKey.leixingming }</td>
-                        </tr>
-                        <c:set value="${count+1}" var="count"></c:set>
-                     </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.table-responsive -->
-            <!-- 分页注入 -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				句库
+				<div class="pull-right">
+					<div class="btn-group">
+						<button type="button"
+							class="btn btn-default btn-xs dropdown-toggle"
+							data-toggle="dropdown">
+							数量 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu">
+							<li><a href="#" id="listsize_10">10</a></li>
+							<li><a href="#" id="listsize_30">30</a></li>
+							<li><a href="#" id="listsize_60">60</a></li>
+							<li><a href="#" id="listsize_100">100</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<td>序号</td>
+								<th>句子内容</th>
+								<th>句子出处</th>
+								<th>句子类型</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:set value="1" var="count"></c:set>
+							<c:forEach items="${requestScope.page2.lists}" var="juzis">
+								<tr>
+									<td>${count}</td>
+									<td>${juzis.juzineirong}</td>
+									<td>${juzis.juzichuchu }</td>
+									<td>${juzis.juziTypeKey.leixingming }</td>
+								</tr>
+								<c:set value="${count+1}" var="count"></c:set>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.table-responsive -->
+				<!-- 分页注入 -->
 				<!-- <div id="fenye"></div> -->
 				<ul id='fenye'></ul>
-			<form id="frompage" method="post" action="">
-			   <input name="juzi" type="text" value="${requestScope.juzi }"/>
-                <select name="juzileixing">
-                <option></option>
-                    <c:forEach items="${requestScope.juzileixing}" var="juzileixing">
-                        <c:choose>
-                            <c:when test="${juzileixing.leixingid==requestScope.juzitype}">
-                             <option value="${juzileixing.leixingid }" selected="selected">${juzileixing.leixingming}</option>
-                            </c:when>
-                            <c:otherwise>
-                             <option value="${juzileixing.leixingid }" >${juzileixing.leixingming}</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </select>
-                <input type="submit" value="查询">
-			</form>
-		 <form action="/SSM/Houtai/updataJuzi.do">
-	           爬取网站<input type="text" name="juziurl" />
-	        <input type="submit" value="更新句库" />
-         </form>
-        </div>
-        <!-- 条件查询 -->
-        <div>
-        </div>
-       </div>
-     </div>
+				<hr class="dirver"/>
+				<form id="frompage" method="post" action="" role="form">
+					<div class="form-group">
+						<label for="name">内容</label> <input name="juzi" type="text"
+							value="${requestScope.juzi }" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="name">出处/作者</label> <input name="chuchu" type="text"
+							value="${requestScope.chuchu }" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="name">句子类型</label> <select name="juzileixing"
+							class="form-control">
+							<option></option>
+							<c:forEach items="${requestScope.juzileixing}" var="juzileixing">
+								<c:choose>
+									<c:when test="${juzileixing.leixingid==requestScope.juzitype}">
+										<option value="${juzileixing.leixingid }" selected="selected">${juzileixing.leixingming}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${juzileixing.leixingid }">${juzileixing.leixingming}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</div>
+					<input type="submit" value="查询" class="btn btn-primary">
+				</form>
+				<hr class="dirver"/>
+				<form action="/SSM/Houtai/updataJuzi.do" role="form">
+					<div class="form-group">
+						<label for="name"> 爬取网站</label> <input name="juziurl" type="text" class="form-control" />
+					</div>
+					<input type="submit" value="爬取" class="btn btn-primary">
+				</form>
+			</div>
+			<!-- 条件查询 -->
+			<div></div>
+		</div>
+	</div>
 	<script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->

@@ -94,6 +94,7 @@ $(function(){
                  Basic Form Elements
              </div>
              <div class="form-group">
+             <form action="/SSM/Houtai/modifyJuziaction.do">
             	<c:set value="${1 }" var="count"></c:set>
             	<c:forEach items="${requestScope.juzis }" var="juzi">
 	                <div class="form-group">
@@ -102,6 +103,8 @@ $(function(){
 	                     <c:set value="${count+1}" var="count"></c:set>
 	                 </div>
             	</c:forEach>
+            	<input type="submit" class = "btn btn-default" value="修改"/>
+                </form>
             </div>
           </div>
         </div>
