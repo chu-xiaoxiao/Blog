@@ -232,13 +232,16 @@ public class HoutaiController {
 		juziExample.getOredCriteria().set(0, juziExample.createCriteria());
 		if(juzi!=null&&!"".equals(juzi)){
 			criteria=criteria.andJuzineirongLike("%"+juzi+"%");
+			currentPage=0;
 		}
 		if(juziType!=null&&!"".equals(juziType)){
 			Integer temp = Integer.parseInt(juziType);
 			criteria=criteria.andJuzileixingEqualTo(temp);
+			currentPage=0;
 		}
 		if(chuchu!=null&&!"".equals(chuchu)){
 			criteria=criteria.andJuzichuchuLike("%"+chuchu+"%");
+			currentPage=0;
 		}
 		juziExample.getOredCriteria().add(criteria);
 		Page2<Juzi, JuziExample> page2 = new Page2<Juzi, JuziExample>(juziExample, currentPage, size);
