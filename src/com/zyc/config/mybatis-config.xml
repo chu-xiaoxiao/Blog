@@ -12,4 +12,7 @@
         <mapper resource="com/zyc/mapper/WenZhangMapper.xml" />
         <mapper resource="com/zyc/mapper/IPMapper.xml" />
     </mappers> 
+  <!--  <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings> -->
 </configuration>

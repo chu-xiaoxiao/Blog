@@ -24,6 +24,7 @@ import com.zyc.model.IP;
 import com.zyc.model.IPExample;
 import com.zyc.model.Juzi;
 import com.zyc.model.JuziExample;
+import com.zyc.model.JuziExample.Criteria;
 import com.zyc.model.Page2;
 import com.zyc.service.IPService;
 import com.zyc.service.JuZiTypeService;
@@ -226,20 +227,24 @@ public class HoutaiController {
 			size = Integer.parseInt(request.getParameter("size"));
 		}
 		JuziExample juziExample = new JuziExample();
+		Criteria criteria = juziExample.createCriteria();
+		juziExample.getOredCriteria().set(0, juziExample.createCriteria());
 		if(juzi!=null&&!"".equals(juzi)){
-			juziExample.getOredCriteria().add(juziExample.createCriteria().andJuzineirongLike(juzi));
+			criteria=criteria.andJuzineirongLike("%"+juzi+"%");
 		}
 		if(juziType!=null&&!"".equals(juziType)){
 			Integer temp = Integer.parseInt(juziType);
-			
-			juziExample.getOredCriteria().set(0,juziExample.createCriteria().andJuzileixingEqualTo(temp));
+			criteria=criteria.andJuzileixingEqualTo(temp);
 		}
+		juziExample.getOredCriteria().add(criteria);
 		Page2<Juzi, JuziExample> page2 = new Page2<Juzi, JuziExample>(juziExample, currentPage, size);
 		page2=juziservice.findJuziByPage(page2);
 		modelAndView.addObject("page2",page2);
 		modelAndView.addObject("juzileixing",juZiTypeService.finAll());
 		modelAndView.addObject("juzitype",juziType);
+		modelAndView.addObject("juzi",juzi);
 		modelAndView.setViewName("/Houtai/juzi");
 		return modelAndView;
+		
 	}
 }
