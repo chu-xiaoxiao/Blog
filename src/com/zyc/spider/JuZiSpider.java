@@ -114,7 +114,6 @@ public class JuZiSpider implements JuziService,PageProcessor{
 		page2.getE().setLimit(page2.getSize());
 		page2.getE().setOffset(page2.getStart());
 		page2.setLists(juziMapper.selectByExample(page2.getE()));
-		
 		page2.getE().setOrderByClause("desc tianjiariqi");
 		return page2;
 	}

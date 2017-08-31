@@ -124,7 +124,7 @@ $(function(){
 				<!-- <div id="fenye"></div> -->
 				<ul id='fenye'></ul>
 			<form id="frompage" method="post" action="">
-			   <input name="juzi" type="text"/>
+			   <input name="juzi" type="text" value="${requestScope.juzi }"/>
                 <select name="juzileixing">
                 <option></option>
                     <c:forEach items="${requestScope.juzileixing}" var="juzileixing">
