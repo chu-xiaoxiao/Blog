@@ -317,7 +317,7 @@
                                     <a href="/SSM/">博客主页</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="https://github.com/zhangxiaoq00/Blog">GitHub</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
