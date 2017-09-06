@@ -158,7 +158,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="#">
+						<a href="/SSM/Houtai/iplist.do">
 							<div class="panel-footer">
 								<span class="pull-left">View Details</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -180,7 +180,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="#">
+						<a href="/SSM/Houtai/findByPage.do">
 							<div class="panel-footer">
 								<span class="pull-left">View Details</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -202,7 +202,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="#">
+						<a href="/SSM/Houtai/listjuzi.do">
 							<div class="panel-footer">
 								<span class="pull-left">View Details</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
