@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+     <typeAliases>
+        <typeAlias alias="User" type="com.zyc.model.User"/>
+        <typeAlias alias="WenZhang" type = "com.zyc.model.WenZhang"/>
+        <typeAlias alias="IP" type = "com.zyc.model.IP"/>
+    </typeAliases> 
+    <mappers>
+        <mapper resource="com/zyc/mapper/UserMapper.xml" />
+        <mapper resource="com/zyc/mapper/WenZhangMapper.xml" />
+        <mapper resource="com/zyc/mapper/IPMapper.xml" />
+    </mappers> 
+</configuration>
