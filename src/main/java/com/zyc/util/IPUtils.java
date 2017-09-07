@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,6 +26,9 @@ public class IPUtils {
 		return request.getHeader("x-forwarded-for");
 	}
 	public static String getLocatsion(String ip) throws ClientProtocolException, IOException, JSONException{
+		if(ip.contains("0:0:0:0:0:0:0:1")||ip.contains("127")){
+			return null;
+		}
 		StringBuffer get = new StringBuffer();
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet httpGet = new HttpGet("http://ip.taobao.com/service/getIpInfo.php?ip="+ip);

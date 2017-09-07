@@ -21,6 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zyc.model.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -39,13 +40,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.zyc.model.IP;
-import com.zyc.model.IPExample;
-import com.zyc.model.Ip_Date;
-import com.zyc.model.JuziExample;
-import com.zyc.model.Page;
-import com.zyc.model.WenZhang;
-import com.zyc.model.WenZhangSearch;
 import com.zyc.service.IPService;
 import com.zyc.service.JuZiTypeService;
 import com.zyc.service.WenZhangService;
@@ -53,6 +47,7 @@ import com.zyc.spider.JuziService;
 import com.zyc.spider.NewsSpider;
 
 import net.sf.json.JSONObject;
+import redis.clients.jedis.Jedis;
 
 @Controller
 public class WenZhangController {
@@ -492,7 +487,6 @@ public class WenZhangController {
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws ParseException
-	 * @throws JSONException
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/Houtai/index.do")
@@ -503,6 +497,7 @@ public class WenZhangController {
 		modelAndView.addObject("count", wenZhangService.countWenzhang());
 		modelAndView.addObject("countIp", iPService.countIP(new IPExample()));
 		JSONObject listip_date = new JSONObject();
+		Jedis jedis = new Jedis("123.206.8.180");
 		List<Ip_Date> list = iPService.selectCountByDay(ipResultCount--);
 		for (int i = 0; i < ipResultCount / 2 + 1; i++) {
 			Ip_Date temp = null;
@@ -517,6 +512,7 @@ public class WenZhangController {
 		modelAndView.addObject("news", new NewsSpider().getNews());
 		modelAndView.addObject("typecount", typeCount);
 		modelAndView.addObject("juziCount", juziService.countJuZiByExample(new JuziExample()));
+		modelAndView.addObject("nowDate",jedis.get("date"));
 		modelAndView.setViewName("/Houtai/index1");
 		return modelAndView;
 	}

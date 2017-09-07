@@ -2,9 +2,7 @@ package com.zyc.spider;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
@@ -18,8 +16,33 @@ import org.apache.http.util.EntityUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import redis.clients.jedis.Jedis;
+
+import javax.xml.crypto.Data;
 
 public class NewsSpider {
+    static{
+        Jedis jedis = new Jedis("123.206.8.180");
+        //初始化redis中时间
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE,-1);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        jedis.set("date",simpleDateFormat.format(calendar.getTime()));
+    }
+    private Jedis jedis = new Jedis("123.206.8.180");
+    Logger logger = LogManager.getLogger(NewsSpider.class);
+    /**
+     * 新浪新闻api爬取
+     * @return
+     * @throws ClientProtocolException
+     * @throws IOException
+     * @throws ParseException
+     * @throws JSONException
+     */
 	public JSONObject sina() throws ClientProtocolException, IOException, ParseException, JSONException{
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		Calendar calendar = Calendar.getInstance();
@@ -34,14 +57,45 @@ public class NewsSpider {
 		JSONObject jsonObject =JSONObject.fromObject(result.substring(0,result.length()-2));
 		return jsonObject;
 	}
-	
-	public Map<String, String> getNews() throws ClientProtocolException, ParseException, JSONException, IOException{
+
+    /**
+     * 从新浪新闻api获取新闻信息,并存入redis
+     * @return
+     * @throws ClientProtocolException
+     * @throws ParseException
+     * @throws JSONException
+     * @throws IOException
+     */
+	private Map<String, String> getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException{
 		Map<String, String> result = new HashMap<String,String>();
 		JSONArray jsonArray = this.sina().getJSONArray("data");
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+		jedis.set("date",simpleDateFormat.format(date));
+		jedis.del("newsFromSina");
 		for(int i=0;i<10;i++){
-			JSONObject jsonObject =JSONObject.fromObject(jsonArray.get(i).toString());
-			result.put(jsonObject.getString("title"), jsonObject.getString("url"));
-		}
+            JSONObject jsonObject =JSONObject.fromObject(jsonArray.get(i).toString());
+            result.put(jsonObject.getString("title"), jsonObject.getString("url"));
+            jedis.lpush("newsFromSina",jsonObject.toString());
+        }
 		return result;
 	}
+    public Map<String,String> getNews() throws IOException {
+	    Map<String,String> result = new HashMap<String,String>();
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        //当日期不同时刷新新闻
+	    if(!jedis.get("date").toString().equals(simpleDateFormat.format(date))) {
+	        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd zzzz");
+            logger.info("时间有差异，刷新新闻当前新闻时间"+simpleDateFormat.format(date));
+            this.getNewsFromSinaToRedis();
+        }
+        List<String> getFromRedis = jedis.lrange("newsFromSina",0,10);
+        for(String temp:getFromRedis){
+            JSONObject jsonObject = JSONObject.fromObject(temp);
+            result.put(jsonObject.getString("title"),jsonObject.getString("url"));
+        }
+        return result;
+    }
 }
+

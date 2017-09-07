@@ -107,28 +107,6 @@
 			}
 		});
 	});
-/* 	$(function(){
-		var leixingming = new Array();
-		var countType = new Array();
-		$.each(${requestScope.typecount.typecount}, function(index, content)
-		{ 
-			leixingming.push(content.leixingming);
-			countType.push(content.count);
-		});	
-		data = {
-			    datasets: [{
-			        data: countType,
-			        color:["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]
-			    }],
-			    labels: leixingming
-			};
-		var ctx = document.getElementById("typeChart").getContext("2d");
-		var myPieChart = new Chart(ctx,{
-		    type: 'doughnut',
-		    data: data,
-		    options: Chart.defaults.doughnut
-		});
-	}); */
 </script>
 </head>
 
@@ -520,8 +498,7 @@
 							<c:forEach items="${requestScope.news }" var="temp">
 								<a href="${temp.value }" class="list-group-item" target="_blank"> <i
 									class="fa fa-comment fa-fw"></i> ${temp.key } <span
-									class="pull-right text-muted small"><em>4 minutes
-											ago</em> </span>
+									class="pull-right text-muted small"><em>${requestScope.nowDate}</em> </span>
 								</a>
 							</c:forEach>
 							</div>
