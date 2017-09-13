@@ -50,6 +50,7 @@ public class HoutaiController {
 	@Autowired
 	@Qualifier("juZITypeServiceImplements")
 	private JuZiTypeService juZiTypeService;
+
 	/**
 	 * 文件树状图
 	 * @param response

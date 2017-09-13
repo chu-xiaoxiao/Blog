@@ -22,11 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zyc.model.*;
+import com.zyc.spider.TodayInHistorySpider;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -509,9 +511,15 @@ public class WenZhangController {
 		modelAndView.addObject("listip_date", listip_date);
 		JSONObject typeCount = new JSONObject();
 		typeCount.put("typecount", juZiTypeService.getGruop());
+		//获取每日新闻
 		modelAndView.addObject("news", new NewsSpider().getNews());
+		//获取历史上的今天
+		modelAndView.addObject("todayInHistory",new TodayInHistorySpider().getTodayInHistorySpider());
+		//获取文章类型计数
 		modelAndView.addObject("typecount", typeCount);
+		//获取句库计数
 		modelAndView.addObject("juziCount", juziService.countJuZiByExample(new JuziExample()));
+		//获取当前服务器时间
 		modelAndView.addObject("nowDate",jedis.get("date"));
 		modelAndView.setViewName("/Houtai/index1");
 		return modelAndView;

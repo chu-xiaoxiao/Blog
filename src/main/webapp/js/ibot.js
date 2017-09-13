@@ -1,4 +1,4 @@
-	$(function(){
+﻿	$(function(){
 		$("#btn-chat").click(function(){
 			var date = new Date($.ajax({async: false}).getResponseHeader("Date"));
 			var bombay = date + (3600000 * 8);

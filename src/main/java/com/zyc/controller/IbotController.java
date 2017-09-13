@@ -27,7 +27,7 @@ import net.sf.json.JSONObject;
 @RequestMapping("/Ibot")
 public class IbotController {
 	
-	@RequestMapping("/getmsg.do")
+	@RequestMapping(value= "/getmsg.do")
 	public void getmsg(HttpServletRequest request,HttpServletResponse response,@CookieValue("JSESSIONID")String sessionid) throws ClientProtocolException, IOException, ParseException{
 		String problem = request.getParameter("xiaoxi");
 		CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -59,6 +59,6 @@ public class IbotController {
 	}
 	@RequestMapping("/gettime.do")
 	public void gettime(){
-		
+
 	}
 }

@@ -18,22 +18,20 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.xml.crypto.Data;
-
 public class NewsSpider {
     static{
-        Jedis jedis = new Jedis("123.206.8.180");
-        //初始化redis中时间
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE,-1);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        jedis.set("date",simpleDateFormat.format(calendar.getTime()));
+        try {
+            SpiderUtil.flushDateAndData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    private Jedis jedis = new Jedis("123.206.8.180");
+    private Jedis jedis = com.zyc.util.JedisPool.getJedis();
     Logger logger = LogManager.getLogger(NewsSpider.class);
     /**
      * 新浪新闻api爬取
@@ -55,6 +53,7 @@ public class NewsSpider {
 		String result = EntityUtils.toString(entity,"UTF-8");
 		result = result.split("=")[1];
 		JSONObject jsonObject =JSONObject.fromObject(result.substring(0,result.length()-2));
+        logger.info("从api接口获取新闻信息");
 		return jsonObject;
 	}
 
@@ -66,12 +65,11 @@ public class NewsSpider {
      * @throws JSONException
      * @throws IOException
      */
-	private Map<String, String> getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException{
+	public Map<String, String> getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException{
 		Map<String, String> result = new HashMap<String,String>();
 		JSONArray jsonArray = this.sina().getJSONArray("data");
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-		jedis.set("date",simpleDateFormat.format(date));
+        SpiderUtil.flushDate();
+        //清空当前Redis中的新闻纪录
 		jedis.del("newsFromSina");
 		for(int i=0;i<10;i++){
             JSONObject jsonObject =JSONObject.fromObject(jsonArray.get(i).toString());
@@ -80,17 +78,21 @@ public class NewsSpider {
         }
 		return result;
 	}
+
+    /**
+     * 获取新闻消息，在时间戳与系统时间一致的时从Redis中获取新闻信息
+     * 当时间戳与系统时间不一致时从sina接口获取消息
+     * @return
+     * @throws IOException
+     */
     public Map<String,String> getNews() throws IOException {
 	    Map<String,String> result = new HashMap<String,String>();
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         //当日期不同时刷新新闻
-	    if(!jedis.get("date").toString().equals(simpleDateFormat.format(date))) {
-	        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd zzzz");
-            logger.info("时间有差异，刷新新闻当前新闻时间"+simpleDateFormat.format(date));
-            this.getNewsFromSinaToRedis();
+	    if(!SpiderUtil.validateDate()) {
+            SpiderUtil.flushDateAndData();
         }
-        List<String> getFromRedis = jedis.lrange("newsFromSina",0,10);
+        List<String> getFromRedis = jedis.lrange("newsFromSina",0,-1);
         for(String temp:getFromRedis){
             JSONObject jsonObject = JSONObject.fromObject(temp);
             result.put(jsonObject.getString("title"),jsonObject.getString("url"));
