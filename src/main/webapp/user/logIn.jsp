@@ -204,6 +204,7 @@
 								<input type="password" name="password" class="form-control"
 									placeholder="请输入密码" />
 							</div>
+							<span style="color: red">${requestScope.msg}</span>
 						</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">

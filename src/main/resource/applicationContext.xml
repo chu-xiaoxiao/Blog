@@ -140,4 +140,12 @@
         </property>
     </bean>
     <!--配置shiroFIlter end-->
+    <!--开启shiro注解 start-->
+    <bean id="defaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+        <!--强制使用cglib创建action的代理对象-->
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    
+    
+    <!--开启shiro注解 end-->
 </beans>

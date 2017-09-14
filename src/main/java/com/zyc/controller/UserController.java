@@ -91,13 +91,15 @@ public class UserController {
 			subject.login(usernamePasswordToken);
 		} catch (UnknownAccountException e) {
 			modelAndView.setViewName("/user/logIn");
-			throw new MyException("用户名或密码错误");
+			modelAndView.addObject("msg","用户名或密码错误");
+			return modelAndView;
 		}catch (IncorrectCredentialsException e){
 			modelAndView.setViewName("/user/logIn");
-			throw new MyException("用户名或密码错误");
+            modelAndView.addObject("msg","用户名或密码错误");
+            return modelAndView;
 		}
 		//获取登录成功的用户对象
-		user = (User) subject.getPreviousPrincipals();
+		user = (User) subject.getPrincipal();
 		request.getSession().setAttribute("user", user);
 		modelAndView.setViewName("/Houtai/index");
 		return modelAndView;
