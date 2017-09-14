@@ -11,6 +11,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zyc.util.MyException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +55,8 @@ public class UserController {
 		request.getSession().setAttribute("user", user);
 		return "redirect:/index.jsp"; 
 	}
-	@RequestMapping(value="/user/logIn.do")
+	/*@RequestMapping(value="/user/logIn.do")
 	public ModelAndView login(HttpServletRequest request){
-		
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setPssword(EncodeMD5.encodeMD5(request.getParameter("password")));
@@ -69,6 +75,30 @@ public class UserController {
 			modelAndView.setViewName("redirect:/index.jsp");
 			return modelAndView;
 		}
+	}*/
+	@RequestMapping(value="/user/logIn.do")
+	public ModelAndView login(HttpServletRequest request,ModelAndView modelAndView) throws MyException {
+		//封装用户信息
+		User user = new User();
+		user.setUsername(request.getParameter("username"));
+		user.setPssword(EncodeMD5.encodeMD5(request.getParameter("password")));
+
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(),user.getUserpassword());
+		usernamePasswordToken.setRememberMe(true);
+		try {
+			subject.login(usernamePasswordToken);
+		} catch (UnknownAccountException e) {
+			modelAndView.setViewName("/user/logIn");
+			throw new MyException("用户名或密码错误");
+		}catch (IncorrectCredentialsException e){
+			modelAndView.setViewName("/user/logIn");
+			throw new MyException("用户名或密码错误");
+		}
+		//获取登录成功的用户对象
+		user = (User) subject.getPreviousPrincipals();
+		modelAndView.setViewName("/Houtai/index");
+		return modelAndView;
 	}
 	@RequestMapping(value="/user/modifyTouXiang")
 	public ModelAndView modifyTouxiang(@RequestParam(value="touxiang",required=false) MultipartFile file,HttpServletRequest request){
