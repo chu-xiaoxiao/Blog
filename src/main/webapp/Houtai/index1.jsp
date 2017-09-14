@@ -261,7 +261,7 @@
                                                             <h4 class="timeline-title">${fn:split(historyTemp.value,"::")[0]}</h4>
                                                         </div>
                                                         <div class="timeline-body">
-                                                            <a href="${historyTemp.key}" target="_blank" class="list-group-item">${historyTemp.value}</a>
+                                                            <a href="${historyTemp.key}" target="_blank"><p class="fa fa-chain">详细</p></a>
                                                         </div>
                                                         <hr>
                                                             ${fn:split(historyTemp.value,"::")[1]}
@@ -278,7 +278,7 @@
                                                             <h4 class="timeline-title">${fn:split(historyTemp.value,"::")[0]}</h4>
                                                         </div>
                                                         <div class="timeline-body">
-                                                            <a href="${historyTemp.key}" class="list-group-item" target="_blank">${historyTemp.value}</a>
+															<a href="${historyTemp.key}" target="_blank"><p class="fa fa-chain">详细</p></a>
                                                             <hr>
                                                                 ${fn:split(historyTemp.value,"::")[1]}
                                                         </div>
