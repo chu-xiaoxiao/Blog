@@ -19,7 +19,7 @@
             <value>com.mysql.jdbc.Driver</value>
         </property>
         <property name="jdbcUrl">
-            <value>jdbc:mysql://123.206.8.180:3306/BoKe</value>
+            <value>jdbc:mysql://123.206.8.180:3306/BoKe?useUnicode=true&amp; characterEncoding=UTF-8</value>
         </property>
         <!--MySQL数据库的用户名 -->
         <property name="user">
