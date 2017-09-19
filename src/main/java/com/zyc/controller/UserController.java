@@ -100,7 +100,8 @@ public class UserController {
 		}
 		//获取登录成功的用户对象
 		user = (User) subject.getPrincipal();
-		request.getSession().setAttribute("user", user);
+		Session session = subject.getSession();
+		session.setAttribute("user",user);
 		modelAndView.setViewName("/Houtai/index");
 		return modelAndView;
 	}

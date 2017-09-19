@@ -22,13 +22,6 @@ public class TodayInHistorySpider {
     private Jedis jedis = com.zyc.util.JedisPool.getJedis();
     private Logger logger = LogManager.getLogger(TodayInHistorySpider.class);
     private static List<Map.Entry<String,String>> todayInHistorySpider;
-    static{
-        try {
-            SpiderUtil.flushDateAndData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     /**
      * 从uri中获取历史上今天的数据
      * @throws IOException

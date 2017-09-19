@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import com.zyc.spider.JuziService;
 
 @Controller("houtaiController")
 @RequestMapping("/Houtai")
+@RequiresRoles(value="admin")
 public class HoutaiController {
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView errmsg(ModelAndView modelAndView,Exception exception) {

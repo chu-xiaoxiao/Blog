@@ -19,6 +19,7 @@ public class BOSrealm extends AuthorizingRealm{
     UserMapper userMapper;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        String userName = (String) principalCollection.getPrimaryPrincipal();
         return null;
     }
 

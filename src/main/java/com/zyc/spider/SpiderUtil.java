@@ -22,7 +22,7 @@ public class SpiderUtil {
     public static Boolean validateDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd zzzz");
         //判断Redis中的日期是否与当前日期一致
-        if(jedis.get("date").equals(simpleDateFormat.format(new Date()))){
+        if(simpleDateFormat.format(new Date()).equals(jedis.get("date"))){
             return true;
         }else{
             return false;
@@ -49,7 +49,7 @@ public class SpiderUtil {
         NewsSpider newsSpider = new NewsSpider();
         TodayInHistorySpider todayInHistorySpider = new TodayInHistorySpider();
         flushDate();
-        newsSpider.sina();
+        newsSpider.getNewsFromSinaToRedis();
         todayInHistorySpider.setHistroyToRedis();
         return true;
     }

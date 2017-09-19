@@ -24,6 +24,8 @@ import redis.clients.jedis.JedisPool;
 
 import javax.xml.crypto.Data;
 public class NewsSpider {
+    private Jedis jedis = com.zyc.util.JedisPool.getJedis();
+    Logger logger = LogManager.getLogger(NewsSpider.class);
     static{
         try {
             SpiderUtil.flushDateAndData();
@@ -31,8 +33,6 @@ public class NewsSpider {
             e.printStackTrace();
         }
     }
-    private Jedis jedis = com.zyc.util.JedisPool.getJedis();
-    Logger logger = LogManager.getLogger(NewsSpider.class);
     /**
      * 新浪新闻api爬取
      * @return
@@ -68,7 +68,6 @@ public class NewsSpider {
 	public Map<String, String> getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException{
 		Map<String, String> result = new HashMap<String,String>();
 		JSONArray jsonArray = this.sina().getJSONArray("data");
-        SpiderUtil.flushDate();
         //清空当前Redis中的新闻纪录
 		jedis.del("newsFromSina");
 		for(int i=0;i<10;i++){
@@ -87,7 +86,6 @@ public class NewsSpider {
      */
     public Map<String,String> getNews() throws IOException {
 	    Map<String,String> result = new HashMap<String,String>();
-        Date date = new Date();
         //当日期不同时刷新新闻
 	    if(!SpiderUtil.validateDate()) {
             SpiderUtil.flushDateAndData();
