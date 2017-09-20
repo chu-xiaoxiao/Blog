@@ -2,43 +2,49 @@ package com.zyc.service;
 
 import javax.annotation.Resource;
 
+import com.zyc.model.UserExample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zyc.mapper.UserMapper;
 import com.zyc.model.User;
-@Service
+@Service("userServiceImplement")
 @Transactional
 public class UserServiceImplement implements UserService{
 	@Resource
 	public UserMapper UserMapper;
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
+
 	public String findUsername(Integer id) {
-		String userName = UserMapper.findUserName(id);
-		return userName;
+		User user = UserMapper.selectByPrimaryKey(id);
+		return user.getUsername();
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public User findUser(Integer id) {
-		User user = UserMapper.findUser(id);
+		User user = UserMapper.selectByPrimaryKey(id);
 		return user;
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
 	public int insertuUser(User user) {
-		return UserMapper.insertUser(user);
+		return UserMapper.insert(user);
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public User logIn(User user) {
-		return UserMapper.logIn(user);
+		UserExample userExample = new UserExample();
+		userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(user.getUsername()).andUserpasswordEqualTo(user.getUserpassword()));
+		return UserMapper.selectByExample(userExample).get(0);
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public User findByName(String name) {
-		User user = UserMapper.findByName(name);
+		UserExample userExample = new UserExample();
+		userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(name));
+		User user = UserMapper.selectByExample(userExample).get(0);
 		return user;
 	}
 }

@@ -2,9 +2,9 @@ package com.zyc.test;
 
 import java.io.UnsupportedEncodingException;
 
+import com.zyc.model.User;
 import org.junit.Test;
 
-import com.zyc.model.User;
 
 import net.sf.json.JSONObject;
 import sun.misc.BASE64Encoder;
@@ -15,7 +15,7 @@ public class TestAdd {
 	public void testadd() throws UnsupportedEncodingException{
 		User user = new User();
 		try {
-			user.setPssword(new BASE64Encoder().encode("Zhangyuchen1016".getBytes("UTF-8")));
+			user.setUserpassword(new BASE64Encoder().encode("Zhangyuchen1016".getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

@@ -86,40 +86,6 @@ $(function() {
          }
      };
 	 $('#fenye').bootstrapPaginator(options);
-/*	 $("#fenye").paginate({
-       count       : ${page.allPage},//总页数  
-       start       : ${page.currentPage},//当前页码  
-       display     : (${page.allPage}>5)?"5":${page.allPage},//设置每页显示页码数  
-       border                  : true,  
-       border_color            : '#B0B0CC',//border颜色  
-       text_color              : '#5C6C90',//字体颜色  
-       background_color        : '#FAFFFF',      
-       border_hover_color      : '#000E53',  
-       text_hover_color        : '#fff',  
-       background_hover_color  : '#2F6BA7',   
-       images                  : false,  
-       mouse                   : 'press',  
-       onChange: function(p) {
-    	   $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage="+(p));
-    	   $("#frompage").submit();
-     		$.get("/SSM/Houtai/findByPage2.do", {currentPage:p},function(data){
-     			var list = JSON.parse(data);
-     			$("#neirong").html("");
-     			$("#neirong").append("<table class='table table-striped table-bordered table-hover' id='pagetable'> <thead><tr><th>id</th><th>文章标题</th><th>文章类型</th><th>发布日期</th><th>修改/删除</th></tr></thead><tbody >");
-     			$.each(list.lists, function(i, item) {
-     				$("#neirong").append("<tr>");
-     				$("#neirong").append("<td id='wenzhangid'>"+item.id+"</td>");
-     				$("#neirong").append("<td><a href=/SSM/wenzhang/xiangxi.do?wenzhangid="+item.id+">"+item.wenzhangbiaoti+"</a></td>");
-     				$("#neirong").append("<td>"+item.wenzhangleixing+"</td>");
-     				//$("#neirong").append("<td>"+item.wenzhangriqi+"</td>");
-     				$("#neirong").append("<td><button type='button' class='btn btn-info' id='modify"+item.id+"' value='"+item.id+"'>修改</button> <button type='button' class='btn btn-danger' id='deletewenzhang"+item.id+"' value='"+item.id+"'>删除</button> <input type='hidden' id='deletneirong"+item.id+"' value="+item.wenzhangbiaoti+"/> </td>");
-     				$("#neirong").append("</tr></tbody></table>");
-     				//$("#pagetable").trigger("create");
-     	        });
-     			
-     		}); 
-       }
-	 });*/
 	 $('#upload').Huploadify({
 			auto:true,
 			multi:true,
@@ -167,7 +133,8 @@ $(function() {
 			}
 		});
 	$("#sieze").change(function() {
-				$("#frompage").submit();
+        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage=1");
+		$("#frompage").submit();
 	});
 	$("#addwenzhang").click(function(){
 		$("#myModa1").modal("show");

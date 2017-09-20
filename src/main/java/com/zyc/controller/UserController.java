@@ -50,39 +50,18 @@ public class UserController {
 	public String add(HttpServletRequest request){
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
-		user.setPssword(EncodeMD5.encodeMD5(request.getParameter("password")));
+		user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
 		user.setUsertype(1);
 		userService.insertuUser(user);
 		request.getSession().setAttribute("user", user);
 		return "redirect:/index.jsp"; 
 	}
-	/*@RequestMapping(value="/user/logIn.do")
-	public ModelAndView login(HttpServletRequest request){
-		User user = new User();
-		user.setUsername(request.getParameter("username"));
-		user.setPssword(EncodeMD5.encodeMD5(request.getParameter("password")));
-		user=userService.logIn(user);
-		ModelAndView modelAndView = new ModelAndView();
-		if(user==null){
-			modelAndView.setViewName("redirect:/user/logIn.jsp");
-			return modelAndView;
-		}else if(user.getUsertype()==3){
-			request.getSession().setAttribute("user", user);
-			modelAndView.setViewName("redirect:/Houtai/");
-			return modelAndView;
-		}
-		else{ 
-			request.getSession().setAttribute("user", user);
-			modelAndView.setViewName("redirect:/index.jsp");
-			return modelAndView;
-		}
-	}*/
 	@RequestMapping(value="/user/logIn.do")
 	public ModelAndView login(HttpServletRequest request,ModelAndView modelAndView) throws MyException {
 		//封装用户信息
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
-		user.setPssword(EncodeMD5.encodeMD5(request.getParameter("password")));
+		user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
 
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(),user.getUserpassword());
