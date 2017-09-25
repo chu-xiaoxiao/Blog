@@ -105,7 +105,27 @@
 				]
 			}
 		});
-	});
+    });
+    function getNews(type){
+        $.ajax({
+            url:"/SSM/Houtai/getNews/"+type+".do",
+            type:"get",
+            dataType:"json",
+            success:function(result){
+                $("#news").html("");
+                $.each(result.date,function(i,n){
+                    $("#news").append('<a href="'+n.url+'" class="list-group-item" target="_blank"> <i class="fa fa-comment fa-fw"></i>'+n.title+'<em><p class="list-group-item-text">'+n.media+'</p></em> <em  align="right" ><p class="list-group-item-text">'+n.create_date+"&nbsp;&nbsp;"+n.create_time+'</p></em> </a>')
+                });
+            },
+            error:function(XMLhttp){
+                alert("新闻加载错误")
+            }
+        });
+    }
+    $(function(){
+       /*首次加载新闻*/
+        getNews("ALLNEWS");
+    });
 </script>
 </head>
 
@@ -224,7 +244,7 @@
                                             data-toggle="dropdown">
                                         Actions <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
+                                    <ul class="dropdown-menu pull-right" role="menu" id="getNewsType">
                                         <li><a href="#">Action</a></li>
                                         <li><a href="#">Another action</a></li>
                                         <li><a href="#">Something else here</a></li>
@@ -296,17 +316,53 @@
 				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<i class="fa fa-bell fa-fw"></i> 国际新闻
+							<i class="fa fa-bell fa-fw"></i> 新闻
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        新闻类别
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="###"  onclick="getNews('GUONEI')">国内新闻</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('GUOWAI')">国际新闻</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('SHEHUI')">社会新闻</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('KEJI')">科技新闻</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('TIYU')">体育新闻</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('CAIJING')">财经新闻</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('YULE')">娱乐新闻</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('ALLNEWS')">新闻总排行</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('VIDEO')">视频排行</a>
+                                        </li>
+                                        <li>
+                                            <a href="###"  onclick="getNews('IMG')">图片排行</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="list-group" id="news">
-							<c:forEach items="${requestScope.news }" var="temp">
-								<a href="${temp.value }" class="list-group-item" target="_blank"> <i
-									class="fa fa-comment fa-fw"></i> ${temp.key }
-									<em  align="right" ><p class="list-group-item-text">${requestScope.nowDate}</p></em>
-								</a>
-							</c:forEach>
+
 							</div>
 							<!-- /.list-group -->
 							<a href="#" class="btn btn-default btn-block">View All Alerts</a>

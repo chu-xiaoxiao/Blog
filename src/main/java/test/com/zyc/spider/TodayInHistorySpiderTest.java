@@ -1,12 +1,19 @@
 package test.com.zyc.spider; 
 
+import com.zyc.model.NewsType;
+import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
+import com.zyc.util.HttpclientUtil;
 import com.zyc.util.JedisPool;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 import redis.clients.jedis.Jedis;
 
+import java.io.IOException;
 import java.util.*;
 
 /** 
@@ -53,5 +60,20 @@ public void after() throws Exception {
         Jedis jedis = JedisPool.getJedis();
         jedis.set("zyc","1016");
         System.out.println(jedis.get("zyc"));
+    }
+    @Test
+    public void testSinaUrl() throws IOException {
+        HttpclientUtil httpclientUtil = new HttpclientUtil();
+        String result = httpclientUtil.getDocumentFromUriPost("http://news.sina.com.cn/hotnews/");
+        Document document = new Document(result);
+        Elements elements= document.getElementsByTag("script");
+        for(Element temp :elements){
+            System.out.println(temp);
+        }
+    }
+    @Test
+    public void testGetNes() throws IOException {
+        NewsSpider newsSpider = new NewsSpider();
+        System.out.println("============================");
     }
 }
