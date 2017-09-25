@@ -511,8 +511,8 @@ public class WenZhangController {
 		modelAndView.addObject("listip_date", listip_date);
 		JSONObject typeCount = new JSONObject();
 		typeCount.put("typecount", juZiTypeService.getGruop());
-		//获取每日新闻
-		modelAndView.addObject("news", new NewsSpider().getNews());
+		/*//获取每日新闻
+		modelAndView.addObject("allNews", new NewsSpider().getNews(NewsType.ALLNEWS));*/
 		//获取历史上的今天
 		modelAndView.addObject("todayInHistory",new TodayInHistorySpider().getTodayInHistorySpider());
 		//获取文章类型计数
@@ -736,5 +736,21 @@ public class WenZhangController {
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		headers.setContentDispositionFormData("attachment", dfileName);
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file2), headers, HttpStatus.CREATED);
+	}
+
+	/**
+	 * 获取每日新闻
+	 * @param request
+	 */
+	@RequestMapping(value="/Houtai/getNews/{type}.*")
+	public void getnewsByType(HttpServletRequest request,HttpServletResponse response,@PathVariable("type") String type) throws IOException {
+		PrintWriter out = response.getWriter();
+		NewsSpider newsSpider = new NewsSpider();
+		List<String> result = newsSpider.getNews(NewsType.valueOf(type));
+		for(String temp : result){
+		    out.print(temp);
+        }
+        out.flush();
+        out.close();
 	}
 }

@@ -1,9 +1,12 @@
 package com.zyc.spider;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.zyc.model.NewsType;
+import com.zyc.util.HttpclientUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -41,19 +44,19 @@ public class NewsSpider {
      * @throws ParseException
      * @throws JSONException
      */
-	public JSONObject sina() throws ClientProtocolException, IOException, ParseException, JSONException{
-		CloseableHttpClient httpClient = HttpClients.createDefault();
+	public JSONObject sina(String url) throws ClientProtocolException, IOException, ParseException, JSONException{
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 		String date = simpleDateFormat.format(calendar.getTime().getTime());
-		HttpGet httpGet = new HttpGet("http://top.news.sina.com.cn/ws/GetTopDataList.php?top_type=day&top_cat=news_world_suda&top_time="+date+"&top_show_num=20&top_order=DESC&js_var=news_");
-		httpGet.setHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36");
-		CloseableHttpResponse response = httpClient.execute(httpGet);
-		HttpEntity entity = response.getEntity();
-		String result = EntityUtils.toString(entity,"UTF-8");
-		result = result.split("=")[1];
-		JSONObject jsonObject =JSONObject.fromObject(result.substring(0,result.length()-2));
-        logger.info("从api接口获取新闻信息");
+        HttpclientUtil httpclientUtil = new HttpclientUtil();
+        String result = httpclientUtil.getDocumentFromUriGet(url);
+		result = result.split("= \\{")[1];
+        System.out.println(result);
+        result ="{" + result.split("if \\(")[0];
+        result = result.substring(0,result.length()-2);
+        System.out.println(result);
+        JSONObject jsonObject =JSONObject.fromObject(result);
+        logger.info("从"+url+"获取新闻信息");
 		return jsonObject;
 	}
 
@@ -65,17 +68,23 @@ public class NewsSpider {
      * @throws JSONException
      * @throws IOException
      */
-	public Map<String, String> getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException{
+	public void getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException{
 		Map<String, String> result = new HashMap<String,String>();
-		JSONArray jsonArray = this.sina().getJSONArray("data");
-        //清空当前Redis中的新闻纪录
-		jedis.del("newsFromSina");
-		for(int i=0;i<10;i++){
-            JSONObject jsonObject =JSONObject.fromObject(jsonArray.get(i).toString());
-            result.put(jsonObject.getString("title"), jsonObject.getString("url"));
-            jedis.lpush("newsFromSina",jsonObject.toString());
+		//读取新闻url配置文件
+		Properties properties = new Properties();
+		properties.load(NewsSpider.class.getClassLoader().getResourceAsStream("News.properties"));
+		for(Object temp : properties.keySet()){
+		    String url = properties.getProperty((String) temp);
+		    url=this.replaceDateAndNum(url,new Date(),10);
+            JSONArray jsonArray = this.sina(url).getJSONArray("data");
+            //清空当前Redis中的新闻纪录
+            jedis.del((String) temp);
+            for(int i=0;i<10;i++) {
+                JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i).toString());
+                jedis.lpush((String) temp, jsonObject.toString());
+                logger.info(jsonObject.toString());
+            }
         }
-		return result;
 	}
 
     /**
@@ -84,18 +93,36 @@ public class NewsSpider {
      * @return
      * @throws IOException
      */
-    public Map<String,String> getNews() throws IOException {
-	    Map<String,String> result = new HashMap<String,String>();
+    public List<String> getNews(NewsType newsType) throws IOException {
+	   List result = new ArrayList<String>();
         //当日期不同时刷新新闻
 	    if(!SpiderUtil.validateDate()) {
             SpiderUtil.flushDateAndData();
         }
-        List<String> getFromRedis = jedis.lrange("newsFromSina",0,-1);
+        List<String> getFromRedis = jedis.lrange(newsType.getType(),0,-1);
+	    JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
         for(String temp:getFromRedis){
-            JSONObject jsonObject = JSONObject.fromObject(temp);
-            result.put(jsonObject.getString("title"),jsonObject.getString("url"));
+            jsonArray.add(temp);
         }
+        jsonObject.put("date",jsonArray);
+        result.add(jsonObject.toString());
         return result;
+    }
+
+    /**
+     * 将传过来的值替换配置文件里面{}中的值
+     * @param old
+     * @param date
+     * @param num
+     * @return
+     */
+    public String replaceDateAndNum(String old,Date date,Integer num){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String sDate =simpleDateFormat.format(date);
+        old=old.replace("<date>",sDate);
+        old=old.replace("<num>",num.toString());
+        return old;
     }
 }
 
