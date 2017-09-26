@@ -29,13 +29,6 @@ import javax.xml.crypto.Data;
 public class NewsSpider {
     private Jedis jedis = com.zyc.util.JedisPool.getJedis();
     Logger logger = LogManager.getLogger(NewsSpider.class);
-    static{
-        try {
-            SpiderUtil.flushDateAndData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     /**
      * 新浪新闻api爬取
      * @return
@@ -95,10 +88,10 @@ public class NewsSpider {
      */
     public List<String> getNews(NewsType newsType) throws IOException {
 	   List result = new ArrayList<String>();
-        //当日期不同时刷新新闻
+/*        //当日期不同时刷新新闻
 	    if(!SpiderUtil.validateDate()) {
             SpiderUtil.flushDateAndData();
-        }
+        }*/
         List<String> getFromRedis = jedis.lrange(newsType.getType(),0,-1);
 	    JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
