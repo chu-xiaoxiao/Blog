@@ -342,6 +342,9 @@
                                         <li>
                                             <a href="###"  onclick="getNews('CAIJING')">财经新闻</a>
                                         </li>
+										<li>
+											<a href="###"  onclick="getNews('JUNSHI')">军事新闻</a>
+										</li>
                                         <li>
                                             <a href="###"  onclick="getNews('YULE')">娱乐新闻</a>
                                         </li>

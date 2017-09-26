@@ -13,8 +13,8 @@ public enum NewsType {
     TIYU("tiyu"),
     CAIJING("caijing"),
     YULE("yule"),
-    KEJI("keji");
-
+    KEJI("keji"),
+    JUNSHI("junshi");
     private String type;
     NewsType(String input) {
         this.type=input;
