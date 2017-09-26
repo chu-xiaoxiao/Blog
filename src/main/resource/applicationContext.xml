@@ -14,20 +14,21 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  ">
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <!-- 1. 数据源 : DriverManagerDataSource -->
+    <context:property-placeholder location="classpath:DB.properties"/>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass">
-            <value>com.mysql.jdbc.Driver</value>
+            <value>${jdbc.driverClass}</value>
         </property>
         <property name="jdbcUrl">
-            <value>jdbc:mysql://123.206.8.180:3306/BoKe?useUnicode=true&amp; characterEncoding=UTF-8</value>
+            <value>${jdbc.connectionURL}</value>
         </property>
         <!--MySQL数据库的用户名 -->
         <property name="user">
-            <value>root</value>
+            <value>${jdbc.userID}</value>
         </property>
         <!--MySQL数据库 密码 -->
         <property name="password">
-            <value>081816</value>
+            <value>${jdbc.pwd}</value>
         </property>
         <!--连接池中保留的最小连接数。 -->
         <property name="minPoolSize">
