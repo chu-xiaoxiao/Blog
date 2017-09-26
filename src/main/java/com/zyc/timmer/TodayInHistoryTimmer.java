@@ -4,6 +4,7 @@ import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.ServletContext;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class TodayInHistoryTimmer extends TimerTask {
     @Override
     public void run() {
         if(!isRunning){
-            logger.info("获取获取历史上的今天任务开启");
+            logger.info("获取历史上的今天>>>>>任务开启");
             isRunning=true;
             TodayInHistorySpider todayInHistorySpider = new TodayInHistorySpider();
             try {
@@ -33,7 +34,7 @@ public class TodayInHistoryTimmer extends TimerTask {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            logger.info("获取历史上的今天任务结束");
+            logger.info("获取历史上的今天>>>>>任务结束");
         }else{
             logger.error("上一次获取历史上的今天任务还未结束");
         }

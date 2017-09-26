@@ -42,12 +42,12 @@ public class RedisFlushTimmer extends TimerTask {
     @Override
     public void run() {
         if (!isRunning) {
-            logger.info("Redis刷新任务开启");
+            logger.info("Redis刷新>>>>>任务开启");
             isRunning = true;
             NewsSpider newsSpider = new NewsSpider();
                 SpiderUtil.flushDate();
                 isRunning = false;
-            logger.info("Redis刷新任务结束");
+            logger.info("Redis刷新>>>>>任务结束");
         } else {
             logger.error("上一次获Redis刷新任务还未结束");
         }

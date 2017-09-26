@@ -11,16 +11,16 @@
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resource" />
         </sourceRoots>
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration>
+      <configuration process_explicitly_annotated="false">
         <fileset id="web application context" name="MVC application context" removed="true" />
         <fileset id="web springMVC servlet context" name="MVC springMVC servlet context" removed="true" />
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/resource/applicationContext.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resource/applicationContext2.xml</file>
           <file>file://$MODULE_DIR$/src/main/resource/spring-mvc.xml</file>
         </fileset>
       </configuration>
@@ -33,10 +33,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resource" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resource/com" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resource/com/zyc" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resource/com/zyc/mapper" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M26" level="application_server_libraries" />
     <orderEntry type="library" name="Maven: junit:junit:4.10" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.0.2.RELEASE" level="project" />
@@ -107,6 +111,5 @@
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-ehcache:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache-core:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis.generator:mybatis-generator-core:1.3.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M26" level="application_server_libraries" />
   </component>
 </module>

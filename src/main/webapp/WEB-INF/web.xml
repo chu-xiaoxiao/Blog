@@ -16,7 +16,6 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <context-param>
-
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:applicationContext.xml</param-value>
     </context-param>
@@ -28,12 +27,13 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath*:spring-mvc.xml</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
+        <!--<load-on-startup>1</load-on-startup>-->
     </servlet>
 
     <servlet-mapping>
         <servlet-name>springMVC</servlet-name>
         <url-pattern>*.do</url-pattern>
+       <!-- <url-pattern>/</url-pattern>-->
     </servlet-mapping>
 
     <listener>
@@ -54,15 +54,17 @@
     </filter>
 
     <filter-mapping>
-
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
 
     <error-page>
         <error-code>404</error-code>
         <location>/Houtai/error/web/404.html</location>
     </error-page>
+
+
     <!--shiro  过滤器 start-->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -73,6 +75,8 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!--shiro  过滤器 end-->
+
+
     <!--定时器启动监听器 start-->
     <listener>
         <listener-class>com.zyc.timmer.MainLinstener</listener-class>

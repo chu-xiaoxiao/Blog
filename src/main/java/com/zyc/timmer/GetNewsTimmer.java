@@ -40,7 +40,7 @@ public class GetNewsTimmer extends TimerTask {
     @Override
     public void run() {
         if(!isRunning){
-            logger.info("获取新闻任务开启");
+            logger.info("获取新闻>>>>>任务开启");
             isRunning=true;
             NewsSpider newsSpider = new NewsSpider();
             try {
@@ -49,7 +49,7 @@ public class GetNewsTimmer extends TimerTask {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            logger.info("获取新闻任务结束");
+            logger.info("获取新闻>>>>>任务结束");
         }else{
             logger.error("上一次获取新闻任务还未结束");
         }
