@@ -44,10 +44,9 @@ public class NewsSpider {
         HttpclientUtil httpclientUtil = new HttpclientUtil();
         String result = httpclientUtil.getDocumentFromUriGet(url);
 		result = result.split("= \\{")[1];
-        System.out.println(result);
         result ="{" + result.split("if \\(")[0];
         result = result.substring(0,result.length()-2);
-        System.out.println(result);
+        logger.debug(result);
         JSONObject jsonObject =JSONObject.fromObject(result);
         logger.info("从"+url+"获取新闻信息");
 		return jsonObject;
