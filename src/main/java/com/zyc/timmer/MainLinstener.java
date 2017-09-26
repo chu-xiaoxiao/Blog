@@ -13,16 +13,16 @@ import java.util.Timer;
  * Created by YuChen Zhang on 17/09/26.
  */
 public class MainLinstener implements ServletContextListener {
-    private Timer timer;
+    private Timer timer = new Timer(true);;
     Logger logger = LogManager.getLogger(MainLinstener.class);
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         timer =  new Timer(true);
         this.startTodayInHistoryTimmer(sce);
         this.startNewsTimmer(sce);
+        this.startFlushRedisDateTimmer(sce);
     }
     public void startNewsTimmer(ServletContextEvent sce){
-        timer =  new Timer(true);
         logger.info("新闻获取定时器开启");
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -33,7 +33,6 @@ public class MainLinstener implements ServletContextListener {
         logger.info("已经将新闻获取定时器加入任务栈");
     }
     public void startTodayInHistoryTimmer(ServletContextEvent sce){
-        timer =  new Timer(true);
         logger.info("历史上的今天获取定时器开启");
         Calendar calendar = Calendar.getInstance();
         int todayInHistoryPeriod = 1000*60*60*24;
@@ -41,7 +40,6 @@ public class MainLinstener implements ServletContextListener {
         logger.info("已经将历史上的今天获取定时器加入任务栈");
     }
     public void startFlushRedisDateTimmer(ServletContextEvent sce){
-        timer =  new Timer(true);
         logger.info("Redis刷新定时器开启");
         int redisFlushPeriod = 1000*60*60;
         SpiderUtil.flushDate();
