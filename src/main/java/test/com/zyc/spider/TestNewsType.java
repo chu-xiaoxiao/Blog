@@ -15,5 +15,6 @@ public class TestNewsType {
     }
     @Test
     public void testSpring(){
+
     }
 }

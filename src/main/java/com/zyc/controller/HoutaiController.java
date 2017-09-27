@@ -12,6 +12,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zyc.service.GetOSInfo;
+import com.zyc.service.GetOSInfoImplement;
+import net.sf.json.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -256,6 +259,13 @@ public class HoutaiController {
 		modelAndView.addObject("juzi",juzi);
 		modelAndView.setViewName("/Houtai/juzi");
 		return modelAndView;
-		
+	}
+	@RequestMapping("/getOS.do")
+	public void getOS(HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		GetOSInfo getOSInfo = new GetOSInfoImplement();
+		out.print(getOSInfo.getJVM());
+		out.flush();
+		out.close();
 	}
 }
