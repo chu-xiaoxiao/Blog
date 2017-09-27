@@ -62,4 +62,16 @@ public class Juzi {
 	public void setJuziTypeKey(JuziTypeKey juziTypeKey) {
 		this.juziTypeKey = juziTypeKey;
 	}
+
+    @Override
+    public String toString() {
+        return "Juzi{" +
+                "juziid=" + juziid +
+                ", juzineirong='" + juzineirong + '\'' +
+                ", juzichuchu='" + juzichuchu + '\'' +
+                ", juzileixing=" + juzileixing +
+                ", tianjiashijian=" + tianjiashijian +
+                ", juziTypeKey=" + juziTypeKey +
+                '}';
+    }
 }

@@ -10,6 +10,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -33,6 +35,8 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 @Component("juZiSpider")
 public class JuZiSpider implements JuziService,PageProcessor{
+
+    Logger logger = LogManager.getLogger(JuZiSpider.class);
 
 	private Site site = Site.me()
 			.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
@@ -102,7 +106,9 @@ public class JuZiSpider implements JuziService,PageProcessor{
 			juzi.setJuzileixing(juziType.getLeixingid());
 			juzi.setTianjiashijian(new Date());
 			juzis.add(juzi);
+			logger.info(juzi.toString());
 		}
+
 		page.putField("juziResult", juzis);
 		page.putField("juziType", juziType);
 	}
