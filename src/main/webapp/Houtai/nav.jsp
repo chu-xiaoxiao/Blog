@@ -275,7 +275,7 @@
                                    
                                 </li>
                                 <li>
-                                    <a href="grid.html">Grid</a>
+                                    <a href="/SSM/Houtai/OSInfo.jsp">查看当前运行信息</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
