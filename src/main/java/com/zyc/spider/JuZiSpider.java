@@ -83,8 +83,10 @@ public class JuZiSpider implements JuziService,PageProcessor{
 			page.addTargetRequest("http://www.juzimi.com"+temp);
 		}
 		List<String> juziget = page.getHtml().css("div.views-field-phpcode").all();
-	    String type = Jsoup.parse(page.getHtml().css("div.xqfamwritercount").get()).getElementsByClass("xqfamwritercount").toString();
-	    type=type.split("&quot;")[1];
+		//获取页面中有关类别的节点 例如本站所收录关于"成长"的句子
+	    String type = Jsoup.parse(page.getHtml().css("div.xqfamwritercount").get()).getElementsByClass("xqfamwritercount").text();
+	    //截取字符串
+	    type=type.split("\"")[1];
 	    JuziTypeKey juziType = new JuziTypeKey();
 	    juziType.setLeixingming(type);
 		for(int i=0;i<juziget.size();i++){
