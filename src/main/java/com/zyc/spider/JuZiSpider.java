@@ -112,10 +112,6 @@ public class JuZiSpider implements JuziService,PageProcessor{
 		page.putField("juziResult", juzis);
 		page.putField("juziType", juziType);
 	}
-	@Test
-	public void testGet(){
-		Spider.create(new JuZiSpider()).addUrl("http://www.juzimi.com/tags/%E5%94%AF%E7%BE%8E").addPipeline(Pipeline).thread(5).run();
-	}
 	@Override
 	public Page2<Juzi, JuziExample> findJuziByPage(Page2<Juzi, JuziExample> page2) {
 		page2.setAllPage(page2.countAllPage(juziMapper.countByExample(page2.getE())));
