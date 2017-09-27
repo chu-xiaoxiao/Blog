@@ -6,10 +6,5 @@
         <typeAlias alias="User" type="com.zyc.model.User"/>
         <typeAlias alias="WenZhang" type = "com.zyc.model.WenZhang"/>
         <typeAlias alias="IP" type = "com.zyc.model.IP"/>
-    </typeAliases> 
-<!--    <mappers>
-        <mapper resource="classpath:com/zyc/mapper/UserMapper.xml" />
-        <mapper resource="classpath:com/zyc/mapper/WenZhangMapper.xml" />
-        <mapper resource="classpath:com/zyc/mapper/IPMapper.xml" />
-    </mappers> -->
+    </typeAliases>
 </configuration>

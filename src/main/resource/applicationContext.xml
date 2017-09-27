@@ -5,30 +5,30 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="
-        http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd
-        http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  ">
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  ">
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <!-- 1. 数据源 : DriverManagerDataSource -->
-    <context:property-placeholder location="classpath:DB.properties"/>
+       <context:property-placeholder location="classpath:DB.properties"/>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass">
-            <value>${jdbc.driverClass}</value>
+                        <value>com.mysql.jdbc.Driver</value>
         </property>
         <property name="jdbcUrl">
-            <value>${jdbc.connectionURL}</value>
+                        <value>jdbc:mysql://123.206.8.180:3306/BoKe?useUnicode=true&amp; characterEncoding=UTF-8</value>
         </property>
         <!--MySQL数据库的用户名 -->
         <property name="user">
-            <value>${jdbc.userID}</value>
+                       <value>root</value>
         </property>
         <!--MySQL数据库 密码 -->
         <property name="password">
-            <value>${jdbc.pwd}</value>
+                       <value>081816</value>
         </property>
         <!--连接池中保留的最小连接数。 -->
         <property name="minPoolSize">
@@ -50,7 +50,7 @@
         <property name="acquireIncrement">
             <value>5</value>
         </property>
-        <!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的 statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面   
+        <!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的 statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面
             的因素。如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0 -->
         <property name="maxStatements">
             <value>0</value>
@@ -63,12 +63,12 @@
         <property name="acquireRetryAttempts">
             <value>30</value>
         </property>
-        <!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效 保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试   
+        <!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效 保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试
             获取连接失败后该数据源将申明已断开并永久关闭。Default: false -->
         <property name="breakAfterAcquireFailure">
             <value>true</value>
         </property>
-        <!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的 时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable   
+        <!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的 时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable
             等方法来提升连接测试的性能。Default: false -->
         <property name="testConnectionOnCheckout">
             <value>false</value>

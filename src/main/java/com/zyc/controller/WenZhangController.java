@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zyc.model.*;
+import com.zyc.service.WenzhangService;
 import com.zyc.spider.TodayInHistorySpider;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.ParseException;
@@ -44,7 +45,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.zyc.service.IPService;
 import com.zyc.service.JuZiTypeService;
-import com.zyc.service.WenZhangService;
 import com.zyc.spider.JuziService;
 import com.zyc.spider.NewsSpider;
 
@@ -54,7 +54,8 @@ import redis.clients.jedis.Jedis;
 @Controller
 public class WenZhangController {
 	@Autowired
-	private WenZhangService wenZhangService;
+	@Qualifier("wenzhangServiceImplements")
+	private WenzhangService wenzhangService;
 
 	@Autowired
 	@Qualifier("iPServiceImplements")
@@ -78,12 +79,12 @@ public class WenZhangController {
 	@RequestMapping(value = "/Houtai/addWenZhang.do")
 	public ModelAndView addWenZhang(HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
-		WenZhang wenZhang = new WenZhang();
+		Wenzhang wenZhang = new Wenzhang();
 		wenZhang.setWenzhangneirong(request.getParameter("wenzhangneirong"));
 		wenZhang.setWenzhangbiaoti(request.getParameter("wenzhangbiaoti"));
 		wenZhang.setWenzhangchunwenben(request.getParameter("wenzhangchunwenben").trim());
 		wenZhang.setWenzhangleixing(request.getParameter("wenzhangleixing"));
-		wenZhangService.addWenZhang(wenZhang);
+		wenzhangService.addWenzhang(wenZhang);
 		return new ModelAndView("redirect:/Houtai/findByPage.do");
 	}
 
@@ -95,7 +96,7 @@ public class WenZhangController {
 	 */
 	@RequestMapping(value = "/WenZhang/findAll")
 	public String findAll(HttpServletRequest request) {
-		request.setAttribute("wenzhang", wenZhangService.findAllWenZhang());
+		request.setAttribute("wenzhang", wenzhangService.findAllWenzhang());
 		return "/Houtai/findByPage";
 	}
 
@@ -108,8 +109,7 @@ public class WenZhangController {
 	@RequestMapping(value = "/Houtai/delete")
 	public ModelAndView deleteWenZhang(HttpServletRequest request) {
 		Integer id = Integer.parseInt(request.getParameter("wenzhangid"));
-		wenZhangService.deleteWenZhang(id);
-
+		wenzhangService.deleteWenzhang(id);
 		return new ModelAndView("redirect:/Houtai/findByPage.do");
 	}
 
@@ -127,22 +127,14 @@ public class WenZhangController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		WenZhang wenZhang = new WenZhang();
+		Wenzhang wenZhang = new Wenzhang();
 		wenZhang.setWenzhangneirong(request.getParameter("wenzhangneirong"));
 		wenZhang.setWenzhangbiaoti(request.getParameter("wenzhangbiaoti"));
 		wenZhang.setWenzhangleixing(request.getParameter("wenzhangleixing"));
-		wenZhang.setId(Integer.parseInt(request.getParameter("wenzhangid1")));
+		wenZhang.setWenzhangid(Integer.parseInt(request.getParameter("wenzhangid1")));
 		wenZhang.setWenzhangchunwenben(request.getParameter("wenzhangchunwenben").trim());
-		wenZhangService.modifyWenZhang(wenZhang);
+		wenzhangService.modifyWenzhang(wenZhang);
 		return new ModelAndView("redirect:/Houtai/findByPage.do");
-		/*
-		 * JSONObject jsonObject = new JSONObject(); jsonObject.put("wenzhang",
-		 * wenZhang); PrintWriter printWriter; try { printWriter = new
-		 * PrintWriter(response.getOutputStream());
-		 * printWriter.println(wenZhang); printWriter.flush();
-		 * printWriter.close(); } catch (IOException e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); }
-		 */
 	}
 
 	/**
@@ -153,7 +145,7 @@ public class WenZhangController {
 	 */
 	@RequestMapping("/Houtai/modifywenzhang")
 	public void findWenZhangByid(HttpServletRequest request, PrintWriter printWriter) {
-		WenZhang wenZhang = wenZhangService.findWenZhangByid(Integer.parseInt(request.getParameter("wenzhangid")));
+		Wenzhang wenZhang = wenzhangService.findWenzhangByid(Integer.parseInt(request.getParameter("wenzhangid")));
 		JSONObject json = new JSONObject();
 		json.put("wenzhang", wenZhang);
 		printWriter.print(json.toString());
@@ -174,59 +166,27 @@ public class WenZhangController {
 	@RequestMapping("/Houtai/findByPage.**")
 	public ModelAndView finWenZhangByPage(HttpServletRequest request, HttpServletResponse response) throws net.sf.json.JSONException, ClientProtocolException, IOException {
 		ModelAndView modelAndView = new ModelAndView();
-		WenZhangSearch wenZhangSearch = new WenZhangSearch();
+		WenzhangExample wenzhangExample = new WenzhangExample();
 		if (request.getSession().getAttribute("temp") == null) {
 			request.getSession().setAttribute("temp", 1);
 			IP ip = new IP();
 			ip.setIp(request.getRemoteAddr());
 			iPService.addIP(ip);
 		}
-		if (request.getParameter("wenzhangbiaoti") != null && !"".equals(request.getParameter("wenzhangbiaoti"))) {
-			wenZhangSearch.setName(request.getParameter("wenzhangbiaoti"));
-		} else {
-			wenZhangSearch.setName(null);
+		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+		if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
+			criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
 		}
-		if (request.getParameter("wenzhangleixing") != null && !"".equals(request.getParameter("wenzhangleixing"))) {
-			wenZhangSearch.setType(request.getParameter("wenzhangleixing"));
-		} else {
-			wenZhangSearch.setType(null);
+		if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
+			criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
 		}
-		Page<WenZhang> page = new Page<WenZhang>();
-		if (request.getParameter("currentPage") != null) {
-			if (page.getAllPage() != null) {
-				if (page.getAllPage() < Integer.parseInt(request.getParameter("currentPage"))) {
-					page.setCurrentPage(1);
-				} else {
-					page.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-				}
-			} else {
-				page.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-			}
-		} else {
-			page.setCurrentPage(1);
-		}
-		if (request.getParameter("sieze") != null) {
-			page.setSieze(Integer.parseInt(request.getParameter("sieze")));
-		} else {
-			page.setSieze(10);
-		}
-		page.setWenZhangSearch(wenZhangSearch);
-		if (page.getCurrentPage() != 0) {
-			page.setStatr((page.getCurrentPage() - 1) * page.getSieze());
-		} else {
-			page.setStatr(0);
-		}
-		page.setEnd(page.getCurrentPage() * page.getSieze());
-		page = wenZhangService.findWenZhangBySearch(page);
-		modelAndView.addObject(page);
+		wenzhangExample.getOredCriteria().add(criteria);
+        Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
+		page = wenzhangService.findWenzhangBySearch(page);
+		modelAndView.addObject("page",page);
+		modelAndView.addObject("wenzhangbiaoti",request.getParameter("wenzhangbiaoti"));
+        modelAndView.addObject("wenzhangleixing",request.getParameter("wenzhangleixing"));
 		modelAndView.setViewName("/Houtai/ListWenZhangByPage");
-		/*
-		 * try { JSONObject jsonObject = new JSONObject();
-		 * jsonObject.put("page", page); PrintWriter printWriter = new
-		 * PrintWriter(response.getOutputStream()); printWriter.println(page);
-		 * printWriter.flush(); printWriter.close(); } catch (IOException e) {
-		 * e.printStackTrace(); }
-		 */
 		return modelAndView;
 	}
 
@@ -242,51 +202,24 @@ public class WenZhangController {
 	@RequestMapping("/Houtai/findByPage2.**")
 	public void finWenZhangByPage2(HttpServletRequest request, HttpServletResponse response) throws net.sf.json.JSONException, ClientProtocolException, IOException {
 		ModelAndView modelAndView = new ModelAndView();
-		WenZhangSearch wenZhangSearch = new WenZhangSearch();
+		WenzhangExample wenzhangExample = new WenzhangExample();
 		if (request.getSession().getAttribute("temp") == null) {
 			request.getSession().setAttribute("temp", 1);
 			IP ip = new IP();
 			ip.setIp(request.getRemoteAddr());
 			iPService.addIP(ip);
 		}
-		if (request.getParameter("wenzhangbiaoti") != null && !"".equals(request.getParameter("wenzhangbiaoti"))) {
-			wenZhangSearch.setName(request.getParameter("wenzhangbiaoti"));
-		} else {
-			wenZhangSearch.setName(null);
+		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+		if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
+			criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
 		}
-		if (request.getParameter("wenzhangleixing") != null && !"".equals(request.getParameter("wenzhangleixing"))) {
-			wenZhangSearch.setType(request.getParameter("wenzhangleixing"));
-		} else {
-			wenZhangSearch.setType(null);
+		if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
+			criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
 		}
-		Page<WenZhang> page = new Page<WenZhang>();
-		if (request.getParameter("currentPage") != null) {
-			if (page.getAllPage() != null) {
-				if (page.getAllPage() < Integer.parseInt(request.getParameter("currentPage"))) {
-					page.setCurrentPage(1);
-				} else {
-					page.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-				}
-			} else {
-				page.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-			}
-		} else {
-			page.setCurrentPage(1);
-		}
-		if (request.getParameter("sieze") != null) {
-			page.setSieze(Integer.parseInt(request.getParameter("sieze")));
-		} else {
-			page.setSieze(4);
-		}
-		page.setWenZhangSearch(wenZhangSearch);
-		if (page.getCurrentPage() != 0) {
-			page.setStatr((page.getCurrentPage() - 1) * page.getSieze());
-		} else {
-			page.setStatr(0);
-		}
-		page.setEnd(page.getCurrentPage() * page.getSieze());
-		page = wenZhangService.findWenZhangBySearch(page);
-		modelAndView.addObject(page);
+		wenzhangExample.getOredCriteria().add(criteria);
+        Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
+        page = wenzhangService.findWenzhangBySearch(page);
+		modelAndView.addObject("page",page);
 		modelAndView.setViewName("/wenzhang/index");
 		try {
 			JSONObject jsonObject = new JSONObject();
@@ -312,55 +245,26 @@ public class WenZhangController {
 	@RequestMapping(value = { "/wenzhang/index.**", "/wenzhang/blogs.**" })
 	public ModelAndView finWenZhangByPageIndex(HttpServletRequest request) throws IOException {
 		ModelAndView modelAndView = new ModelAndView();
-		WenZhangSearch wenZhangSearch = new WenZhangSearch();
+		WenzhangExample wenzhangExample = new WenzhangExample();
 		if (request.getSession().getAttribute("temp") == null) {
 			request.getSession().setAttribute("temp", 1);
 			IP ip = new IP();
 			ip.setIp(request.getRemoteAddr());
 			iPService.addIP(ip);
 		}
-		if (request.getParameter("wenzhangbiaoti") != null && !"".equals(request.getParameter("wenzhangbiaoti"))) {
-			wenZhangSearch.setName(request.getParameter("wenzhangbiaoti"));
-		} else {
-			wenZhangSearch.setName(null);
-		}
-		if (request.getParameter("wenzhangleixing") != null && !"".equals(request.getParameter("wenzhangleixing"))) {
-			wenZhangSearch.setType(request.getParameter("wenzhangleixing"));
-		} else {
-			wenZhangSearch.setType(null);
-		}
-		Page<WenZhang> page = new Page<WenZhang>();
-		if (request.getParameter("currentPage") != null) {
-			if (page.getAllPage() != null) {
-				if (page.getAllPage() < Integer.parseInt(request.getParameter("currentPage"))) {
-					page.setCurrentPage(1);
-				} else {
-					page.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-				}
-			} else {
-				page.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
-			}
-		} else {
-			page.setCurrentPage(1);
-		}
-		if (request.getParameter("sieze") != null) {
-			page.setSieze(Integer.parseInt(request.getParameter("sieze")));
-		} else {
-			if (request.getRequestURL().toString().contains("index")) {
-				page.setSieze(4);
-			} else {
-				page.setSieze(12);
-			}
-		}
-		page.setWenZhangSearch(wenZhangSearch);
-		if (page.getCurrentPage() != 0) {
-			page.setStatr((page.getCurrentPage() - 1) * page.getSieze());
-		} else {
-			page.setStatr(0);
-		}
-		page.setEnd(page.getCurrentPage() * page.getSieze());
-		page = wenZhangService.findWenZhangBySearch(page);
-		modelAndView.addObject(page);
+		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+        if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
+            criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
+        }
+        if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
+			criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
+        }
+        wenzhangExample.getOredCriteria().add(criteria);
+        Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
+		page = wenzhangService.findWenzhangBySearch(page);
+		modelAndView.addObject("page",page);
+        modelAndView.addObject("wenzhangbiaoti",request.getParameter("wenzhangbiaoti"));
+        modelAndView.addObject("wenzhangleixing",request.getParameter("wenzhangleixing"));
 		/*
 		 * 加载配置文件显示主页的图片以及图片对应文字
 		 */
@@ -405,8 +309,8 @@ public class WenZhangController {
 	public ModelAndView xiangxi(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (request.getParameter("wenzhangid") != null) {
-			WenZhang wenZhang = wenZhangService.findWenZhangByid(Integer.parseInt(request.getParameter("wenzhangid")));
-			modelAndView.addObject(wenZhang);
+			Wenzhang wenZhang = wenzhangService.findWenzhangByid(Integer.parseInt(request.getParameter("wenzhangid")));
+			modelAndView.addObject("wenZhang",wenZhang);
 		}
 		modelAndView.setViewName("/wenzhang/about");
 		return modelAndView;
@@ -468,19 +372,6 @@ public class WenZhangController {
 		}
 	}
 
-	/**
-	 * 随机一篇文章
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/wenzhang/randWenZhang")
-	public ModelAndView randWenZhang() {
-		ModelAndView modelAndView = new ModelAndView();
-		List<WenZhang> wenZhangs = wenZhangService.randWenZhang(1);
-		modelAndView.addObject(wenZhangs.get(0));
-		modelAndView.setViewName("/wenzhang/randpage");
-		return modelAndView;
-	}
 
 	/**
 	 * 后台主页
@@ -496,7 +387,7 @@ public class WenZhangController {
 	        throws ClientProtocolException, ParseException, IOException {
 		Integer ipResultCount = 10;// IP查询的数量
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("count", wenZhangService.countWenzhang());
+		modelAndView.addObject("count", wenzhangService.countWenzhang());
 		modelAndView.addObject("countIp", iPService.countIP(new IPExample()));
 		JSONObject listip_date = new JSONObject();
 		Jedis jedis = new Jedis("123.206.8.180");

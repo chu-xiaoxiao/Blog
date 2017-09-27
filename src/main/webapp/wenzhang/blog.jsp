@@ -69,11 +69,11 @@
 	$(function(){
 		var options = {
 		         bootstrapMajorVersion:3,
-		         currentPage: ${page.currentPage},
+		         currentPage: ${page.currentPage+1},
 		         numberOfPages: ${page.allPage}>5?"5":${page.allPage},
-		         totalPages:${page.allPage}, 
+		         totalPages:${page.allPage},
 		         onPageClicked : function (event, originalEvent, type, page) {
-			        $("#frompage").attr("action","/SSM/wenzhang/blogs.do?currentPage="+(page));
+			        $("#frompage").attr("action","/SSM/wenzhang/blogs.do?currentPage="+(page-1));
 			      	$("#frompage").submit();
 		         }
 		     };
@@ -97,14 +97,14 @@
 								<!-- <a href="#" class="blog-img"><img src="images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a> -->
 								<div class="desc">
 									<h3>
-										<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.id }">${wenzhang1.wenzhangbiaoti}</a>
+										<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a>
 									</h3>
 									<span><small>${wenzhang1.wenzhangriqi}</small></span>
 									<p>
 										<c:if test="${fn:length(wenzhang1.wenzhangchunwenben)<=100 }">${fn:replace(wenzhang1.wenzhangchunwenben,"<","")}</c:if>
 										<c:if test="${fn:length(wenzhang1.wenzhangchunwenben)>=100 }">${fn:substring(fn:replace(wenzhang1.wenzhangchunwenben,"<","") ,0,100)} ...</c:if>
 									</p>
-									<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.id }" class="lead">Read More <i
+									<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }" class="lead">Read More <i
 										class="icon-arrow-right3"></i></a>
 								</div>
 							</div>
@@ -120,8 +120,8 @@
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft" align="center" >
 				<form action="" method="post" id="frompage" class="form-inline">
-					<p>文章标题: <input type="search" name="wenzhangbiaoti" class="form-control" value="${page.wenZhangSearch.name }" /></p>
-					<p>文章类型:<input type="text" name="wenzhangleixing" class="form-control" value="${page.wenZhangSearch.type }" /></p>
+					<p>文章标题: <input type="search" name="wenzhangbiaoti" class="form-control" value="${requestScope.wenzhangbiaoti}" /></p>
+					<p>文章类型:<input type="text" name="wenzhangleixing" class="form-control" value="${requestScope.wenzhangleixing }" /></p>
 					<p><input type="submit" value="查找" class="btn btn-default" /></p>
 				</form>
 					<ul id='fenye'></ul>

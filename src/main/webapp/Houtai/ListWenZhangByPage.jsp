@@ -77,11 +77,11 @@ $(function() {
 	//加载分页
 	var options = {
          bootstrapMajorVersion:3,
-         currentPage: ${page.currentPage},
+         currentPage: ${page.currentPage+1},
          numberOfPages: ${page.allPage}>5?"5":${page.allPage},
          totalPages:${page.allPage}, 
          onPageClicked : function (event, originalEvent, type, page) {
-	        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage="+(page));
+	        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage="+(page-1));
 	      	$("#frompage").submit();
          }
      };
@@ -133,7 +133,7 @@ $(function() {
 			}
 		});
 	$("#sieze").change(function() {
-        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage=1");
+        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage=0");
 		$("#frompage").submit();
 	});
 	$("#addwenzhang").click(function(){
@@ -174,7 +174,7 @@ $(function() {
         		$("#myModal1").modal("show");
 				$("#wenzhangbiaoti1").val(obj.wenzhang.wenzhangbiaoti);
 				$("#wenzhangleixing1").val(obj.wenzhang.wenzhangleixing);
-				$("#wenzhangid1").val(obj.wenzhang.id);
+				$("#wenzhangid1").val(obj.wenzhang.wenzhangid);
 				editor.$txt.html(obj.wenzhang.wenzhangneirong);
 				$("#tijiao1").click(function() {
 					$("#wenzhangchunwenben1").val(editor.$txt.text())
@@ -214,7 +214,7 @@ $(function() {
 								<label>Show <select id ="sieze" name="sieze" aria-controls="dataTables-example" class="form-control input-sm">
 									<c:forEach begin="10" end="100" step="30" var="temp">
 										<c:choose>
-											<c:when test="${page.sieze==temp}">
+											<c:when test="${page.size==temp}">
 												<option value="${temp}" selected="selected">${temp}</option>
 											</c:when>
 											<c:otherwise>
@@ -229,9 +229,9 @@ $(function() {
 						<div class="col-sm-6">
 							<div id="dataTables-example_filter" class="dataTables_filter">
 								<label>文章标题: <input type="search" name="wenzhangbiaoti"
-									class="form-control" value="${page.wenZhangSearch.name }" /></label> <label>文章类型:
+									class="form-control" value="${requestScope.wenzhangbiaoti}" /></label> <label>文章类型:
 									<input type="text" name="wenzhangleixing" class="form-control"
-									value="${page.wenZhangSearch.type }" />
+									value="${requestScope.wenzhangleixing }" />
 								</label> <input type="submit" value="查找" class="btn btn-default" />
 							</div>
 						</div>
@@ -249,17 +249,17 @@ $(function() {
 							<tbody>
 								<c:forEach items="${page.lists }" var="wenzhang1">
 									<tr>
-										<td id="wenzhangid">${wenzhang1.id}</td>
+										<td id="wenzhangid">${wenzhang1.wenzhangid}</td>
 										<td><a
-											href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.id }">${wenzhang1.wenzhangbiaoti}</a>
+											href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a>
 										</td>
 										<td>${wenzhang1.wenzhangleixing}</td>
 										<td>${wenzhang1.wenzhangriqi}</td>
 										<td><button type="button" class="btn btn-info"
-												id="modify${wenzhang1.id}" value="${wenzhang1.id}">修改</button>
+												id="modify${wenzhang1.wenzhangid}" value="${wenzhang1.wenzhangid}">修改</button>
 											<button type="button" class="btn btn-danger"
-												id="deletewenzhang${wenzhang1.id}" value="${wenzhang1.id}">删除</button>
-											<input type="hidden" id="deletneirong${wenzhang1.id}"
+												id="deletewenzhang${wenzhang1.wenzhangid}" value="${wenzhang1.wenzhangid}">删除</button>
+											<input type="hidden" id="deletneirong${wenzhang1.wenzhangid}"
 											value="${wenzhang1.wenzhangbiaoti}" /></td>
 									</tr>
 								</c:forEach>

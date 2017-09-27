@@ -73,11 +73,11 @@
 							<div class="blog-entry">
 	<!-- 							<a href="#" class="blog-img"><img src="/SSM/wenzhang/mar/css/images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a> -->
 								<div class="desc">
-									<h3><a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.id }">${wenzhang1.wenzhangbiaoti}</a></h3>
+									<h3><a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a></h3>
 									<span><small>${wenzhang1.wenzhangriqi}</small></span>
 									<p><c:if test="${fn:length(wenzhang1.wenzhangchunwenben)>100 }">${fn:substring(fn:replace(wenzhang1.wenzhangchunwenben,"<","") ,0,100)} ...</c:if>
 	 								<c:if test="${fn:length(wenzhang1.wenzhangchunwenben)<=100 }">${fn:replace(wenzhang1.wenzhangchunwenben,"<","")}</c:if></p>
-									<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.id }" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+									<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }" class="lead">Read More <i class="icon-arrow-right3"></i></a>
 								</div>
 							</div>
 						</div>

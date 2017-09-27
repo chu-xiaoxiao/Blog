@@ -11,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zyc.service.WenzhangService;
 import com.zyc.util.MyException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -30,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.zyc.model.User;
 import com.zyc.service.UserService;
-import com.zyc.service.WenZhangService;
 import com.zyc.util.EncodeMD5;
 
 @Controller
@@ -38,7 +38,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private WenZhangService wenZhangService;
+	private WenzhangService wenZhangService;
 	@RequestMapping(value="/hello.do")
 	public String find(HttpServletRequest request){
 		String userName = userService.findUsername(2);

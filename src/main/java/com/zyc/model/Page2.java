@@ -39,6 +39,24 @@ public class Page2<T,E> {
 		this.start = this.size*this.currentPage;
 		this.end =(this.size+1)*this.currentPage;
 	}
+	public Page2(E e, String currentPage, String size) {
+		super();
+		this.e = e;
+		if(currentPage!=null){
+			this.currentPage = Integer.parseInt(currentPage);
+		}else{
+			this.currentPage=0;
+		}
+		if(size!=null){
+			this.size = Integer.parseInt(size);
+		}else{
+			this.size=10;
+		}
+		this.allPage = allPage;
+		this.lists = lists;
+		this.start = this.size*this.currentPage;
+		this.end =(this.size+1)*this.currentPage;
+	}
 	public Integer countAllPage(Integer allRows){
 		return (allRows+this.size-1)/this.size;
 	}
