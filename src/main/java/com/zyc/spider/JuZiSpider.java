@@ -86,6 +86,7 @@ public class JuZiSpider implements JuziService,PageProcessor{
 		for(String temp:urls){
 			page.addTargetRequest("http://www.juzimi.com"+temp);
 		}
+		logger.debug("Download from"+page.getUrl());
 		List<String> juziget = page.getHtml().css("div.views-field-phpcode").all();
 		//获取页面中有关类别的节点 例如本站所收录关于"成长"的句子
 	    String type = Jsoup.parse(page.getHtml().css("div.xqfamwritercount").get()).getElementsByClass("xqfamwritercount").text();
@@ -108,7 +109,6 @@ public class JuZiSpider implements JuziService,PageProcessor{
 			juzis.add(juzi);
 			logger.info(juzi.toString());
 		}
-
 		page.putField("juziResult", juzis);
 		page.putField("juziType", juziType);
 	}
