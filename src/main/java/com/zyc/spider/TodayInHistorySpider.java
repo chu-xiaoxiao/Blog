@@ -93,13 +93,6 @@ public class TodayInHistorySpider {
     }
 
     public List<Map.Entry<String, String>> getTodayInHistorySpider() {
-        if(!SpiderUtil.validateDate()){
-            try {
-                SpiderUtil.flushDateAndData();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         return todayInHistorySpider;
     }
 
