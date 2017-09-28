@@ -1,111 +1,174 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
 %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-<!-- Bootstrap Core CSS -->
-<link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<!-- MetisMenu CSS -->
-<link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
-	rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
+          rel="stylesheet">
 
-<!-- DataTables CSS -->
-<link
-	href="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
-	rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link
+            href="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
+            rel="stylesheet">
 
-<!-- DataTables Responsive CSS -->
-<link
-	href="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.css"
-	rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link
+            href="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.css"
+            rel="stylesheet">
 
-<!-- Custom CSS -->
-<link href="/SSM/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/SSM/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 
-<!-- Custom Fonts -->
-<link href="/SSM/assets/vendor/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
+    <!-- Custom Fonts -->
+    <link href="/SSM/assets/vendor/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" href="/SSM/css/jquery-confirm.css">
-<link rel="stylesheet" href="/SSM/css/fenye.css">
+    <link rel="stylesheet" href="/SSM/css/jquery-confirm.css">
+    <link rel="stylesheet" href="/SSM/css/fenye.css">
 
-<link rel="stylesheet" type="text/css"
-	href="/SSM//dist/css/wangEditor.min.css">
-<!-- <script src="/SSM/js/jquery.js"></script> -->
-<script
-	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="/SSM/js/jquery-confirm.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="/SSM//dist/css/wangEditor.min.css">
+    <!-- <script src="/SSM/js/jquery.js"></script> -->
+    <script
+            src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/SSM/js/jquery-confirm.js"></script>
 
-<script type="text/javascript" src="/SSM/dist/js/wangEditor.js"></script>
+    <script type="text/javascript" src="/SSM/dist/js/wangEditor.js"></script>
+    <script type="text/javascript" src="/SSM/js/dateFormat.js"></script>
     <script type="text/javascript">
-        function getData() {
+        function init(){
             $.ajax({
-                method:"get",
-                url:"/SSM/Houtai/getOS.do",
-                dataType:"json",
-                success:function(data){
-                    $("#message").html("");
-                    $("#message").append("<div>JVM名称:"+data.JVMInfo.jvm_name+"</div>");
-                    $("#message").append("<div>JVM版本:"+data.JVMInfo.jvm_version+"</div>");
-                    $("#message").append("<div>JVM位置:"+data.JVMInfo.jvm_bootClassPath+"</div>");
-                    $("#message").append("<div>JVM启动时间:"+data.JVMInfo.jvm_start_time+"</div>");
-                    $("#message").append("<div>操作系统架构:"+data.OSInfo.Architecture+"</div>");
-                    $("#message").append("<div>核心数:"+data.OSInfo.Processors+"</div>");
-                    $("#message").append("<div>操作系统名称:"+data.OSInfo.System_name+"</div>");
-                    $("#message").append("<div>操作系统版本:"+data.OSInfo.System_version+"</div>");
-                    $("#message").append("<div>JVM内存堆栈:"+data.JvmMemoryInfo.Heap_committed+"</div>");
-                    $("#message").append("<div>JVM版本:"+data.JvmMemoryInfo.init+"</div>");
-                    $("#message").append("<div>JVM内存最大值:"+data.JvmMemoryInfo.max+"</div>");
-                    $("#message").append("<div>JVM内存当前使用量:"+data.JvmMemoryInfo.used+"</div>");
+                method: "get",
+                url: "/SSM/Houtai/getOS.do",
+                dataType: "json",
+                success: function (data) {
+                    var strTemp;
+                    strTemp = data.JVMInfo.jvm_bootClassPath.split(";");
+                    $("#JVMmessage").html("");
+                    $("#OSmessage").html("");
+                    $("#JVMmessage").append("<div>JVM名称:" + data.JVMInfo.jvm_name + "</div>");
+                    $("#JVMmessage").append("<div>JVM版本:" + data.JVMInfo.jvm_version + "</div>");
+                    $("#JVMmessage").append("<div>JVM启动时间:" + TimeObjectUtil.longMsTimeConvertToDateTime(data.JVMInfo.jvm_start_time) + "</div>");
+                    $("#JVMmessage").append("<div>JVMClassPath:</div>");
+                    $.each(strTemp,function(i,n){
+                        $("#JVMmessage").append("<div>--" + n + "</div>");
+                    });
+                    $("#OSmessage").append("<div>操作系统架构:" + data.OSInfo.Architecture + "</div>");
+                    $("#OSmessage").append("<div>核心数:" + data.OSInfo.Processors + "</div>");
+                    $("#OSmessage").append("<div>操作系统名称:" + data.OSInfo.System_name + "</div>");
+                    $("#OSmessage").append("<div>操作系统版本:" + data.OSInfo.System_version + "</div>");
                 }
             });
         }
-        //页面初始加载
-        getData();
-        $(function(){
-            t = setInterval("getData()", 1000);
+        function getData() {
+            $.ajax({
+                method: "get",
+                url: "/SSM/Houtai/getOS.do",
+                dataType: "json",
+                success: function (data) {
+                    $("#memoryMessage").html("");
+                    $("#memoryMessage").append("<div>JVM内存堆栈:" + data.JvmMemoryInfo.Heap_committed / 1024 / 1024 + "M</div>");
+                    $("#memoryMessage").append("<div>JVM内存初值:" + data.JvmMemoryInfo.init / 1024 / 1024 + "M</div>");
+                    $("#memoryMessage").append("<div>JVM内存最大值:" + data.JvmMemoryInfo.max / 1024 / 1024 + "M</div>");
+                    $("#memoryMessage").append("<div>JVM内存当前使用量:" + (data.JvmMemoryInfo.used / 1024 / 1024).toFixed(2) + "M</div>");
+                    $("#memoryBar").attr("aria-valuenow",data.JvmMemoryInfo.used);
+                    $("#memoryBar").attr("aria-valuemax",data.JvmMemoryInfo.max);
+                    $("#memoryBar").css("width",(data.JvmMemoryInfo.used/data.JvmMemoryInfo.max)*100+"%");
+                    $("#printMemroy").text(((data.JvmMemoryInfo.used/data.JvmMemoryInfo.max)*100).toFixed(2)+"% Complete")
+                }
+            });
+        }
+        $(function () {
+            //页面初始加载
+            getData();
+            init();
+            t = setInterval("getData()", 5000);
         })
 
     </script>
 </head>
 
 <body>
-	<div id="wrapper">
-		<jsp:include page="nav.jsp"></jsp:include>
-	</div>
-	<div id="page-wrapper">
-       <div class="panel panel-default">
-        <div class="panel-heading">
-        	监控参数
+<div id="wrapper">
+    <jsp:include page="nav.jsp"></jsp:include>
+</div>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">当前服务器运行信息</h1>
         </div>
-          <div class="panel-body">
-              <div id="message"></div>
-         </div>
-       </div>
-     </div>
-	<script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> 系统参数
+                </div>
+                <div class="panel-body">
+                    <div id="OSmessage"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> 内存使用
+                </div>
+                <div class="panel-body">
+                    <div id="memoryMessage"></div>
+                    <div>
+                        <strong>内存使用量</strong>
+                        <span class="pull-right text-muted" id="printMemroy">40% Complete</span>
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 0%" id="memoryBar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> JVM参数
+                </div>
+                <div class="panel-body">
+                    <div id="JVMmessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="/SSM/assets/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-	<!-- DataTables JavaScript -->
-	<script src="/SSM/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
-	<script
-		src="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-	<script
-		src="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/SSM/assets/vendor/metisMenu/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="/SSM/assets/dist/js/sb-admin-2.js"></script>
-	<script type="text/javascript" src="/SSM/js/bootstrap-paginator.min.js"></script>
-	<script src="/SSM/js/jqueryForm.js"></script>
+    <!-- DataTables JavaScript -->
+    <script src="/SSM/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script
+            src="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script
+            src="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/SSM/assets/dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript" src="/SSM/js/bootstrap-paginator.min.js"></script>
+    <script src="/SSM/js/jqueryForm.js"></script>
 </body>
 </html>
