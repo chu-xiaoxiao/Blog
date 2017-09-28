@@ -132,7 +132,7 @@
                         <strong>内存使用量</strong>
                         <span class="pull-right text-muted" id="printMemroy">40% Complete</span>
                         <div class="progress progress-striped active">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0"
+                            <div class="progress-bar progress-bar-sakura" role="progressbar" aria-valuenow="" aria-valuemin="0"
                                  aria-valuemax="100" style="width: 0%" id="memoryBar">
                             </div>
                         </div>
