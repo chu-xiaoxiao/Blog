@@ -71,11 +71,11 @@ public class GetOSInfoImplement implements GetOSInfo{
     public static JSONObject showSystem() {
         JSONObject jsonObject = new JSONObject();
         OperatingSystemMXBean op = ManagementFactory.getOperatingSystemMXBean();
-        jsonObject.put("Architecture " , op.getArch());
-        jsonObject.put("Processors " , op.getAvailableProcessors());
-        jsonObject.put("System_name " , op.getName());
-        jsonObject.put("System_version " , op.getVersion());
-        jsonObject.put("Last_minuteload " , op.getSystemLoadAverage());
+        jsonObject.put("Architecture" , op.getArch());
+        jsonObject.put("Processors" , op.getAvailableProcessors());
+        jsonObject.put("System_name" , op.getName());
+        jsonObject.put("System_version" , op.getVersion());
+        jsonObject.put("Last_minuteload" , op.getSystemLoadAverage());
         return jsonObject;
     }
 
