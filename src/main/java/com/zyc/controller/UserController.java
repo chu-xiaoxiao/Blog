@@ -76,6 +76,14 @@ public class UserController {
 			modelAndView.setViewName("/user/logIn");
             modelAndView.addObject("msg","用户名或密码错误");
             return modelAndView;
+		}catch(AuthenticationException e){
+			modelAndView.setViewName("/user/logIn");
+			modelAndView.addObject("msg","用户名或密码错误");
+			return modelAndView;
+		}catch(Exception e){
+			modelAndView.setViewName("/user/logIn");
+			modelAndView.addObject("msg","未知错误,登录失败");
+			return modelAndView;
 		}
 		//获取登录成功的用户对象
 		user = (User) subject.getPrincipal();

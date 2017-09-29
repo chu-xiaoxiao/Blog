@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zyc.mapper.UserMapper;
 import com.zyc.model.User;
+
+import java.util.List;
+
 @Service("userServiceImplement")
 @Transactional
 public class UserServiceImplement implements UserService{
@@ -44,7 +47,13 @@ public class UserServiceImplement implements UserService{
 	public User findByName(String name) {
 		UserExample userExample = new UserExample();
 		userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(name));
-		User user = UserMapper.selectByExample(userExample).get(0);
+		List<User> result =  UserMapper.selectByExample(userExample);
+		User user = null;
+		if(result.size()>0){
+			user = result.get(0);
+		}else{
+			user = null;
+		}
 		return user;
 	}
 }

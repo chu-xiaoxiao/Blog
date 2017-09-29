@@ -38,7 +38,7 @@ public class BOSrealm extends AuthorizingRealm{
         userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(username));
         User user = userMapper.selectByExample(userExample).get(0);
         if(user==null){
-            return null;
+            throw new AuthenticationException();
         }else{
             String password = user.getUserpassword();
             SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,password,this.getClass().getSimpleName());

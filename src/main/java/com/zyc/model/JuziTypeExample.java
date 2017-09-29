@@ -166,7 +166,7 @@ public class JuziTypeExample {
 
         public Criteria andLeixingidIn(List<Integer> values) {
             addCriterion("leixingid in", values, "leixingid");
-            return (Criteria) this;
+                return (Criteria) this;
         }
 
         public Criteria andLeixingidNotIn(List<Integer> values) {

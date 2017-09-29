@@ -1,6 +1,9 @@
 package com.zyc.test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.zyc.model.User;
 import org.junit.Test;
@@ -27,4 +30,19 @@ public class TestAdd {
 		JSONObject jsonObject = new JSONObject();
 		
 	}
+    @Test
+    public void testThread(){
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for(int i=0;i<100000;i++){
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                    while(true){
+                        System.out.println("6");
+                    }
+                }
+            });
+        }
+    }
 }

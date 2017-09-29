@@ -559,7 +559,7 @@ public class WenZhangController {
 	public void modifyJuziImg(HttpServletRequest request, HttpServletResponse response)
 	        throws IllegalStateException, IOException {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-		        request.getSession().getServletContext());
+				request.getSession().getServletContext());
 		// 判断 request 是否有文件上传,即多部分请求
 		if (multipartResolver.isMultipart(request)) {
 			// 转换成多部分request
@@ -584,13 +584,12 @@ public class WenZhangController {
 						System.out.println(localFile.getAbsolutePath());
 						file1.transferTo(localFile);
 						output.print("<a href=/SSM/Houtai/download" + path + ".do?filename=" + myFileName + ">"
-						        + myFileName + "</a>");
+								+ myFileName + "</a>");
 					}
 				}
 			}
 		}
 	}
-
 	/**
 	 * 下载保存在服务器虚拟路径的文件
 	 * 
@@ -621,6 +620,7 @@ public class WenZhangController {
 	public ResponseEntity<byte[]> download(HttpServletRequest request, @RequestParam("filename") String filename)
 	        throws IOException {
 		String path = request.getParameter("filepath");
+
 		File file2 = new File(path);
 		String dfileName = new String(filename.getBytes("gb2312"), "iso8859-1");
 		HttpHeaders headers = new HttpHeaders();
