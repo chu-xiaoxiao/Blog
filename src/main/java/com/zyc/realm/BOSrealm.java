@@ -1,32 +1,58 @@
 package com.zyc.realm;
 
 import com.zyc.mapper.UserMapper;
+import com.zyc.model.Power;
+import com.zyc.model.Role;
 import com.zyc.model.User;
 import com.zyc.model.UserExample;
-import com.zyc.service.UserService;
-import jdk.nashorn.internal.parser.Token;
+import com.zyc.service.PowerService;
+import com.zyc.service.RoleService;
+import com.zyc.util.MyException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by YuChen Zhang on 17/09/14.
  */
 @Component("bOSrealm")
 public class BOSrealm extends AuthorizingRealm{
+
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    @Qualifier("powerServiceImplements")
+    PowerService powerService;
+
+    @Autowired
+    @Qualifier("roleServiceImplements")
+    RoleService roleService;
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String userName = (String) principalCollection.getPrimaryPrincipal();
-        return null;
+        User user = (User) principalCollection.getPrimaryPrincipal();
+        List<Role> roles = null;
+        try {
+            roles = roleService.getRolesByUserName(user.getUsername());
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
+        List<Power> powers = new ArrayList<Power>();
+        powers = powerService.getPowerByRoles(roles);
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        for(Role temp : roles) {
+            simpleAuthorizationInfo.addRole(temp.getRolename());
+        }
+        return simpleAuthorizationInfo;
     }
 
     @Override
