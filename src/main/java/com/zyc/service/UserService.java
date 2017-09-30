@@ -1,5 +1,6 @@
 package com.zyc.service;
 
+import com.zyc.model.Role;
 import com.zyc.model.User;
 
 public interface UserService {
