@@ -11,6 +11,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zyc.mapper.UserMapper;
+import com.zyc.model.Role;
+import com.zyc.service.RoleService;
 import com.zyc.service.WenzhangService;
 import com.zyc.util.MyException;
 import org.apache.shiro.SecurityUtils;
@@ -21,6 +24,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,25 +40,51 @@ import com.zyc.util.EncodeMD5;
 @Controller
 public class UserController {
 	@Autowired
+    @Qualifier("userServiceImplement")
 	private UserService userService;
 	@Autowired
 	private WenzhangService wenZhangService;
-	@RequestMapping(value="/hello.do")
+
+	@Autowired
+    @Qualifier("roleServiceImplements")
+    RoleService roleService;
+    @RequestMapping(value="/hello.do")
 	public String find(HttpServletRequest request){
 		String userName = userService.findUsername(2);
 		System.out.println(userName);
 		System.out.println(userService.findUser(2));
-		return "/SSM/index";
+		return "redirect :/SSM/index.jsp";
 	}
+	@RequestMapping(value = "/user/authorization.do")
+    public ModelAndView authorization(ModelAndView modelAndView){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        User user = (User) session.getAttribute("user");
+        Role role = new Role();
+        role.setRoleid(1);
+        user = userService.findByName(user.getUsername());
+        roleService.authorization(user,role);
+        modelAndView.setViewName("redirect:/index.jsp");
+        return modelAndView;
+    }
+
 	@RequestMapping(value="/user/adduser.do")
 	public String add(HttpServletRequest request){
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
 		user.setUsertype(1);
-		userService.insertuUser(user);
-		request.getSession().setAttribute("user", user);
-		return "redirect:/index.jsp"; 
+        userService.insertuUser(user);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(),user.getUserpassword());
+        usernamePasswordToken.setRememberMe(true);
+        subject.login(usernamePasswordToken);
+
+        Session session = subject.getSession();
+        session.setAttribute("user",user);
+		return "redirect:/user/a" +
+                "" +
+                "uthorization.do";
 	}
 	@RequestMapping(value="/user/logIn.do")
 	public ModelAndView login(HttpServletRequest request,ModelAndView modelAndView) throws MyException {
@@ -89,7 +119,7 @@ public class UserController {
 		user = (User) subject.getPrincipal();
 		Session session = subject.getSession();
 		session.setAttribute("user",user);
-		modelAndView.setViewName("/Houtai/index");
+		modelAndView.setViewName("redirect:/Houtai/index");
 		return modelAndView;
 	}
 	@RequestMapping(value="/user/modifyTouXiang")
