@@ -12,23 +12,32 @@
          http://www.springframework.org/schema/tx
          http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  ">
+
+    <mvc:annotation-driven />
+    <!-- 注解扫描包 -->
+    <context:component-scan base-package="com.zyc.controller" />
+    <context:component-scan base-package="com.zyc.service" />
+    <context:component-scan base-package="com.zyc.spider" />
+    <context:component-scan base-package="com.zyc.realm"/>
+    <!-- 开启注解 -->
+
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <!-- 1. 数据源 : DriverManagerDataSource -->
-       <context:property-placeholder location="classpath:DB.properties"/>
+    <!--<context:property-placeholder location="classpath:DB.properties"/>-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass">
-                        <value>com.mysql.jdbc.Driver</value>
+            <value>com.mysql.jdbc.Driver</value>
         </property>
         <property name="jdbcUrl">
-                        <value>jdbc:mysql://123.206.8.180:3306/BoKe?useUnicode=true&amp; characterEncoding=UTF-8</value>
+            <value>jdbc:mysql://123.206.8.180:3306/BoKe?useUnicode=true&amp; characterEncoding=UTF-8</value>
         </property>
         <!--MySQL数据库的用户名 -->
         <property name="user">
-                       <value>root</value>
+            <value>root</value>
         </property>
         <!--MySQL数据库 密码 -->
         <property name="password">
-                       <value>081816</value>
+            <value>081816</value>
         </property>
         <!--连接池中保留的最小连接数。 -->
         <property name="minPoolSize">
@@ -77,7 +86,6 @@
 
     <!--
         2. mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源
-
         MyBatis定义数据源,同意加载配置
     -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -87,7 +95,6 @@
 
     <!--
         3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
-
         basePackage:指定sql映射文件/接口所在的包（自动扫描）
     -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -125,11 +132,11 @@
         <!--注入成功页面-->
         <property name="successUrl" value="/Houtai/index.jsp"/>
         <!--注入权限不足页面-->
-        <property name="unauthorizedUrl" value="/User/error.jsp"/>
+        <property name="unauthorizedUrl" value="/error/web/roleerror.jsp"/>
         <!--url拦截规则-->
         <property name="filterChainDefinitions">
             <value>
-                /Houtai/** = authc
+                /Houtai/** = roles[administrator]
                 /assets/** =anon
                 /css/** = anon
                 /dist/** = anon

@@ -2,6 +2,7 @@ package com.zyc.spider;
 
 import com.zyc.model.NewsType;
 import com.zyc.util.HttpclientUtil;
+import com.zyc.util.MyException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -11,6 +12,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -52,11 +56,16 @@ public class NewsSpider {
      * @throws JSONException
      * @throws IOException
      */
-    public void getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException {
+    public void getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException, MyException {
         Map<String, String> result = new HashMap<String, String>();
         //读取新闻url配置文件
         Properties properties = new Properties();
-        properties.load(NewsSpider.class.getClassLoader().getResourceAsStream("News.properties"));
+        File file = new File(NewsSpider.class.getClassLoader().getResource("News.properties").toString().substring(6));
+        if(file==null){
+            logger.error(file.getAbsoluteFile()+"加载失败");
+            throw new MyException(file.getAbsoluteFile()+"加载失败");
+        }
+        properties.load(new BufferedInputStream(new FileInputStream(file)));
         for (Object temp : properties.keySet()) {
             String url = properties.getProperty((String) temp);
             url = this.replaceDateAndNum(url, new Date(), 10);

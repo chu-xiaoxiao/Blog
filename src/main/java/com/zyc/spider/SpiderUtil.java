@@ -1,5 +1,6 @@
 package com.zyc.spider;
 
+import com.zyc.util.MyException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
@@ -45,7 +46,7 @@ public class SpiderUtil {
      * 刷新时间的同时刷新所有跟时间有关的纪录
      * @return
      */
-    public static Boolean flushDateAndData() throws IOException {
+    public static Boolean flushDateAndData() throws IOException, MyException {
         NewsSpider newsSpider = new NewsSpider();
         TodayInHistorySpider todayInHistorySpider = new TodayInHistorySpider();
         flushDate();

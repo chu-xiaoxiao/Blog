@@ -2,6 +2,7 @@ package com.zyc.timmer;
 
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.SpiderUtil;
+import com.zyc.util.MyException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -47,6 +48,8 @@ public class GetNewsTimmer extends TimerTask {
                 newsSpider.getNewsFromSinaToRedis();
                 isRunning=false;
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (MyException e) {
                 e.printStackTrace();
             }
             logger.info("获取新闻>>>>>任务结束");

@@ -1,3 +1,11 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
@@ -20,7 +28,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-----start-logo--------->
 			<div class="logo">
 				<h1><a href="#"><img src="./images/logo.png"/></a></h1>
-				<span><img src="./images/signal.png"/>Oops! The Page you requested was not found!</span>
+				<span><img src="./images/signal.png"/>用户权限不足</span>
 				<span></span>
 			</div>
 			<!-----end-logo--------->

@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${requestScope.msg}
+权限不足
 </body>
 </html>

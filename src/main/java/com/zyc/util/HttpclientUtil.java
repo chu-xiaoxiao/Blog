@@ -7,7 +7,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
@@ -16,6 +15,7 @@ import java.io.IOException;
  */
 public class HttpclientUtil {
     private CloseableHttpClient httpClient = HttpClients.createDefault();
+
     public String getDocumentFromUriPost(String uri) throws IOException {
         //设置HTTP头
         HttpPost post = new HttpPost(uri);

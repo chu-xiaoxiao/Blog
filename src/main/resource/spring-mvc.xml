@@ -9,14 +9,6 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <mvc:annotation-driven />
-    <!-- 注解扫描包 -->
-    <context:component-scan base-package="com.zyc.controller" />
-    <context:component-scan base-package="com.zyc.service" />
-    <context:component-scan base-package="com.zyc.spider" />
-    <context:component-scan base-package="com.zyc.realm"/>
-    <!-- 开启注解 -->
-
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
