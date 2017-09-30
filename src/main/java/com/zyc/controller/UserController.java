@@ -119,7 +119,7 @@ public class UserController {
 		user = (User) subject.getPrincipal();
 		Session session = subject.getSession();
 		session.setAttribute("user",user);
-		modelAndView.setViewName("redirect:/Houtai/index");
+		modelAndView.setViewName("redirect:/Houtai/index.jsp");
 		return modelAndView;
 	}
 	@RequestMapping(value="/user/modifyTouXiang")

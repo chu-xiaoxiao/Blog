@@ -12,7 +12,7 @@
          http://www.springframework.org/schema/tx
          http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  ">
-
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <mvc:annotation-driven />
     <!-- 注解扫描包 -->
     <context:component-scan base-package="com.zyc.controller" />
@@ -20,10 +20,7 @@
     <context:component-scan base-package="com.zyc.spider" />
     <context:component-scan base-package="com.zyc.realm"/>
     <!-- 开启注解 -->
-
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <!-- 1. 数据源 : DriverManagerDataSource -->
-    <!--<context:property-placeholder location="classpath:DB.properties"/>-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass">
             <value>com.mysql.jdbc.Driver</value>
