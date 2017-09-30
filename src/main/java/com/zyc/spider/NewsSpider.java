@@ -60,7 +60,7 @@ public class NewsSpider {
         Map<String, String> result = new HashMap<String, String>();
         //读取新闻url配置文件
         Properties properties = new Properties();
-        File file = new File(NewsSpider.class.getClassLoader().getResource("News.properties").toString().substring(6));
+        File file = new File(NewsSpider.class.getClassLoader().getResource("News.properties").toString().substring(5));
         if(file==null){
             logger.error(file.getAbsoluteFile()+"加载失败");
             throw new MyException(file.getAbsoluteFile()+"加载失败");
