@@ -109,6 +109,17 @@
                     $("#tijiao").attr("class", "btn btn-primary");
                 }
             });
+            $("#useremail").blur(function(){
+                if($("#useremail").val()==""){
+                    $("#emailmsg").html("<span style='color:red'>邮箱不能为空</span>");
+                    $("#uenail").attr("class", "form-group has-error");
+                    $("#tijiao").attr("class", "btn btn-primary disabled");
+                }else{
+                    $("#emailmsg").html(null);
+                    $("#uenail").attr("class", "form-group has-success");
+                    $("#tijiao").attr("class", "btn btn-primary");
+                }
+            });
             $("#register").click(function () {
                 $("#myModa1").modal("show");
             });
@@ -172,6 +183,13 @@
                     $("#tijiao").attr("class", "btn btn-primary disabled");
                     return;
                 }
+                if($("#useremail").val()==""){
+                    $("#emailmsg").html("<span style='color:red'>邮箱不能为空</span>");
+                    $("#uenail").attr("class", "form-group has-error");
+                    $("#tijiao").attr("class", "btn btn-primary disabled");
+                }else{
+                    $("#tijiao").attr("class", "btn btn-primary");
+                }
                 $("#registerfrom").submit();
             });
         });
@@ -183,6 +201,22 @@
                 type: "get",
                 success: function (data) {
                    $("#verifCode").html('<img src="/SSM/user/getVerifyCode.do"/>');
+                }
+            });
+        }
+        function getVerifCodeByEmail() {
+            $.ajax({
+                url: "/SSM/user/getVerifyCodeFromMail.do?useremail="+$("#useremail").val(),
+                type: "get",
+                beforeSend:function(){
+                    $("#emailMsg").html("正在发送验证码...");
+                },
+                success: function (data) {
+                    $("#emailMsg").html("验证码发送成功...");
+                },
+                error:function(){
+                    $("#emailMsg").html("验证码发送失败...");
+                    $("#emailMsg").html('<a href="###" onclick="">重新发送验证码</a>');
                 }
             });
         }
@@ -278,6 +312,24 @@
                             <input type="password" name="password" class="form-control"
                                    placeholder="再次输入密码" id="passwordagain"/>
                             <div id="msg2"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="uenail">
+                        <label for="useremail" class="col-sm-2 control-label">邮箱</label>
+                        <div class="col-lg-4">
+                            <input type="email" name="useremail" class="form-control"
+                                   placeholder="输入邮箱" id="useremail"/>
+                            <div id="emailmsg"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="veudyCode">
+                        <label for="username" class="col-sm-2 control-label">验证码</label>
+                        <div class="col-lg-4">
+                            <input type="password" name="veudyCode_email" class="form-control"
+                                   placeholder="输入验证码" id="veudyCode_email"/>
+                            <span id="veudyCodeMsg">
+                                <a href="###" onclick="getVerifCodeByEmail()">获取验证码</a>
+                            </span>
                         </div>
                     </div>
                 </form>

@@ -1,0 +1,7 @@
+!!MailUtil:
+ #发件人的 邮箱
+ mailAccount: 18842495319@163.com
+  #发件人授权码
+ mailPassword: zhangyuchen1016
+  #发件人SMTP服务器
+ mailSMTPAccount: smtp.163.com

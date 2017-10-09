@@ -83,11 +83,12 @@ public class UserController {
         if(!session.getAttribute("verifyCode").equals(verifyCode)){
             modelAndView.addObject("addError","验证码错误");
             modelAndView.setViewName("redirect:/user/logIn.jsp");
+            return modelAndView;
         }
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
-        user.setUsermail(EncodeMD5.encodeMD5(request.getParameter("useremail")));
+        user.setUsermail(request.getParameter("useremail"));
 		user.setUsertype(1);
         userService.insertuUser(user);
 
