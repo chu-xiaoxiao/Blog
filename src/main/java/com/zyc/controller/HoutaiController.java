@@ -14,8 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zyc.service.GetOSInfo;
 import com.zyc.service.GetOSInfoImplement;
+import com.zyc.util.VerifyCodeUtils;
 import net.sf.json.JSONObject;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -171,7 +175,7 @@ public class HoutaiController {
 		if(request.getParameter(("size"))!=null){
 			size = Integer.parseInt(request.getParameter("size"));
 		}
-		Page2<IP	, IPExample> page2 = new Page2<IP, IPExample>(ipExample, currentPage, size);
+		Page2<IP, IPExample> page2 = new Page2<IP, IPExample>(ipExample, currentPage, size);
 		page2 = iPservice.findIpByPage(page2);
 		modelAndView.addObject("page2",page2);
 		modelAndView.setViewName("/Houtai/listip");
@@ -268,4 +272,5 @@ public class HoutaiController {
 		out.flush();
 		out.close();
 	}
+
 }

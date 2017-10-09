@@ -16,6 +16,7 @@ import com.zyc.model.Role;
 import com.zyc.service.RoleService;
 import com.zyc.service.WenzhangService;
 import com.zyc.util.MyException;
+import com.zyc.util.VerifyCodeUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -38,6 +39,7 @@ import com.zyc.service.UserService;
 import com.zyc.util.EncodeMD5;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
     @Qualifier("userServiceImplement")
@@ -55,7 +57,7 @@ public class UserController {
 		System.out.println(userService.findUser(2));
 		return "redirect :/SSM/index.jsp";
 	}
-	@RequestMapping(value = "/user/authorization.do")
+	@RequestMapping(value = "/authorization.do")
     public ModelAndView authorization(ModelAndView modelAndView){
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
@@ -68,7 +70,7 @@ public class UserController {
         return modelAndView;
     }
 
-	@RequestMapping(value="/user/adduser.do")
+	@RequestMapping(value="/adduser.do")
 	public String add(HttpServletRequest request){
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
@@ -86,14 +88,23 @@ public class UserController {
                 "" +
                 "uthorization.do";
 	}
-	@RequestMapping(value="/user/logIn.do")
-	public ModelAndView login(HttpServletRequest request,ModelAndView modelAndView) throws MyException {
+	@RequestMapping(value="/logIn.do")
+	public ModelAndView login(HttpServletRequest request,ModelAndView modelAndView,String veudyCode) throws MyException {
 		//封装用户信息
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
 
 		Subject subject = SecurityUtils.getSubject();
+		//检测验证码是否正确
+		Session session = subject.getSession();
+		String verifyCode = (String) session.getAttribute("veudyCode");
+		if(!verifyCode.equals(veudyCode)){
+			modelAndView.setViewName("/user/logIn");
+			modelAndView.addObject("msg","验证码错误");
+			return modelAndView;
+		}
+
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(),user.getUserpassword());
 		usernamePasswordToken.setRememberMe(true);
 		try {
@@ -117,12 +128,11 @@ public class UserController {
 		}
 		//获取登录成功的用户对象
 		user = (User) subject.getPrincipal();
-		Session session = subject.getSession();
 		session.setAttribute("user",user);
 		modelAndView.setViewName("redirect:/Houtai/index.jsp");
 		return modelAndView;
 	}
-	@RequestMapping(value="/user/modifyTouXiang")
+	@RequestMapping(value="/modifyTouXiang")
 	public ModelAndView modifyTouxiang(@RequestParam(value="touxiang",required=false) MultipartFile file,HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
 		String path = request.getSession().getServletContext().getRealPath("imgs");
@@ -136,7 +146,7 @@ public class UserController {
 		modelAndView.setViewName("redirect:/WenZhang/findAll.do");
 		return modelAndView;
 	}
-	@RequestMapping(value="/user/findByName")
+	@RequestMapping(value="/findByName")
 	public void findByName(HttpServletRequest request,HttpServletResponse response){
 		User user = userService.findByName(request.getParameter("username"));
 		try {
@@ -153,7 +163,7 @@ public class UserController {
 			
 		}
 	}
-	@RequestMapping(value="/user/logout")
+	@RequestMapping(value="/logout")
 	public ModelAndView logout(HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
 		request.getSession().removeAttribute("user");
@@ -200,7 +210,7 @@ public class UserController {
             }  
         }
 	}
-	@RequestMapping("/user/xiugaitouxiang.do")
+	@RequestMapping("/xiugaitouxiang.do")
 	public ModelAndView queren(ServletRequest request,ModelAndView modelAndView) throws IOException{
 		File file = new File(request.getServletContext().getRealPath("imgs")+"/touxiang.png");
 		File file2 = new File(request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png");
@@ -209,5 +219,21 @@ public class UserController {
 		file2.renameTo(file);
 		modelAndView.setViewName("redirect:/Houtai/index.jsp");
 		return modelAndView;
+	}
+	@RequestMapping("/getVerifyCode.do")
+	public void getVerifyCode(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		response.setHeader("Pragma", "No-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		response.setContentType("image/jpeg");
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String verudyCode = VerifyCodeUtils.generateVerifyCode(4);
+		session.setAttribute("veudyCode",verudyCode.toLowerCase());
+		Integer x = 100;
+		Integer y = 40;
+		VerifyCodeUtils.outputImage(x,y,response.getOutputStream(),verudyCode);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
 	}
 }
