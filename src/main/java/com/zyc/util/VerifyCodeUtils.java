@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
+ * 验证码生成工具类
  * Created by YuChen Zhang on 17/10/09.
  */
 public class VerifyCodeUtils {
