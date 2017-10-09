@@ -4,6 +4,9 @@ import java.util.Calendar;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+/**
+ * MD5 加密工具类
+ */
 public class EncodeMD5 {
 	public static String encodeMD5(String string){
 /*		MessageDigest messageDigest = null;

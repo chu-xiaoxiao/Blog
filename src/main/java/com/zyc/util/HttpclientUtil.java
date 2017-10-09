@@ -11,6 +11,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 /**
+ * httpclient 工具类
  * Created by YuChen Zhang on 17/09/13.
  */
 public class HttpclientUtil {

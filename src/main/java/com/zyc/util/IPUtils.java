@@ -18,6 +18,9 @@ import org.junit.Test;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+/**
+ * 获取访问ip工具类
+ */
 public class IPUtils {
 	public static String getIpaddr(HttpServletRequest request){
 		if(request.getHeader("x-forwarded-for")==null){
