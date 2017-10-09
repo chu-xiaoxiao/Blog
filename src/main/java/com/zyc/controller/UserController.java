@@ -3,9 +3,11 @@ package com.zyc.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Iterator;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import com.zyc.mapper.UserMapper;
 import com.zyc.model.Role;
 import com.zyc.service.RoleService;
 import com.zyc.service.WenzhangService;
+import com.zyc.util.MailUtil;
 import com.zyc.util.MyException;
 import com.zyc.util.VerifyCodeUtils;
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +27,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.SubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -37,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.zyc.model.User;
 import com.zyc.service.UserService;
 import com.zyc.util.EncodeMD5;
+import sun.misc.Request;
 
 @Controller
 @RequestMapping("/user")
@@ -71,22 +76,28 @@ public class UserController {
     }
 
 	@RequestMapping(value="/adduser.do")
-	public String add(HttpServletRequest request){
+	public ModelAndView add(HttpServletRequest request,ModelAndView modelAndView){
+        String verifyCode = request.getParameter("veudyCode_email");
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        if(!session.getAttribute("verifyCode").equals(verifyCode)){
+            modelAndView.addObject("addError","验证码错误");
+            modelAndView.setViewName("redirect:/user/logIn.jsp");
+        }
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
+        user.setUserpassword(EncodeMD5.encodeMD5(request.getParameter("password")));
 		user.setUsertype(1);
         userService.insertuUser(user);
-        Subject subject = SecurityUtils.getSubject();
+
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(),user.getUserpassword());
         usernamePasswordToken.setRememberMe(true);
         subject.login(usernamePasswordToken);
 
-        Session session = subject.getSession();
         session.setAttribute("user",user);
-		return "redirect:/user/a" +
-                "" +
-                "uthorization.do";
+        modelAndView.setViewName("redirect:/user/authorization.do");
+		return modelAndView;
 	}
 	@RequestMapping(value="/logIn.do")
 	public ModelAndView login(HttpServletRequest request,ModelAndView modelAndView,String veudyCode) throws MyException {
@@ -222,18 +233,39 @@ public class UserController {
 	}
 	@RequestMapping("/getVerifyCode.do")
 	public void getVerifyCode(HttpServletRequest request,HttpServletResponse response) throws IOException {
-		response.setHeader("Pragma", "No-cache");
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
-		response.setContentType("image/jpeg");
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		String verudyCode = VerifyCodeUtils.generateVerifyCode(4);
-		session.setAttribute("veudyCode",verudyCode.toLowerCase());
-		Integer x = 100;
-		Integer y = 40;
-		VerifyCodeUtils.outputImage(x,y,response.getOutputStream(),verudyCode);
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-	}
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setContentType("image/jpeg");
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String verudyCode = VerifyCodeUtils.generateVerifyCode(4);
+        session.setAttribute("veudyCode", verudyCode.toLowerCase());
+        Integer x = 100;
+        Integer y = 40;
+        VerifyCodeUtils.outputImage(x, y, response.getOutputStream(), verudyCode);
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+    }
+    @RequestMapping("/getVerifyCodeFromMail.do")
+    public void getVerifyCodeFromMail(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        MailUtil mailUtil = new MailUtil(UserController.class.getClassLoader().getResource("mail.yml"));
+        PrintWriter out = response.getWriter();
+        String veudyCode = null;
+        try {
+            veudyCode = mailUtil.sendVerifyCode(10, request.getParameter("useremail"));
+        } catch (UnsupportedEncodingException e) {
+            out.print("验证码获取失败");
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            out.print("验证码获取失败");
+            e.printStackTrace();
+        }
+        out.print("验证码已发送至您的邮箱");
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        session.setAttribute("verifyCode",veudyCode);
+        out.flush();
+        out.close();
+    }
 }
