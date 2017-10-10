@@ -13,14 +13,12 @@ import com.zyc.model.*;
 import com.zyc.service.*;
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
-import com.zyc.util.VerifyCodeUtils;
+import com.zyc.util.ExcleUtil;
+import jxl.write.WriteException;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -283,10 +281,49 @@ public class HoutaiController {
 		out.flush();
 		out.close();
 	}
-	@RequestMapping(value="/exportExcle.do")
-	public void exportExcle(){
 
-	}
+
+	@RequestMapping(value="/exportExcle.do")
+	public void exportExcle(HttpServletRequest request, HttpServletResponse response, String juzi, String juzileixing, String chuchu) throws IOException, WriteException {
+        File file2 = new File("/home/imgs/file/temp/"+new Date().getTime()+".xls");
+        ExcleUtil excleUtil = new ExcleUtil();
+        JuziExample juziExample = new JuziExample();
+        Criteria criteria = juziExample.createCriteria();
+        if(juzi!=null&&!"".equals(juzi)){
+            criteria=criteria.andJuzineirongLike("%"+juzi+"%");
+        }
+        if(juzileixing!=null&&!"".equals(juzileixing)){
+            Integer temp = Integer.parseInt(juzileixing);
+            criteria=criteria.andJuzileixingEqualTo(temp);
+        }
+        if(chuchu!=null&&!"".equals(chuchu)){
+            criteria=criteria.andJuzichuchuLike("%"+chuchu+"%");
+        }
+        juziExample.getOredCriteria().add(criteria);
+        List<Juzi> juzis = juziservice.findall(juziExample);
+        Object[][] result = new Object[juzis.size()][3];
+
+        for (int i = 0; i <juzis.size() ; i++) {
+            result[i][0] = juzis.get(i).getJuzineirong();
+            result[i][1] = juzis.get(i).getJuzichuchu();
+            result[i][2] = juzis.get(i).getJuziTypeKey().getLeixingming();
+        }
+
+        excleUtil.writetoExcle(file2.getAbsolutePath(),juzis.get(0).getJuziTypeKey().getLeixingming(),result,true,"句子内容","句子出处","句子类型");
+
+        OutputStream outputStream = response.getOutputStream();
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=dict.txt");
+        response.setContentType("application/octet-stream; charset=utf-8");
+        response.setHeader("Content-Disposition","attachment;filename="+new String(juzis.get(0).getJuziTypeKey().getLeixingming().getBytes("gb2312"), "ISO8859-1" )+".xls");
+        response.setContentLength(Integer.parseInt(String.valueOf(file2.length())));
+        outputStream.write(FileUtils.readFileToByteArray(file2));
+
+        outputStream.flush();
+        outputStream.close();
+
+        file2.delete();
+    }
 	/**
 	 * 获取每日新闻
 	 * @param request
@@ -318,6 +355,8 @@ public class HoutaiController {
 		headers.setContentDispositionFormData("attachment", dfileName);
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file2), headers, HttpStatus.CREATED);
 	}
+
+
 	/**
 	 * 下载保存在服务器虚拟路径的文件
 	 *
@@ -771,5 +810,4 @@ public class HoutaiController {
         wenzhangService.addWenzhang(wenZhang);
         return new ModelAndView("redirect:/Houtai/findByPage.do");
     }
-
 }

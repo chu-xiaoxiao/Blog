@@ -125,4 +125,9 @@ public class JuZiSpider implements JuziService,PageProcessor{
 	public Integer countJuZiByExample(JuziExample juziExample) {
 		return juziMapper.countByExample(juziExample);
 	}
+
+	@Override
+	public List<Juzi> findall(JuziExample juziExample) {
+		return juziMapper.selectByExample(juziExample);
+	}
 }

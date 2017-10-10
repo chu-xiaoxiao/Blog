@@ -252,7 +252,7 @@
                         <div class="form-group">
                             <label for="password" class="col-sm-2 control-label">验证码</label>
                             <div class="col-lg-8">
-                                <input type="password" name="veudyCode" class="form-control"
+                                <input type="text" name="veudyCode" class="form-control"
                                        placeholder="请输入验证码"/>
                                 <span style="color: red">${requestScope.msg}</span>
                             </div>

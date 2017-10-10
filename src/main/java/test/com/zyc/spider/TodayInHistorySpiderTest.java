@@ -76,4 +76,10 @@ public void after() throws Exception {
         NewsSpider newsSpider = new NewsSpider();
         System.out.println("============================");
     }
+    @Test
+    public void testGetJs() throws IOException {
+        HttpclientUtil httpclientUtil = new HttpclientUtil();
+        String result = httpclientUtil.getDocumentFromUriGet("http://banshi.beijing.gov.cn/jsonData/201710/t20171007_50746.json?_=1507532502499");
+        System.out.println(result);
+    }
 }

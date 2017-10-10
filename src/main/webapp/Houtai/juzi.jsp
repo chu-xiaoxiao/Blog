@@ -63,6 +63,41 @@ $(function(){
 		 $("#frompage").attr("action","/SSM/Houtai/listjuzi.do?currentpage=0&size="+count);
 	     $("#frompage").submit();
 	});
+	 $("#exportxls").click(function(){
+
+	     var flag = false;
+	     if($("#juzi").val()!=""){
+            flag=true;
+         }
+         if($("#chuchu").val()!=""){
+             flag=true;
+         }
+         if($("#juzileixing").val()!=""){
+             flag=true;
+         }
+         if(flag==false){
+             $("#exportalert").attr("class", "alert alert-danger");
+             $("#exportalert").html( '<strong>导出时请至少选择一个筛选条件</strong>');
+             return false;
+         }
+         $("#exportxls").attr("class","btn btn-primary btn disabled");
+         $("#exportxls").val("正在生成xls文件,请耐心等待。。。");
+         var form=$("<form>");//定义一个form表单
+         form.attr("style","display:none");
+         form.attr("target","");
+         form.attr("method","post");
+         form.attr("action",'/SSM/Houtai/exportExcle.do?juzi='+$("#juzi").val()+'&chuchu='+$("#chuchu").val()+'&juzileixing='+$("#juzileixing").val());
+         var input1=$("<input>");
+         input1.attr("type","hidden");
+         input1.attr("name","exportData");
+         input1.attr("value",(new Date()).getMilliseconds());
+         $("body").append(form);//将表单放置在web中
+
+         form.submit();//表单提交
+         $("#exportalert").attr("class", "alert alert-success alert-dismissable");
+         $("#exportalert").html( '<strong>导出成功。。。。。</strong>');
+
+     });
 });
 </script>
 </head>
@@ -120,19 +155,20 @@ $(function(){
 				<!-- 分页注入 -->
 				<!-- <div id="fenye"></div> -->
 				<ul id='fenye'></ul>
+
 				<hr class="dirver"/>
 				<form id="frompage" method="post" action="" role="form">
 					<div class="form-group">
 						<label for="name">内容</label> <input name="juzi" type="text"
-							value="${requestScope.juzi }" class="form-control" />
+							value="${requestScope.juzi }" class="form-control" id="juzi"/>
 					</div>
 					<div class="form-group">
 						<label for="name">出处/作者</label> <input name="chuchu" type="text"
-							value="${requestScope.chuchu }" class="form-control" />
+							value="${requestScope.chuchu }" class="form-control" id="chuchu"/>
 					</div>
 					<div class="form-group">
 						<label for="name">句子类型</label> <select name="juzileixing"
-							class="form-control">
+							class="form-control" id="juzileixing">
 							<option></option>
 							<c:forEach items="${requestScope.juzileixing}" var="juzileixing">
 								<c:choose>
@@ -147,6 +183,8 @@ $(function(){
 						</select>
 					</div>
 					<input type="submit" value="查询" class="btn btn-primary">
+                    <span style="float:right" ><input type="button" value="导出至xls" class="btn btn-primary" id="exportxls"></span>
+                    <div id="exportalert"></div>
 				</form>
 				<hr class="dirver"/>
 				<form action="/SSM/Houtai/updataJuzi.do" role="form">
