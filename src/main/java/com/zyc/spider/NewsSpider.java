@@ -2,6 +2,7 @@ package com.zyc.spider;
 
 import com.zyc.model.NewsType;
 import com.zyc.util.HttpclientUtil;
+import com.zyc.util.JedisPoolUtil;
 import com.zyc.util.MyException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -11,6 +12,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
+import redis.clients.util.JedisURIHelper;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -20,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class NewsSpider {
-    private Jedis jedis = com.zyc.util.JedisPool.getJedis();
+
     Logger logger = LogManager.getLogger(NewsSpider.class);
 
     /**
@@ -57,6 +59,7 @@ public class NewsSpider {
      * @throws IOException
      */
     public void getNewsFromSinaToRedis() throws ClientProtocolException, ParseException, JSONException, IOException, MyException {
+        Jedis jedis = JedisPoolUtil.getJedis();
         Map<String, String> result = new HashMap<String, String>();
         //读取新闻url配置文件
         Properties properties = new Properties();
@@ -77,6 +80,7 @@ public class NewsSpider {
                 jedis.lpush((String) temp, jsonObject.toString());
                 logger.info(jsonObject.toString());
             }
+            JedisPoolUtil.returnRes(jedis);
         }
     }
 
@@ -88,6 +92,7 @@ public class NewsSpider {
      * @throws IOException
      */
     public List<String> getNews(NewsType newsType) throws IOException {
+        Jedis jedis = JedisPoolUtil.getJedis();
         List result = new ArrayList<String>();
 /*        //当日期不同时刷新新闻
         if(!SpiderUtil.validateDate()) {
@@ -101,6 +106,7 @@ public class NewsSpider {
         }
         jsonObject.put("date", jsonArray);
         result.add(jsonObject.toString());
+        JedisPoolUtil.returnRes(jedis);
         return result;
     }
 

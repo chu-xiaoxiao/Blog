@@ -1,10 +1,9 @@
 package test.com.zyc.spider; 
 
-import com.zyc.model.NewsType;
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import com.zyc.util.HttpclientUtil;
-import com.zyc.util.JedisPool;
+import com.zyc.util.JedisPoolUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -57,7 +56,7 @@ public void after() throws Exception {
     }
     @Test
     public void testREdis(){
-        Jedis jedis = JedisPool.getJedis();
+        Jedis jedis = JedisPoolUtil.getJedis();
         jedis.set("zyc","1016");
         System.out.println(jedis.get("zyc"));
     }

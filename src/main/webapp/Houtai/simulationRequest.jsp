@@ -49,7 +49,7 @@
         $(function () {
             $("#requestPost").click(function () {
                 var requestType = $("#requestType").val();
-                var params = "url="+$("#inputUrl").val()+"?";
+                var params = "url="+$("#inputUrl").val()+"%63";
                 for(var i=1;i<=countpara;i++){
                     params+=($("#paramname"+i).val()+"="+$("#paramvalue"+i).val())+"&";
                 }
@@ -58,7 +58,7 @@
                         url: "/SSM/webutil/simulationGet.do",
                         data:params,
                         dataType: "json",
-                        type:"get",
+                        type:"post",
                         success: function (date) {
                             $("#resultResponse").val(JSON.stringify(date.result));
                         }

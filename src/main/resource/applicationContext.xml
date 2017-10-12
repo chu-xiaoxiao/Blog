@@ -34,7 +34,7 @@
         </property>
         <!--MySQL数据库 密码 -->
         <property name="password">
-            <value>081816</value>
+            <value>199616</value>
         </property>
         <!--连接池中保留的最小连接数。 -->
         <property name="minPoolSize">
