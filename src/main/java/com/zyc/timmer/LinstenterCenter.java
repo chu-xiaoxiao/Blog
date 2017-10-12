@@ -12,9 +12,9 @@ import java.util.Timer;
 /**
  * Created by YuChen Zhang on 17/09/26.
  */
-public class MainLinstener implements ServletContextListener {
+public class LinstenterCenter implements ServletContextListener {
     private Timer timer = new Timer(true);;
-    Logger logger = LogManager.getLogger(MainLinstener.class);
+    Logger logger = LogManager.getLogger(LinstenterCenter.class);
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         timer =  new Timer(true);
@@ -35,7 +35,7 @@ public class MainLinstener implements ServletContextListener {
     public void startTodayInHistoryTimmer(ServletContextEvent sce){
         logger.info("定时器开启>>>>>>>>>>历史上的今天获取");
         Calendar calendar = Calendar.getInstance();
-        int todayInHistoryPeriod = 1000*60*60*24;
+        int todayInHistoryPeriod = 1000*60*60;
         timer.schedule(new TodayInHistoryTimmer(sce.getServletContext()),0,todayInHistoryPeriod);
         logger.info("加入定时器任务栈<<<<<<<<历史上的今天获取定时器");
     }
