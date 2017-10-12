@@ -30,7 +30,9 @@ public class JedisPoolUtil {
         config.setMaxIdle(10);
 
         // 创建连接池
+
         pool = new JedisPool(config, "123.206.8.180", 6379);
+
 
     }
 
@@ -48,10 +50,11 @@ public class JedisPoolUtil {
      * @return
      */
     public static Jedis getJedis() {
-
         if (pool == null)
             poolInit();
-        return pool.getResource();
+        Jedis jedis = pool.getResource();
+        jedis.auth("199616");
+        return jedis;
     }
 
     /**

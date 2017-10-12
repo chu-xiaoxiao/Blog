@@ -136,7 +136,8 @@
         <!--url拦截规则-->
         <property name="filterChainDefinitions">
             <value>
-                /Houtai/** = roles[administrator]
+                <!--/Houtai/** = roles[administrator]-->
+                /Houtai/** = perms[manage]
                 /assets/** =anon
                 /css/** = anon
                 /dist/** = anon

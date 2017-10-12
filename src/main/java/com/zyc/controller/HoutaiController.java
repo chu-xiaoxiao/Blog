@@ -14,6 +14,7 @@ import com.zyc.service.*;
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import com.zyc.util.ExcleUtil;
+import com.zyc.util.JedisPoolUtil;
 import jxl.write.WriteException;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -455,7 +456,7 @@ public class HoutaiController {
 		modelAndView.addObject("count", wenzhangService.countWenzhang());
 		modelAndView.addObject("countIp", iPService.countIP(new IPExample()));
 		JSONObject listip_date = new JSONObject();
-		Jedis jedis = new Jedis("123.206.8.180");
+		Jedis jedis = JedisPoolUtil.getJedis();
 		List<Ip_Date> list = iPService.selectCountByDay(ipResultCount--);
 		for (int i = 0; i < ipResultCount / 2 + 1; i++) {
 			Ip_Date temp = null;
@@ -477,6 +478,7 @@ public class HoutaiController {
 		modelAndView.addObject("juziCount", juziservice.countJuZiByExample(new JuziExample()));
 		//获取当前服务器时间
 		modelAndView.addObject("nowDate",jedis.get("date"));
+		JedisPoolUtil.returnRes(jedis);
 		modelAndView.setViewName("/Houtai/index1");
 		return modelAndView;
 	}

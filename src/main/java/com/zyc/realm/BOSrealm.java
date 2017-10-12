@@ -52,6 +52,10 @@ public class BOSrealm extends AuthorizingRealm{
         for(Role temp : roles) {
             simpleAuthorizationInfo.addRole(temp.getRolename());
         }
+
+        for(Power temp : powers){
+            simpleAuthorizationInfo.addStringPermission(temp.getPowername());
+        }
         return simpleAuthorizationInfo;
     }
 

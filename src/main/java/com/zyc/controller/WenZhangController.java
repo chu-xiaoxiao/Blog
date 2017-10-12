@@ -48,9 +48,6 @@ import com.zyc.service.JuZiTypeService;
 import com.zyc.spider.JuziService;
 import com.zyc.spider.NewsSpider;
 
-import net.sf.json.JSONObject;
-import redis.clients.jedis.Jedis;
-
 @Controller
 public class WenZhangController {
 	@Autowired
