@@ -81,7 +81,6 @@
                 $("#paramses").append('<label class="control-label">参数'+countpara+'</label> <div class="controls" > <input type="text" placeholder="输入参数名称" class="form-control" id="paramname'+countpara+'"> <input type="text" placeholder="输入参数值" class="form-control" id="paramvalue'+countpara+'"> </div>');
             });
         });
-
     </script>
 </head>
 

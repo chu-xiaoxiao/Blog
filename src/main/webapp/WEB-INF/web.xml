@@ -79,7 +79,7 @@
 
     <!--定时器启动监听器 start-->
     <listener>
-        <listener-class>com.zyc.timmer.MainLinstener</listener-class>
+        <listener-class>com.zyc.timmer.LinstenterCenter</listener-class>
     </listener>
     <!--定时器启动监听器 end-->
 </web-app>
