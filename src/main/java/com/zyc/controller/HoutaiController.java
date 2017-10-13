@@ -356,7 +356,8 @@ public class HoutaiController {
         //设置响应头和客户端保存文件名
         response.setCharacterEncoding("utf-8");
         response.setContentType("multipart/form-data");
-        response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
+        response.setHeader("Content-Disposition", "attachment;fileName=" + file2.getName());
+        response.setHeader("Content-Length", String.valueOf(file2.length()));
         //用于记录以完成的下载的数据量，单位是byte
         long downloadedLength = 0l;
         try {
@@ -406,7 +407,8 @@ public class HoutaiController {
         //设置响应头和客户端保存文件名
         response.setCharacterEncoding("utf-8");
         response.setContentType("multipart/form-data");
-        response.setHeader("Content-Disposition", "attachment;fileName=" + file2.getAbsolutePath());
+        response.setHeader("Content-Disposition", "attachment;fileName=" + file2.getName());
+        response.setHeader("Content-Length", String.valueOf(file2.length()));
         //用于记录以完成的下载的数据量，单位是byte
         long downloadedLength = 0l;
         try {
@@ -426,8 +428,9 @@ public class HoutaiController {
             os.close();
             inputStream.close();
         } catch (Exception e){
+            //System.out.println(e.getMessage());
             downloadRecord.setStatus(DownloadRecord.STATUS_ERROR);
-            throw e;
+           // throw e;
         }
         downloadRecord.setStatus(DownloadRecord.STATUS_SUCCESS);
         downloadRecord.setEndTime(new Timestamp(System.currentTimeMillis()));
