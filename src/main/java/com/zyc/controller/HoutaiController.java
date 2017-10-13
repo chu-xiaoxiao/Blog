@@ -1,6 +1,7 @@
 package com.zyc.controller;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -13,6 +14,7 @@ import com.zyc.model.*;
 import com.zyc.service.*;
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
+import com.zyc.util.DownloadRecord;
 import com.zyc.util.ExcleUtil;
 import com.zyc.util.JedisPoolUtil;
 import jxl.write.WriteException;
@@ -345,16 +347,42 @@ public class HoutaiController {
 	 * 下载保存在服务器端虚拟路径的文件
 	 */
 	@RequestMapping(value = "/download1/**/**.do")
-	public ResponseEntity<byte[]> download(HttpServletRequest request, @RequestParam("filename") String filename)
+	public void download(HttpServletRequest request, @RequestParam("filename") String filename,HttpServletResponse response)
 			throws IOException {
 		String path = request.getParameter("filepath");
-
 		File file2 = new File(path);
-		String dfileName = new String(filename.getBytes("gb2312"), "iso8859-1");
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		headers.setContentDispositionFormData("attachment", dfileName);
-		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file2), headers, HttpStatus.CREATED);
+        //声明本次下载状态的记录对象
+        DownloadRecord downloadRecord = new DownloadRecord(filename, path, request);
+        //设置响应头和客户端保存文件名
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
+        //用于记录以完成的下载的数据量，单位是byte
+        long downloadedLength = 0l;
+        try {
+            //打开本地文件流
+            InputStream inputStream = new FileInputStream(path);
+            //激活下载操作
+            OutputStream os = response.getOutputStream();
+
+            //循环写入输出流
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                os.write(b, 0, length);
+                downloadedLength += b.length;
+            }
+            // 这里主要关闭。
+            os.close();
+            inputStream.close();
+        } catch (Exception e){
+            downloadRecord.setStatus(DownloadRecord.STATUS_ERROR);
+            throw e;
+        }
+        downloadRecord.setStatus(DownloadRecord.STATUS_SUCCESS);
+        downloadRecord.setEndTime(new Timestamp(System.currentTimeMillis()));
+        downloadRecord.setLength(downloadedLength);
+        //存储记录
 	}
 
 
@@ -369,16 +397,42 @@ public class HoutaiController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/download/home/imgs/file/{pathbiaoti}/{path}.*")
-	public ResponseEntity<byte[]> download(@PathVariable("pathbiaoti") String pathbiaoti,
+	public void download(HttpServletResponse response,@PathVariable("pathbiaoti") String pathbiaoti,
 										   @PathVariable("path") String path, HttpServletRequest request, @RequestParam("filename") String filename)
 			throws IOException {
 		File file2 = new File("/home/imgs/file/" + pathbiaoti + "/" + path);
 		String dfileName = new String(filename.getBytes("gb2312"), "iso8859-1");
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		headers.setContentDispositionFormData("attachment", dfileName);
-		int[] a = new int[10];
-		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file2), headers, HttpStatus.CREATED);
+        DownloadRecord downloadRecord = new DownloadRecord(file2.getName(), file2.getAbsolutePath(), request);
+        //设置响应头和客户端保存文件名
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName=" + file2.getAbsolutePath());
+        //用于记录以完成的下载的数据量，单位是byte
+        long downloadedLength = 0l;
+        try {
+            //打开本地文件流
+            InputStream inputStream = new FileInputStream(file2.getAbsoluteFile());
+            //激活下载操作
+            OutputStream os = response.getOutputStream();
+
+            //循环写入输出流
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                os.write(b, 0, length);
+                downloadedLength += b.length;
+            }
+            // 这里主要关闭。
+            os.close();
+            inputStream.close();
+        } catch (Exception e){
+            downloadRecord.setStatus(DownloadRecord.STATUS_ERROR);
+            throw e;
+        }
+        downloadRecord.setStatus(DownloadRecord.STATUS_SUCCESS);
+        downloadRecord.setEndTime(new Timestamp(System.currentTimeMillis()));
+        downloadRecord.setLength(downloadedLength);
+        //存储记录
 	}
 
 

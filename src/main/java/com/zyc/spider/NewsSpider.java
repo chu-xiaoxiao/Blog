@@ -111,7 +111,7 @@ public class NewsSpider {
     }
 
     /**
-     * 将传过来的值替换配置文件里面{}中的值
+     * 将传过来的值替换配置文件里面<>中的值
      *
      * @param old
      * @param date
