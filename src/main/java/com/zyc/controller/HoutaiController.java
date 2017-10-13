@@ -451,6 +451,7 @@ public class HoutaiController {
 	@RequestMapping(value = "/index.do")
 	public ModelAndView index(HttpServletRequest request)
 			throws ClientProtocolException, org.apache.http.ParseException, IOException {
+
 		Integer ipResultCount = 10;// IP查询的数量
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("count", wenzhangService.countWenzhang());

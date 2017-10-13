@@ -80,8 +80,8 @@ public class NewsSpider {
                 jedis.lpush((String) temp, jsonObject.toString());
                 logger.info(jsonObject.toString());
             }
-            JedisPoolUtil.returnRes(jedis);
         }
+        JedisPoolUtil.returnRes(jedis);
     }
 
     /**

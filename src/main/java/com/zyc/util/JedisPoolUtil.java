@@ -4,30 +4,49 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.util.List;
+
 /**
  * Created by YuChen Zhang on 17/09/13.
  */
 public class JedisPoolUtil {
 
     private static JedisPool pool;
-
+    /**
+     * 最大空闲连接
+     */
+    private static Integer maxIdle = 10;
+    /**
+     * 最大阻塞时间
+     */
+    private static Integer maxWaitMillis = 10000;
+    /**
+     * 最大连接数
+     */
+    private static Integer setMaxTotal = 100;
+    /**
+     * 逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
+     */
+    private Integer mnEvictableIdleTimeMillis;
     /**
      * 建立连接池 真实环境，一般把配置参数缺抽取出来。
      *
      */
+    static{
+        createJedisPool();
+    }
     private static void createJedisPool() {
 
         // 建立连接池配置参数
         JedisPoolConfig config = new JedisPoolConfig();
-
         // 设置最大连接数
-        config.setMaxIdle(100);
+        config.setMaxIdle(JedisPoolUtil.maxIdle);
 
         // 设置最大阻塞时间，记住是毫秒数milliseconds
-        config.setMaxWaitMillis(1000);
+        config.setMaxWaitMillis(JedisPoolUtil.maxWaitMillis);
 
-        // 设置空间连接
-        config.setMaxIdle(10);
+        // 设置空闲连接
+        config.setMaxTotal(JedisPoolUtil.maxIdle);
 
         // 创建连接池
 
@@ -63,6 +82,8 @@ public class JedisPoolUtil {
      * @param jedis
      */
     public static void returnRes(Jedis jedis) {
-        jedis.close();
+        if(jedis.isConnected()) {
+            jedis.close();
+        }
     }
 }

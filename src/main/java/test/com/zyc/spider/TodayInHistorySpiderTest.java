@@ -56,9 +56,9 @@ public void after() throws Exception {
     }
     @Test
     public void testREdis(){
-        Jedis jedis = JedisPoolUtil.getJedis();
+/*        Jedis jedis = JedisPoolUtil.getJedis();
         jedis.set("zyc","1016");
-        System.out.println(jedis.get("zyc"));
+        System.out.println(jedis.get("zyc"));*/
     }
     @Test
     public void testSinaUrl() throws IOException {

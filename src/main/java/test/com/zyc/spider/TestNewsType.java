@@ -15,8 +15,8 @@ public class TestNewsType {
     }
     @Test
     public void testSpring(){
-        Jedis jedis = JedisPoolUtil.getJedis();
+/*        Jedis jedis = JedisPoolUtil.getJedis();
         System.out.println(jedis.lrange("ALLNEWS",0,-1));
-        JedisPoolUtil.returnRes(jedis);
+        JedisPoolUtil.returnRes(jedis);*/
     }
 }
