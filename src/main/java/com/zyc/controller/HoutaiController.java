@@ -378,7 +378,7 @@ public class HoutaiController {
             inputStream.close();
         } catch (Exception e){
             downloadRecord.setStatus(DownloadRecord.STATUS_ERROR);
-            throw e;
+            //throw e;
         }
         downloadRecord.setStatus(DownloadRecord.STATUS_SUCCESS);
         downloadRecord.setEndTime(new Timestamp(System.currentTimeMillis()));
