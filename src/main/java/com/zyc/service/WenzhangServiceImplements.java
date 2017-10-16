@@ -54,7 +54,7 @@ public class WenzhangServiceImplements implements WenzhangService{
         page2.getE().setLimit(page2.getSize());
         page2.getE().setOffset(page2.getStart());
         page2.getE().setOrderByClause("wenzhangriqi desc");
-        page2.setLists(wenzhangMapper.selectByExample(page2.getE()));
+        page2.setLists(wenzhangMapper.selectByExampleLeftSub(page2.getE()));
 		return page2;
 	}
 

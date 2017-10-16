@@ -1,17 +1,9 @@
 package com.zyc.controller;
 
-import java.io.*;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.zyc.model.*;
+import com.zyc.model.JuziExample.Criteria;
 import com.zyc.service.*;
+import com.zyc.spider.JuziService;
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import com.zyc.util.DownloadRecord;
@@ -24,10 +16,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,10 +25,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.zyc.model.JuziExample.Criteria;
-import com.zyc.spider.JuziService;
 import redis.clients.jedis.Jedis;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller("houtaiController")
 @RequestMapping("/Houtai")

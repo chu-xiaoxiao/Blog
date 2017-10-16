@@ -137,7 +137,7 @@
         <property name="filterChainDefinitions">
             <value>
                 <!--/Houtai/** = roles[administrator]-->
-                /Houtai/** = perms[manage]
+                /Houtai/** = perms[administrator:manage]
                 /assets/** =anon
                 /css/** = anon
                 /dist/** = anon
@@ -155,7 +155,15 @@
         <!--强制使用cglib创建action的代理对象-->
         <property name="proxyTargetClass" value="true"/>
     </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
     <!--开启shiro注解 end-->
+
 
     <mvc:annotation-driven />
     <mvc:default-servlet-handler/>

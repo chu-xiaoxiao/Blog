@@ -1,22 +1,11 @@
 package com.zyc.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.Iterator;
-
-import javax.mail.MessagingException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.zyc.mapper.UserMapper;
 import com.zyc.model.Role;
+import com.zyc.model.User;
 import com.zyc.service.RoleService;
+import com.zyc.service.UserService;
 import com.zyc.service.WenzhangService;
+import com.zyc.util.EncodeMD5;
 import com.zyc.util.MailUtil;
 import com.zyc.util.MyException;
 import com.zyc.util.VerifyCodeUtils;
@@ -27,7 +16,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.SubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -38,10 +26,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.zyc.model.User;
-import com.zyc.service.UserService;
-import com.zyc.util.EncodeMD5;
-import sun.misc.Request;
+import javax.mail.MessagingException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Iterator;
 
 @Controller
 @RequestMapping("/user")
@@ -141,7 +136,11 @@ public class UserController {
 		//获取登录成功的用户对象
 		user = (User) subject.getPrincipal();
 		session.setAttribute("user",user);
-		modelAndView.setViewName("redirect:/Houtai/index.jsp");
+		if(subject.hasRole("administrator")) {
+            modelAndView.setViewName("redirect:/Houtai/index.jsp");
+        }else{
+		    modelAndView.setViewName("redirect:/index.jsp");
+        }
 		return modelAndView;
 	}
 	@RequestMapping(value="/modifyTouXiang")

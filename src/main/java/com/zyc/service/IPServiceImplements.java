@@ -28,7 +28,7 @@ public class IPServiceImplements implements IPService {
 	@Override
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 	public void addIP(IP ip) throws JSONException, ClientProtocolException, IOException {
-		ip.setLocation(IPUtils.getLocatsion(ip.getIp()));
+		//ip.setLocation(IPUtils.getLocatsion(ip.getIp()));
 		iPMapper.insert(ip);
 	}
 
