@@ -35,7 +35,7 @@ public class testcontroller {
         if(StringUtil.judeStringIsNullAndVoid(request.getParameter("url"))) {
             result = httpclientUtil.getDocumentFromUriGet(request.getParameter("url"));
             jsonObject.put("result",result);
-            jsonObject.put("resultUTF", URLDecoder.decode(result,"UTF-8"));
+            //jsonObject.put("resultUTF", URLDecoder.decode(result,"UTF-8"));
         }else{
             jsonObject.put("errcode","-0001");
             jsonObject.put("errmsg","请求url不能为空");

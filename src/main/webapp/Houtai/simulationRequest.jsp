@@ -49,9 +49,14 @@
         $(function () {
             $("#requestPost").click(function () {
                 var requestType = $("#requestType").val();
-                var params = "url="+$("#inputUrl").val()+"%63";
+                var params = "url="+$("#inputUrl").val();
+                var flag = true;
                 for(var i=1;i<=countpara;i++){
-                    params+=($("#paramname"+i).val()+"="+$("#paramvalue"+i).val())+"&";
+                    if(flag){
+                        params+="%3F";
+                        flag = false;
+                    }
+                    params+=($("#paramname"+i).val()+"="+$("#paramvalue"+i).val())+"%26";
                 }
                 if (requestType == "get") {
                     $.ajax({
