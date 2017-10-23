@@ -9,6 +9,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * httpclient 工具类
@@ -18,6 +19,9 @@ public class HttpclientUtil {
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
     public String getDocumentFromUriPost(String uri) throws IOException {
+        if(!uri.contains("http:\\\\")) {
+            uri = "http:\\\\"+uri;
+        }
         //设置HTTP头
         HttpPost post = new HttpPost(uri);
         post.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
@@ -28,6 +32,9 @@ public class HttpclientUtil {
         return EntityUtils.toString(httpEntity,"UTF-8");
     }
     public String getDocumentFromUriGet(String uri) throws IOException {
+        if(!uri.contains("http:\\\\")&&!uri.contains("http://")) {
+            uri = "http://"+uri;
+        }
         //设置HTTP头
         HttpGet get = new HttpGet(uri);
         get.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
