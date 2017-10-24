@@ -1,9 +1,15 @@
 package com.zyc.controller;
 
+import com.zyc.model.City;
+import com.zyc.service.CityService;
 import com.zyc.util.HttpclientUtil;
+import com.zyc.util.MyException;
 import com.zyc.util.StringUtil;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.jsoup.Jsoup;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +27,9 @@ import java.net.URLEncoder;
 @Controller
 @RequestMapping("webutil")
 public class testcontroller {
+    @Autowired
+    @Qualifier("cityServiceImplements")
+    CityService cityService;
     /**
      * 以get方式请求当前url结果
      * @param response
@@ -68,5 +77,40 @@ public class testcontroller {
         PrintWriter printWriter = response.getWriter();
         printWriter.print(jsonObject.toString());
         printWriter.close();
+    }
+
+    /**
+     * 根据前台城区获取下级城市信息
+     * @param request
+     * @param response
+     */
+    @RequestMapping("getNextLevelCity.do")
+    public void getNextLevelCity(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        City city = null;
+        PrintWriter out = response.getWriter();
+        if(StringUtil.judeStringIsNullAndVoid(request.getParameter("cityId"))){
+            //根据ip获取城市信息
+           city = cityService.getCityByPrimaryKey(Integer.valueOf(request.getParameter("cityId")));
+        }else{
+            out.print("id不能为空");
+            out.close();
+            return;
+        }
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            //根据城市信息获取下级城市信息
+            for(City temp : cityService.getNextLevel(city)) {
+                //循环放入json数组
+                jsonArray.add(temp);
+            }
+        } catch (MyException e) {
+            e.printStackTrace();
+            jsonObject.put("error",e.getMessage());
+        }
+        jsonObject.put("citys",jsonArray);
+        out.print(jsonObject);
+        out.flush();;
+        out.close();
     }
 }
