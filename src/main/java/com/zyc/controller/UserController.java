@@ -105,8 +105,8 @@ public class UserController {
 		Subject subject = SecurityUtils.getSubject();
 		//检测验证码是否正确
 		Session session = subject.getSession();
-		String verifyCode = (String) session.getAttribute("veudyCode");
-		if(!verifyCode.equals(veudyCode)){
+		String verifyCode = ((String) session.getAttribute("veudyCode")).toLowerCase();
+		if(!verifyCode.equals(veudyCode.toLowerCase())){
 			modelAndView.setViewName("/user/logIn");
 			modelAndView.addObject("msg","验证码错误");
 			return modelAndView;
