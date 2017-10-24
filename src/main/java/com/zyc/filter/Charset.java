@@ -13,13 +13,19 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 
+import com.zyc.model.Ip;
+import com.zyc.service.IPService;
 import com.zyc.util.IPUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  * Servlet Filter implementation class Charset
  */
+@Component("charset")
 @WebFilter(dispatcherTypes = {
 				DispatcherType.REQUEST, 
 				DispatcherType.FORWARD, 
@@ -28,6 +34,10 @@ import org.apache.log4j.Logger;
 		}
 					, urlPatterns = { "/*" }, servletNames = { "springMVC" })
 public class Charset implements Filter {
+
+    @Autowired
+    @Qualifier("iPServiceImplements")
+    private IPService iPservice;
 
     /**
      * Default constructor. 
@@ -55,6 +65,12 @@ public class Charset implements Filter {
 		HttpServletRequest request1 = (HttpServletRequest) request;
 		if(request1.getRequestURL().toString().contains("do")||request1.getRequestURL().toString().contains("action")){
 			logger.info("IP:"+IPUtils.getIpaddr(request1)+"\t"+request1.getRequestURL());
+		}
+		if (request1.getSession().getAttribute("temp") == null) {
+			request1.getSession().setAttribute("temp", 1);
+			Ip ip = new Ip();
+			ip.setIp(request.getRemoteAddr());
+			iPservice.addIP(ip);
 		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
