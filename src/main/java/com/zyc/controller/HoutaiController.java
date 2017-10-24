@@ -147,7 +147,7 @@ public class HoutaiController {
 	 */
 	@RequestMapping(value="/iplist.do")
 	public ModelAndView listIP(ModelAndView modelAndView,HttpServletRequest request) throws ParseException{
-		IPExample ipExample = new IPExample();
+		IpExample ipExample = new IpExample();
 		Integer currentPage = null;
 		Integer size = null;
 		String mindate=request.getParameter("mindate");
@@ -181,7 +181,7 @@ public class HoutaiController {
 		if(request.getParameter(("size"))!=null){
 			size = Integer.parseInt(request.getParameter("size"));
 		}
-		Page2<IP, IPExample> page2 = new Page2<IP, IPExample>(ipExample, currentPage, size);
+		Page2<Ip, IpExample> page2 = new Page2<Ip, IpExample>(ipExample, currentPage, size);
 		page2 = iPservice.findIpByPage(page2);
 		modelAndView.addObject("page2",page2);
 		modelAndView.setViewName("/Houtai/listip");
@@ -506,7 +506,7 @@ public class HoutaiController {
 		Integer ipResultCount = 10;// IP查询的数量
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("count", wenzhangService.countWenzhang());
-		modelAndView.addObject("countIp", iPService.countIP(new IPExample()));
+		modelAndView.addObject("countIp", iPService.countIP(new IpExample()));
 		JSONObject listip_date = new JSONObject();
 		Jedis jedis = JedisPoolUtil.getJedis();
 		List<Ip_Date> list = iPService.selectCountByDay(ipResultCount--);
@@ -778,12 +778,6 @@ public class HoutaiController {
     public ModelAndView finWenZhangByPage(HttpServletRequest request, HttpServletResponse response) throws net.sf.json.JSONException, ClientProtocolException, IOException {
         ModelAndView modelAndView = new ModelAndView();
         WenzhangExample wenzhangExample = new WenzhangExample();
-        if (request.getSession().getAttribute("temp") == null) {
-            request.getSession().setAttribute("temp", 1);
-            IP ip = new IP();
-            ip.setIp(request.getRemoteAddr());
-            iPService.addIP(ip);
-        }
         WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
         if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
             criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
@@ -814,12 +808,6 @@ public class HoutaiController {
     public void finWenZhangByPage2(HttpServletRequest request, HttpServletResponse response) throws net.sf.json.JSONException, ClientProtocolException, IOException {
         ModelAndView modelAndView = new ModelAndView();
         WenzhangExample wenzhangExample = new WenzhangExample();
-        if (request.getSession().getAttribute("temp") == null) {
-            request.getSession().setAttribute("temp", 1);
-            IP ip = new IP();
-            ip.setIp(request.getRemoteAddr());
-            iPService.addIP(ip);
-        }
         WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
         if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
             criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");

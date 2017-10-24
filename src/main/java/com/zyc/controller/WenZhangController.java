@@ -91,12 +91,6 @@ public class WenZhangController {
 	public ModelAndView finWenZhangByPageIndex(HttpServletRequest request) throws IOException {
 		ModelAndView modelAndView = new ModelAndView();
 		WenzhangExample wenzhangExample = new WenzhangExample();
-		if (request.getSession().getAttribute("temp") == null) {
-			request.getSession().setAttribute("temp", 1);
-			IP ip = new IP();
-			ip.setIp(request.getRemoteAddr());
-			iPService.addIP(ip);
-		}
 		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
         if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
             criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
