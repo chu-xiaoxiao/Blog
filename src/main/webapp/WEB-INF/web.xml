@@ -82,4 +82,22 @@
         <listener-class>com.zyc.timmer.LinstenterCenter</listener-class>
     </listener>
     <!--定时器启动监听器 end-->
+    <!--ip过滤器 start-->
+    <filter>
+        <filter-name>DelegatingFilterProxy</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>charset</param-value>
+        </init-param>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value><!-- 此参数必需设置-->
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DelegatingFilterProxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--ip过滤器 end-->
 </web-app>
