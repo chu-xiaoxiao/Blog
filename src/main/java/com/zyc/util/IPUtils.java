@@ -28,7 +28,18 @@ public class IPUtils {
 		}
 		return request.getHeader("x-forwarded-for");
 	}
+
+	/**
+	 * 淘宝api获取访问ip
+	 *
+	 * @param ip
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	public static String getLocatsion(String ip) throws ClientProtocolException, IOException, JSONException{
+	    //过滤本地测试ip
 		if(ip.contains("0:0:0:0:0:0:0:1")||ip.contains("127")){
 			return null;
 		}
@@ -64,4 +75,21 @@ public class IPUtils {
 			e.printStackTrace();
 		}
 	}
+
+    /**
+     * 通过高德地图获取ip地理位置以及坐标
+     * @param ip
+     * @return
+     * @throws IOException
+     */
+	public static JSONObject getLocationByGode(String ip) throws IOException {
+        if(ip.contains("0:0:0:0:0:0:0:1")||ip.contains("127")){
+            return null;
+        }
+        HttpclientUtil httpclientUtil = new HttpclientUtil();
+        String result = httpclientUtil.getDocumentFromUriGet("http://restapi.amap.com/v3/ip?key=5e6c1c249358728248c5acef46ba179c&ip="+ip);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSONObject.fromObject(result);
+        return jsonObject;
+    }
 }
