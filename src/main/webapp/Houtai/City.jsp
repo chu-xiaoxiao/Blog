@@ -46,44 +46,109 @@
 
 <script type="text/javascript" src="/SSM/dist/js/wangEditor.js"></script>
 	<script type="text/javascript">
-		//初始化省
-        $.ajax({
-            method : "get",
-            dataType:"json",
-            data:{"cityId":100000},
-            url : "/SSM/webutil/getNextLevelCity.do",
-            success:function(data){
-                $("#provinces").html("");
-                $(data.citys).each(function(i,j){
-                    $("#provinces").append("<option value='"+j.id+"'>"+j.name+"</option>");
-                    $("#area").html("");
-				});
-            }
-        });
+        getNextContinent(-1);
         $(function(){
+            $("#continent").change(function(){
+                getNextCountry($("#continent").val());
+			})
+            $("#country").change(function(){
+                getNextProvinces($("#country").val());
+			})
             $("#provinces").change(function () {
-                $.ajax({
-                    method: "get",
-                    dataType: "json",
-                    data: {"cityId": $("#provinces").val()},
-                    url: "/SSM/webutil/getNextLevelCity.do",
-                    success: function (data) {
-                        var first = 0;
-                        $("#city").empty();
-                        $(data.citys).each(function (i, j) {
-                            $("#city").append("<option value='" + j.id + "'>" + j.name + "</option>");
-                            if(first == 0) {
-                                first = j.id;
-                            }
-                        });
-                        getNextArea(first);
-                    }
-                });
+				getNextCity($("#provinces").val());
             });
             $("#city").change(function () {
                getNextArea($("#city").val())
             });
         });
+        function getNextContinent(cityId){
+            $.ajax({
+                method : "get",
+                dataType:"json",
+                data:{"cityId":cityId},
+                url : "/SSM/webutil/getNextLevelCity.do",
+                success:function(data){
+                    var first = 0;
+                    $("#continent").html("");
+                    $(data.citys).each(function(i,j){
+                        $("#continent").append("<option value='"+j.id+"'>"+j.cityname+"</option>");
+                        if(first == 0) {
+                            first = j.id;
+                        }
+                    });
+                    getNextCountry(first);
+                }
+            });
+		}
+        function getNextCountry(cityId){
+            $.ajax({
+                method : "get",
+                dataType:"json",
+                data:{"cityId":cityId},
+                url : "/SSM/webutil/getNextLevelCity.do",
+                success:function(data){
+                    var first = 0;
+                    $("#country").html("");
+                    $(data.citys).each(function(i,j){
+                        $("#country").append("<option value='"+j.id+"'>"+j.cityname+"</option>");
+                        if(first == 0) {
+                            first = j.id;
+                        }
+                    });
+                    getNextProvinces(first);
+                }
+            });
+		}
+        function getNextProvinces(cityId){
+            $.ajax({
+                method : "get",
+                dataType:"json",
+                data:{"cityId":cityId},
+                url : "/SSM/webutil/getNextLevelCity.do",
+                success:function(data){
+                    var first = 0;
+                    $("#provinces").html("");
+                    $(data.citys).each(function(i,j){
+                        $("#provinces").append("<option value='"+j.id+"'>"+j.cityname+"</option>");
+                        if(first == 0) {
+                            first = j.id;
+                        }
+                    });
+                    if(first==0){
+                        $("#provinces").append("<option value='当前精度不足'>当前精度不足</option>");
+                        $("#city").empty();
+                        $("#city").append("<option value='当前精度不足'>当前精度不足</option>");
+                        $("#area").empty();
+                        $("#area").append("<option value='当前精度不足'>当前精度不足</option>");
+					}
+                    getNextCity(first);
+                }
+            });
+		}
+        function getNextCity(cityId){
+            $.ajax({
+                method: "get",
+                dataType: "json",
+                data: {"cityId": cityId},
+                url: "/SSM/webutil/getNextLevelCity.do",
+                success: function (data) {
+                    var first = 0;
+                    $("#city").empty();
+                    $(data.citys).each(function (i, j) {
+                        $("#city").append("<option value='" + j.id + "'>" + j.cityname + "</option>");
+                        if(first == 0) {
+                            first = j.id;
+                        }
+                    });
+                    if(first==0){
+                        $("#city").append("<option value='当前精度不足'>当前精度不足</option>");
+                        $("#area").empty();
+                        $("#area").append("<option value='当前精度不足'>当前精度不足</option>");
+					}
+                    getNextArea(first);
+                }
+            });
+		}
         function getNextArea(cityId){
             $.ajax({
                 method: "get",
@@ -93,7 +158,7 @@
                 success: function (data) {
                     $("#area").empty();
                     $(data.citys).each(function (i, j) {
-                        $("#area").append("<option value='" + j.id + "'>" + j.name + "</option>");
+                        $("#area").append("<option value='" + j.id + "'>" + j.cityname + "</option>");
                     });
                 }
             });
@@ -113,12 +178,11 @@
           <div class="panel-body">
             <div class="table-responsive">
 				<form action = "###" method="post" class ="form-horizontal" role="form" id="cityLiandong">
-					<select id="provinces"  class="form-control">
-					</select>省
-					<select id="city"  class="form-control">
-					</select>市
-					<select id="area"  class="form-control">
-					</select>区
+					<select id="continent" class="form-control"></select>洲
+					<select id="country" class="form-control"></select>国
+					<select id="provinces"  class="form-control"></select>省
+					<select id="city"  class="form-control"></select>市
+					<select id="area"  class="form-control"></select>区
 				</form>
             </div>
          </div>

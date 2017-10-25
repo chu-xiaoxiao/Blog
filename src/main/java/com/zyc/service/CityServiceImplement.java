@@ -19,8 +19,11 @@ public class CityServiceImplement implements CityService{
     CityMapper cityMapper;
     @Override
     public List<City> getNextLevel(City city) throws MyException {
-        if(city.getLeveltype()==3){
+        if(city.getLeveltype()==5){
             throw new MyException("当前城市没有下级城市");
+        }
+        if(city.getLeveltype()==4&&city.getInsideflag()==false){
+            throw new MyException("暂不支持国外城市区级查询");
         }
         CityExample cityExample = new CityExample();
         cityExample.getOredCriteria().add(cityExample.createCriteria().andParentidEqualTo(city.getId()));

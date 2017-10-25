@@ -42,16 +42,18 @@ public interface CityMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into City (ID, Name, ",
-        "ParentId, ShortName, ",
+        "insert into City (ID, CityName, ",
+        "ParentID, ShortName, ",
         "LevelType, CityCode, ",
         "ZipCode, MergerName, ",
-        "lng, Lat, Pinyin)",
-        "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
+        "lng, Lat, PinYin, ",
+        "insideflag)",
+        "values (#{id,jdbcType=INTEGER}, #{cityname,jdbcType=VARCHAR}, ",
         "#{parentid,jdbcType=INTEGER}, #{shortname,jdbcType=VARCHAR}, ",
         "#{leveltype,jdbcType=INTEGER}, #{citycode,jdbcType=VARCHAR}, ",
         "#{zipcode,jdbcType=VARCHAR}, #{mergername,jdbcType=VARCHAR}, ",
-        "#{lng,jdbcType=REAL}, #{lat,jdbcType=REAL}, #{pinyin,jdbcType=VARCHAR})"
+        "#{lng,jdbcType=REAL}, #{lat,jdbcType=REAL}, #{pinyin,jdbcType=VARCHAR}, ",
+        "#{insideflag,jdbcType=BIT})"
     })
     int insert(City record);
 
@@ -79,8 +81,8 @@ public interface CityMapper {
      */
     @Select({
         "select",
-        "ID, Name, ParentId, ShortName, LevelType, CityCode, ZipCode, MergerName, lng, ",
-        "Lat, Pinyin",
+        "ID, CityName, ParentID, ShortName, LevelType, CityCode, ZipCode, MergerName, ",
+        "lng, Lat, PinYin, insideflag",
         "from City",
         "where ID = #{id,jdbcType=INTEGER}"
     })
@@ -119,8 +121,8 @@ public interface CityMapper {
      */
     @Update({
         "update City",
-        "set Name = #{name,jdbcType=VARCHAR},",
-          "ParentId = #{parentid,jdbcType=INTEGER},",
+        "set CityName = #{cityname,jdbcType=VARCHAR},",
+          "ParentID = #{parentid,jdbcType=INTEGER},",
           "ShortName = #{shortname,jdbcType=VARCHAR},",
           "LevelType = #{leveltype,jdbcType=INTEGER},",
           "CityCode = #{citycode,jdbcType=VARCHAR},",
@@ -128,7 +130,8 @@ public interface CityMapper {
           "MergerName = #{mergername,jdbcType=VARCHAR},",
           "lng = #{lng,jdbcType=REAL},",
           "Lat = #{lat,jdbcType=REAL},",
-          "Pinyin = #{pinyin,jdbcType=VARCHAR}",
+          "PinYin = #{pinyin,jdbcType=VARCHAR},",
+          "insideflag = #{insideflag,jdbcType=BIT}",
         "where ID = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(City record);
