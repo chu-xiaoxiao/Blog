@@ -3,15 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="
-         http://www.springframework.org/schema/beans
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context-4.0.xsd
          http://www.springframework.org/schema/tx
          http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd  ">
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <mvc:annotation-driven />
     <!-- 注解扫描包 -->
@@ -20,6 +19,16 @@
     <context:component-scan base-package="com.zyc.spider" />
     <context:component-scan base-package="com.zyc.realm"/>
     <context:component-scan base-package="com.zyc.filter" />
+    <!--mvc-->
+    <mvc:annotation-driven />
+    <mvc:default-servlet-handler/>
+
+
+    <!--自定义aop-->
+    <aop:aspectj-autoproxy/>
+    <context:component-scan base-package="com.zyc.util"/>
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
     <!-- 开启注解 -->
     <!-- 1. 数据源 : DriverManagerDataSource -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -166,6 +175,6 @@
     <!--开启shiro注解 end-->
 
 
-    <mvc:annotation-driven />
-    <mvc:default-servlet-handler/>
+
+
 </beans>

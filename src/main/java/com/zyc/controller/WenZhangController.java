@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.zyc.model.*;
 import com.zyc.service.WenzhangService;
 import com.zyc.spider.TodayInHistorySpider;
+import com.zyc.util.LogAop;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -87,6 +88,7 @@ public class WenZhangController {
 	 * @return
 	 * @throws IOException
 	 */
+
 	@RequestMapping(value = { "/wenzhang/index.**", "/wenzhang/blogs.**" })
 	public ModelAndView finWenZhangByPageIndex(HttpServletRequest request) throws IOException {
 		ModelAndView modelAndView = new ModelAndView();

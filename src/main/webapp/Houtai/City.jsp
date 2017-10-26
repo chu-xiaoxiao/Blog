@@ -120,6 +120,7 @@
                         $("#city").append("<option value='当前精度不足'>当前精度不足</option>");
                         $("#area").empty();
                         $("#area").append("<option value='当前精度不足'>当前精度不足</option>");
+                        return;
 					}
                     getNextCity(first);
                 }
@@ -144,7 +145,8 @@
                         $("#city").append("<option value='当前精度不足'>当前精度不足</option>");
                         $("#area").empty();
                         $("#area").append("<option value='当前精度不足'>当前精度不足</option>");
-					}
+                        return;
+                    }
                     getNextArea(first);
                 }
             });

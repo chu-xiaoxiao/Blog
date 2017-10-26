@@ -13,6 +13,8 @@ import com.zyc.model.Page;
 import com.zyc.model.Page2;
 import com.zyc.model.Wenzhang;
 import com.zyc.model.WenzhangExample;
+import com.zyc.util.CRDU;
+import com.zyc.util.LogAop;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ public class WenzhangServiceImplements implements WenzhangService{
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
+	@LogAop(tableName = "wenzhang",CRDU = CRDU.Update,logRecord = "对文章内容进行更新")
 	public int modifyWenzhang(Wenzhang Wenzhang) {
 		return wenzhangMapper.updateByPrimaryKeySelective(Wenzhang);
 	}
@@ -49,6 +52,7 @@ public class WenzhangServiceImplements implements WenzhangService{
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
+
 	public Page2<Wenzhang,WenzhangExample> findWenzhangBySearch(Page2<Wenzhang,WenzhangExample> page2) {
         page2.setAllPage(page2.countAllPage(Math.toIntExact(wenzhangMapper.countByExample(page2.getE()))));
         page2.getE().setLimit(page2.getSize());
