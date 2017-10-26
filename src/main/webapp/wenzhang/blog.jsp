@@ -79,6 +79,13 @@
 		     };
 			 $('#fenye').bootstrapPaginator(options);
 	});
+	$(function(){
+	    $("#submitForm").click(function(){
+            $("#frompage").attr("action","/SSM/wenzhang/blogs.do");
+            $("#frompage").submit();
+            return false;
+        });
+    });
 	</script>
 </head>
 <body>
@@ -119,10 +126,10 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft" align="center" >
-				<form action="" method="post" id="frompage" class="form-inline">
+				<form action="" method="post" id="frompage" class="form-inline" >
 					<p>文章标题: <input type="search" name="wenzhangbiaoti" class="form-control" value="${requestScope.wenzhangbiaoti}" /></p>
 					<p>文章类型:<input type="text" name="wenzhangleixing" class="form-control" value="${requestScope.wenzhangleixing }" /></p>
-					<p><input type="submit" value="查找" class="btn btn-default" /></p>
+					<p><input type="button" value="查找" class="btn btn-default" id="submitForm"/></p>
 				</form>
 					<ul id='fenye'></ul>
 				</div>
