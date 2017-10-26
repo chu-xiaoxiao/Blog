@@ -12,5 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface LogAop {
-    String ip() default "";
+    String tableName() default "";
+    CRDU CRDU() default CRDU.Select;
+    String logRecord() default "";
 }
