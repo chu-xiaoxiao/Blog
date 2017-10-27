@@ -1,7 +1,8 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-  <!-- Navigation -->
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -229,7 +230,7 @@
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                              <img src="/SSM/imgs/touxiang.png<%="?"+new Date().getTime() %>" width="200px" height="200px">
+                              <img src="/home/imgs/file/touxiang/${sessionScope.user.id}${sessionScope.user.username}.png<%="?"+new Date().getTime() %>" width="200px" height="200px">
                             </div>
                             <!-- /input-group -->
                         </li>
@@ -242,10 +243,11 @@
                                 <li>
                                     <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改头像</a>
                                 </li>
-
+                                <shiro:hasRole name="administrator">
                                 <li>
                                     <a href="/SSM/Houtai/modifyJuziImg.do">修改页面句子和图片</a>
                                 </li>
+                                </shiro:hasRole>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -265,18 +267,20 @@
                                     <a href="#" id="addwenzhang">æ·»å æç« </a>
                                 </li> -->
                                 <li>
+                                    <a href="/SSM/Houtai/listjuzi.do"> 查看句库</a>
+
+                                </li>
+                                <shiro:hasRole name="administrator">
+                                <li>
                                     <a href="file.jsp">文件浏览</a>
                                 </li>
                                 <li>
                                     <a href="/SSM/Houtai/iplist.do">查看访问ip</a>
                                 </li>
                                 <li>
-                                    <a href="/SSM/Houtai/listjuzi.do"> 查看句库</a>
-                                   
-                                </li>
-                                <li>
                                     <a href="/SSM/Houtai/OSInfo.jsp">查看当前运行信息</a>
                                 </li>
+                                </shiro:hasRole>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

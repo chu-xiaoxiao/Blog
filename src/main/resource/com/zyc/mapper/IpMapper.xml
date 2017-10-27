@@ -252,7 +252,7 @@
     </set>
     where ipid = #{ipid,jdbcType=INTEGER}
   </update>
-  <select id="selectCountByDay" parameterType="int"  resultType="com.zyc.model.Ip_Date">
-    select date,count(1) as count from IP group by DATE_FORMAT(date,"%y%m%d") ORDER BY date DESC limit #{count}
+  <select id="selectCountByDay" parameterType="int" resultType="com.zyc.model.Ip_Date">
+    select date,count(1) as count from IP  GROUP BY DATE_FORMAT(date,"%b %d %Y") order by date desc limit #{count}
   </select>
 </mapper>

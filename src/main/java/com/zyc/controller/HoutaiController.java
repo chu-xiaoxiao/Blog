@@ -13,6 +13,7 @@ import jxl.write.WriteException;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -502,10 +503,10 @@ public class HoutaiController {
 	@RequestMapping(value = "/index.do")
 	public ModelAndView index(HttpServletRequest request)
 			throws ClientProtocolException, org.apache.http.ParseException, IOException {
-
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		Integer ipResultCount = 10;// IP查询的数量
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("count", wenzhangService.countWenzhang());
+		modelAndView.addObject("count", wenzhangService.countWenzhang(user));
 		modelAndView.addObject("countIp", iPService.countIP(new IpExample()));
 		JSONObject listip_date = new JSONObject();
 		Jedis jedis = JedisPoolUtil.getJedis();
@@ -719,8 +720,9 @@ public class HoutaiController {
      */
     @RequestMapping(value = "/delete")
     public ModelAndView deleteWenZhang(HttpServletRequest request) {
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         Integer id = Integer.parseInt(request.getParameter("wenzhangid"));
-        wenzhangService.deleteWenzhang(id);
+        wenzhangService.deleteWenzhang(id,user);
         return new ModelAndView("redirect:/Houtai/findByPage.do");
     }
 
@@ -733,6 +735,7 @@ public class HoutaiController {
      */
     @RequestMapping(value = "/modifywenzhangaction")
     public ModelAndView modifyWenZhang(HttpServletRequest request, HttpServletResponse response) {
+    	User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         try {
             request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -744,7 +747,7 @@ public class HoutaiController {
         wenZhang.setWenzhangleixing(request.getParameter("wenzhangleixing"));
         wenZhang.setWenzhangid(Integer.parseInt(request.getParameter("wenzhangid1")));
         wenZhang.setWenzhangchunwenben(request.getParameter("wenzhangchunwenben").trim());
-        wenzhangService.modifyWenzhang(wenZhang);
+        wenzhangService.modifyWenzhang(wenZhang,user);
         return new ModelAndView("redirect:/Houtai/findByPage.do");
     }
 
@@ -756,7 +759,8 @@ public class HoutaiController {
      */
     @RequestMapping("/modifywenzhang")
     public void findWenZhangByid(HttpServletRequest request, PrintWriter printWriter) {
-        Wenzhang wenZhang = wenzhangService.findWenzhangByid(Integer.parseInt(request.getParameter("wenzhangid")));
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+        Wenzhang wenZhang = wenzhangService.findWenzhangByid(Integer.parseInt(request.getParameter("wenzhangid")),user);
         JSONObject json = new JSONObject();
         json.put("wenzhang", wenZhang);
         printWriter.print(json.toString());
@@ -776,6 +780,7 @@ public class HoutaiController {
      */
     @RequestMapping("/findByPage.**")
     public ModelAndView finWenZhangByPage(HttpServletRequest request, HttpServletResponse response) throws net.sf.json.JSONException, ClientProtocolException, IOException {
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         ModelAndView modelAndView = new ModelAndView();
         WenzhangExample wenzhangExample = new WenzhangExample();
         WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
@@ -787,7 +792,7 @@ public class HoutaiController {
         }
         wenzhangExample.getOredCriteria().add(criteria);
         Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
-        page = wenzhangService.findWenzhangBySearch(page);
+        page = wenzhangService.findWenzhangBySearch(page,user);
         modelAndView.addObject("page",page);
         modelAndView.addObject("wenzhangbiaoti",request.getParameter("wenzhangbiaoti"));
         modelAndView.addObject("wenzhangleixing",request.getParameter("wenzhangleixing"));
@@ -809,6 +814,7 @@ public class HoutaiController {
         ModelAndView modelAndView = new ModelAndView();
         WenzhangExample wenzhangExample = new WenzhangExample();
         WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
             criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
         }
@@ -817,7 +823,7 @@ public class HoutaiController {
         }
         wenzhangExample.getOredCriteria().add(criteria);
         Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
-        page = wenzhangService.findWenzhangBySearch(page);
+        page = wenzhangService.findWenzhangBySearch(page,user);
         modelAndView.addObject("page",page);
         modelAndView.setViewName("/wenzhang/index");
         try {
@@ -843,13 +849,14 @@ public class HoutaiController {
      */
     @RequestMapping(value = "/addWenZhang.do")
     public ModelAndView addWenZhang(HttpServletRequest request) throws UnsupportedEncodingException {
+    	User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         request.setCharacterEncoding("UTF-8");
         Wenzhang wenZhang = new Wenzhang();
         wenZhang.setWenzhangneirong(request.getParameter("wenzhangneirong"));
         wenZhang.setWenzhangbiaoti(request.getParameter("wenzhangbiaoti"));
         wenZhang.setWenzhangchunwenben(request.getParameter("wenzhangchunwenben").trim());
         wenZhang.setWenzhangleixing(request.getParameter("wenzhangleixing"));
-        wenzhangService.addWenzhang(wenZhang);
+        wenzhangService.addWenzhang(wenZhang,user);
         return new ModelAndView("redirect:/Houtai/findByPage.do");
     }
 }

@@ -124,11 +124,5 @@ public interface IpMapper {
     })
     int updateByPrimaryKey(Ip record);
 
-    /**
-     * 按天分组查询ip
-     * xount为查询多少天
-     * @param count
-     * @return
-     */
-    List<Ip_Date>selectCountByDay(Integer count);
+    List<Ip_Date> selectCountByDay (Integer count);
 }

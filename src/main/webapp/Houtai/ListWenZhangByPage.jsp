@@ -73,19 +73,24 @@ $(function() {
 	editor1.config.uploadImgUrl = '/SSM/Houtai/upLoadImg.do';
 	editor1.config.mapAk = 'ByDEc7m5D1gKYKOGTqiltNNjqHvqQmmj';
 	editor1.create();
+	//当总页数不为零时加载分页
+    if(${page.allPage!=0}){
+        //加载分页
+        var options = {
+                bootstrapMajorVersion:3,
+                currentPage: ${page.currentPage+1},
+                numberOfPages: ${page.allPage}>5?"5":${page.allPage},
+            totalPages:${page.allPage},
+        onPageClicked : function (event, originalEvent, type, page) {
+            $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage="+(page-1));
+            $("#frompage").submit();
+			}
+		};
+        $('#fenye').bootstrapPaginator(options);
+    }else{
+        $("#wenzhangListBody").html("当前还没有创建过任何文章")
+    }
 
-	//加载分页
-	var options = {
-         bootstrapMajorVersion:3,
-         currentPage: ${page.currentPage+1},
-         numberOfPages: ${page.allPage}>5?"5":${page.allPage},
-         totalPages:${page.allPage}, 
-         onPageClicked : function (event, originalEvent, type, page) {
-	        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage="+(page-1));
-	      	$("#frompage").submit();
-         }
-     };
-	 $('#fenye').bootstrapPaginator(options);
 	 $('#upload').Huploadify({
 			auto:true,
 			multi:true,
@@ -236,8 +241,8 @@ $(function() {
 							</div>
 						</div>
 						<table class="table table-striped table-bordered table-hover"
-							id="pagetable">
-							<thead>
+							id="pagetable" >
+							<thead id="wenzhangListBody">
 								<tr>
 									<th>id</th>
 									<th>文章标题</th>
@@ -246,7 +251,7 @@ $(function() {
 									<th>修改/删除</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody >
 								<c:forEach items="${page.lists }" var="wenzhang1">
 									<tr>
 										<td id="wenzhangid">${wenzhang1.wenzhangid}</td>

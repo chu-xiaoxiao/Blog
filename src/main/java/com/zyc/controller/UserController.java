@@ -31,10 +31,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -63,7 +60,7 @@ public class UserController {
         Session session = subject.getSession();
         User user = (User) session.getAttribute("user");
         Role role = new Role();
-        role.setRoleid(1);
+        role.setRoleid(3);
         user = userService.findByName(user.getUsername());
         roleService.authorization(user,role);
         modelAndView.setViewName("redirect:/index.jsp");
@@ -143,11 +140,12 @@ public class UserController {
         }
 		return modelAndView;
 	}
-	@RequestMapping(value="/modifyTouXiang")
+/*	@RequestMapping(value="/modifyTouXiang")
 	public ModelAndView modifyTouxiang(@RequestParam(value="touxiang",required=false) MultipartFile file,HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		String path = request.getSession().getServletContext().getRealPath("imgs");
-		String filename = "touxiang.png";
+		String filename = "/home/imgs/file/tempTouxiang/"+user.getId()+user.getUsername()+".png";
 		File temp = new File(path,filename);
 		try {
 			file.transferTo(temp);
@@ -156,7 +154,7 @@ public class UserController {
 		}
 		modelAndView.setViewName("redirect:/WenZhang/findAll.do");
 		return modelAndView;
-	}
+	}*/
 	@RequestMapping(value="/findByName")
 	public void findByName(HttpServletRequest request,HttpServletResponse response){
 		User user = userService.findByName(request.getParameter("username"));
@@ -181,9 +179,20 @@ public class UserController {
 		modelAndView.setViewName("/user/logIn");
 		return modelAndView;
 	}
-	@RequestMapping("/user/uploadTemp.do")
+
+    /**
+     * 上传临时头像
+     * @param tempTouxiang
+     * @param request
+     * @param response
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+	@RequestMapping("/uploadTemp.do")
 	public void upload(@RequestParam(value="tempTouxiang",required=false) MultipartFile tempTouxiang,HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException{
-		  //创建一个通用的多部分解析器   
+
+		  //创建一个通用的多部分解析器
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
         //判断 request 是否有文件上传,即多部分请求   
         if(multipartResolver.isMultipart(request)){  
@@ -192,6 +201,7 @@ public class UserController {
             //取得request中的所有文件名   
             Iterator<String> iter = multiRequest.getFileNames();  
             ServletOutputStream output = response.getOutputStream();
+            String path = "/home/imgs/file/tempTouxiang";
             while(iter.hasNext()){  
                 //取得上传文件   
                 MultipartFile file1 = multiRequest.getFile(iter.next());  
@@ -201,13 +211,11 @@ public class UserController {
                     //如果名称不为“”,说明该文件存在，否则说明该文件不存在   
                     if(myFileName.trim() !=""){  
                         //重命名上传后的文件名
-                        String path =request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png";
                         File pathf = new File(path);  
                         if(!pathf.exists()){
                         	pathf.mkdirs();
                         }
-                        path = request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png";
-                        File localFile = new File(path);  
+                        File localFile = new File(path+"/"+user.getId()+user.getUsername()+".png");
                         try {
 							file1.transferTo(localFile);
 							System.out.println(localFile.getAbsolutePath());
@@ -215,22 +223,42 @@ public class UserController {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} 
-                        output.print("/SSM/imgs/tempTouxiang.png?T="+new Date().getTime());
+                        output.print(path+"/"+user.getId()+user.getUsername()+".png");
                     }  
                 }  
             }  
         }
 	}
+
+    /**
+     * 通过上传至临时文件夹的头像修改头像文件夹的头像
+     * @param request
+     * @param modelAndView
+     * @return
+     * @throws IOException
+     */
 	@RequestMapping("/xiugaitouxiang.do")
 	public ModelAndView queren(ServletRequest request,ModelAndView modelAndView) throws IOException{
-		File file = new File(request.getServletContext().getRealPath("imgs")+"/touxiang.png");
-		File file2 = new File(request.getServletContext().getRealPath("imgs")+"/tempTouxiang.png");
+        String path = "/home/imgs/file/";
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		File file = new File(path+"touxiang/"+user.getId()+user.getUsername()+".png");
+		if(!file.getParentFile().exists()){
+		    file.getParentFile().mkdirs();
+        }
+        //判断当前用户是否有头像，如果没有，新建临时文件
+		if(!file.exists()){
+		    PrintWriter printWriter = new PrintWriter(new FileOutputStream(file));
+		    printWriter.print(1);
+		    printWriter.close();
+        }
+		File file2 = new File(path+"/tempTouxiang/"+user.getId()+user.getUsername()+".png");
 		file.delete();
-		file = new File(request.getServletContext().getRealPath("imgs")+"/touxiang.png");
+		file = new File(path+"/touxiang/"+user.getId()+user.getUsername()+".png");
 		file2.renameTo(file);
 		modelAndView.setViewName("redirect:/Houtai/index.jsp");
 		return modelAndView;
 	}
+
 	@RequestMapping("/getVerifyCode.do")
 	public void getVerifyCode(HttpServletRequest request,HttpServletResponse response) throws IOException {
         response.setHeader("Pragma", "No-cache");
