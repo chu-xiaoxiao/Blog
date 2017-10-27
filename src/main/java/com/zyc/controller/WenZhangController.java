@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+import javax.security.auth.Subject;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ import com.zyc.util.LogAop;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
@@ -91,6 +93,7 @@ public class WenZhangController {
 
 	@RequestMapping(value = { "/wenzhang/index.**", "/wenzhang/blogs.**" })
 	public ModelAndView finWenZhangByPageIndex(HttpServletRequest request) throws IOException {
+		User user = (User) request.getSession().getAttribute("user");
 		ModelAndView modelAndView = new ModelAndView();
 		WenzhangExample wenzhangExample = new WenzhangExample();
 		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
@@ -102,7 +105,7 @@ public class WenZhangController {
         }
         wenzhangExample.getOredCriteria().add(criteria);
         Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
-		page = wenzhangService.findWenzhangBySearch(page);
+		page = wenzhangService.findWenzhangBySearch(page,user);
 		modelAndView.addObject("page",page);
         modelAndView.addObject("wenzhangbiaoti",request.getParameter("wenzhangbiaoti"));
         modelAndView.addObject("wenzhangleixing",request.getParameter("wenzhangleixing"));
@@ -149,8 +152,9 @@ public class WenZhangController {
 	@RequestMapping("/wenzhang/xiangxi")
 	public ModelAndView xiangxi(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		if (request.getParameter("wenzhangid") != null) {
-			Wenzhang wenZhang = wenzhangService.findWenzhangByid(Integer.parseInt(request.getParameter("wenzhangid")));
+			Wenzhang wenZhang = wenzhangService.findWenzhangByid(Integer.parseInt(request.getParameter("wenzhangid")),user);
 			modelAndView.addObject("wenZhang",wenZhang);
 		}
 		modelAndView.setViewName("/wenzhang/about");

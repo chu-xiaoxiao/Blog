@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import com.zyc.mapper.WenzhangMapper;
-import com.zyc.model.Page;
-import com.zyc.model.Page2;
-import com.zyc.model.Wenzhang;
-import com.zyc.model.WenzhangExample;
+import com.zyc.model.*;
 import com.zyc.util.CRDU;
 import com.zyc.util.LogAop;
 import org.springframework.stereotype.Service;
@@ -24,15 +22,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class WenzhangServiceImplements implements WenzhangService{
 	@Resource
 	WenzhangMapper wenzhangMapper;
+
+	private HttpServletRequest request;
+
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
-	public int addWenzhang(Wenzhang Wenzhang) {
-		return wenzhangMapper.insertSelective(Wenzhang);
+	public int addWenzhang(Wenzhang wenzhang, User user) {
+	    wenzhang.setWenzhangauthor(user.getId());
+		return wenzhangMapper.insertSelective(wenzhang);
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
 	@LogAop(tableName = "wenzhang",CRDU = CRDU.Update,logRecord = "对文章内容进行更新")
-	public int modifyWenzhang(Wenzhang Wenzhang) {
+	public int modifyWenzhang(Wenzhang Wenzhang,User user) {
 		return wenzhangMapper.updateByPrimaryKeySelective(Wenzhang);
 	}
 	@Override
@@ -42,18 +44,20 @@ public class WenzhangServiceImplements implements WenzhangService{
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
-	public void deleteWenzhang(Integer id) {
+	public void deleteWenzhang(Integer id,User user) {
         wenzhangMapper.deleteByPrimaryKey(id);
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
-	public Wenzhang findWenzhangByid(Integer id) {
+	public Wenzhang findWenzhangByid(Integer id,User user) {
 		return wenzhangMapper.selectByPrimaryKey(id);
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
-
-	public Page2<Wenzhang,WenzhangExample> findWenzhangBySearch(Page2<Wenzhang,WenzhangExample> page2) {
+	public Page2<Wenzhang,WenzhangExample> findWenzhangBySearch(Page2<Wenzhang,WenzhangExample> page2,User user) {
+	    if(user!=null){
+            page2.getE().getOredCriteria().add(page2.getE().createCriteria().andWenzhangauthorEqualTo(user.getId()));
+        }
         page2.setAllPage(page2.countAllPage(Math.toIntExact(wenzhangMapper.countByExample(page2.getE()))));
         page2.getE().setLimit(page2.getSize());
         page2.getE().setOffset(page2.getStart());
@@ -64,7 +68,9 @@ public class WenzhangServiceImplements implements WenzhangService{
 
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
-	public Integer countWenzhang() {
-		return Math.toIntExact(wenzhangMapper.countByExample(new WenzhangExample()));
+	public Integer countWenzhang(User user) {
+	    WenzhangExample wenzhangExample = new WenzhangExample();
+	    wenzhangExample.getOredCriteria().add(wenzhangExample.createCriteria().andWenzhangauthorEqualTo(user.getId()));
+		return Math.toIntExact(wenzhangMapper.countByExample(wenzhangExample));
 	}
 }	
