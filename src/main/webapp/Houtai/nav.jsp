@@ -241,7 +241,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>信息管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改头像</a>
+                                    <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改头像</a>
                                 </li>
                                 <shiro:hasRole name="administrator">
                                 <li>
@@ -263,9 +263,6 @@
                                 <li>
                                     <a href="/SSM/Houtai/findByPage.do">文章修改删除</a>
                                 </li>
-                              <!--   <li>
-                                    <a href="#" id="addwenzhang">æ·»å æç« </a>
-                                </li> -->
                                 <li>
                                     <a href="/SSM/Houtai/listjuzi.do"> 查看句库</a>
 
@@ -277,6 +274,7 @@
                                 <li>
                                     <a href="/SSM/Houtai/iplist.do">查看访问ip</a>
                                 </li>
+
                                 <li>
                                     <a href="/SSM/Houtai/OSInfo.jsp">查看当前运行信息</a>
                                 </li>

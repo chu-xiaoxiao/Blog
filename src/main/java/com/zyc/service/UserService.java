@@ -9,4 +9,5 @@ public interface UserService {
 	int insertuUser(User user);
 	User logIn(User user);
 	User findByName(String name);
+	void modifyUserInfo(User user);
 }

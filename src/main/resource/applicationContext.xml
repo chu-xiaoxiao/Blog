@@ -93,7 +93,6 @@
             <value>false</value>
         </property>
     </bean>
-
     <!--
         2. mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源
         MyBatis定义数据源,同意加载配置

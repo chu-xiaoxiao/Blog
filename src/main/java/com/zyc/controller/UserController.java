@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -32,6 +34,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLDecoder;
+import java.security.Security;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -133,7 +137,7 @@ public class UserController {
 		//获取登录成功的用户对象
 		user = (User) subject.getPrincipal();
 		session.setAttribute("user",user);
-		if(subject.hasRole("administrator")) {
+		if(subject.hasRole("administrator")||subject.hasRole("author")) {
             modelAndView.setViewName("redirect:/Houtai/index.jsp");
         }else{
 		    modelAndView.setViewName("redirect:/index.jsp");
@@ -295,5 +299,14 @@ public class UserController {
         session.setAttribute("verifyCode",veudyCode);
         out.flush();
         out.close();
+    }
+
+    @RequestMapping("/modifyUserinfo.do")
+    public ModelAndView modifyUserInfo(User user,ModelAndView modelAndView) throws UnsupportedEncodingException {
+	    String nickname = user.getUsernickname();
+        userService.modifyUserInfo(user);
+        SecurityUtils.getSubject().getSession().setAttribute("user",userService.findUser(user.getId()));
+        modelAndView.setViewName("redirect:/Houtai/index.jsp");
+        return modelAndView;
     }
 }

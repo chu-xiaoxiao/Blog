@@ -42,12 +42,12 @@ public interface UserMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into User (id, username, ",
-        "userpassword, usermail, ",
-        "usertype)",
-        "values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, ",
-        "#{userpassword,jdbcType=VARCHAR}, #{usermail,jdbcType=VARCHAR}, ",
-        "#{usertype,jdbcType=INTEGER})"
+        "insert into User (id, usermail, ",
+        "username, usernickname, ",
+        "userpassword, usertype)",
+        "values (#{id,jdbcType=INTEGER}, #{usermail,jdbcType=VARCHAR}, ",
+        "#{username,jdbcType=VARCHAR}, #{usernickname,jdbcType=VARCHAR}, ",
+        "#{userpassword,jdbcType=VARCHAR}, #{usertype,jdbcType=INTEGER})"
     })
     int insert(User record);
 
@@ -75,7 +75,7 @@ public interface UserMapper {
      */
     @Select({
         "select",
-        "id, username, userpassword, usermail, usertype",
+        "id, usermail, username, usernickname, userpassword, usertype",
         "from User",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -114,9 +114,10 @@ public interface UserMapper {
      */
     @Update({
         "update User",
-        "set username = #{username,jdbcType=VARCHAR},",
+        "set usermail = #{usermail,jdbcType=VARCHAR},",
+          "username = #{username,jdbcType=VARCHAR},",
+          "usernickname = #{usernickname,jdbcType=VARCHAR},",
           "userpassword = #{userpassword,jdbcType=VARCHAR},",
-          "usermail = #{usermail,jdbcType=VARCHAR},",
           "usertype = #{usertype,jdbcType=INTEGER}",
         "where id = #{id,jdbcType=INTEGER}"
     })

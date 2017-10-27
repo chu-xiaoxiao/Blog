@@ -6,6 +6,7 @@ import com.zyc.mapper.UsertoroleMapper;
 import com.zyc.model.Role;
 import com.zyc.model.UserExample;
 import com.zyc.model.Usertorole;
+import com.zyc.util.LogAop;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,4 +75,9 @@ public class UserServiceImplement implements UserService{
 		return user;
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+	public void modifyUserInfo(User user) {
+		userMapper.updateByPrimaryKeySelective(user);
+	}
 }

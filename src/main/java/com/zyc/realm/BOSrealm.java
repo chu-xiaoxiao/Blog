@@ -8,10 +8,12 @@ import com.zyc.model.UserExample;
 import com.zyc.service.PowerService;
 import com.zyc.service.RoleService;
 import com.zyc.util.MyException;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +43,25 @@ public class BOSrealm extends AuthorizingRealm{
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user = (User) principalCollection.getPrimaryPrincipal();
-        List<Role> roles = null;
+        Session session = SecurityUtils.getSubject().getSession();
+        //用户赋予角色操作
+        List<Role> roles = (List<Role>) session.getAttribute("roles");
         try {
-            roles = roleService.getRolesByUserName(user.getUsername());
+            //判断当前用户角色是否授权成功，如果是，则不进行数据库查询否则查询数据库授权
+            if(roles==null) {
+                roles = roleService.getRolesByUserName(user.getUsername());
+                session.setAttribute("roles",roles);
+            }
         } catch (MyException e) {
             e.printStackTrace();
         }
-        List<Power> powers = new ArrayList<Power>();
-        powers = powerService.getPowerByRoles(roles);
+        //根据用户角色授权操作
+        List<Power> powers = (List<Power>) session.getAttribute("powers");
+        //判断当前用户权限是否授权成功，如果是，则不进行数据库查询否则查询数据库授权
+        if(powers==null) {
+            powers = powerService.getPowerByRoles(roles);
+            session.setAttribute("powers",powers);
+        }
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         for(Role temp : roles) {
             simpleAuthorizationInfo.addRole(temp.getRolename());
