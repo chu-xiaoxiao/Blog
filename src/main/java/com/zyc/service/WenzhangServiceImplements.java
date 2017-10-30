@@ -57,7 +57,9 @@ public class WenzhangServiceImplements implements WenzhangService{
 	public Page2<Wenzhang,WenzhangExample> findWenzhangBySearch(Page2<Wenzhang,WenzhangExample> page2,User user) {
 	    if(user!=null){
             page2.getE().getOredCriteria().add(page2.getE().createCriteria().andWenzhangauthorEqualTo(user.getId()));
-        }
+        }else{
+			page2.getE().getOredCriteria().add(page2.getE().createCriteria().andWenzhangauthorEqualTo(21));
+		}
         page2.setAllPage(page2.countAllPage(Math.toIntExact(wenzhangMapper.countByExample(page2.getE()))));
         page2.getE().setLimit(page2.getSize());
         page2.getE().setOffset(page2.getStart());

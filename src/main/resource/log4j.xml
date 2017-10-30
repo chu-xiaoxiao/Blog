@@ -54,11 +54,11 @@
         <level value="INFO"></level>
     </logger> -->
 
-    <root>
+<!--    <root>
         <level value="ALL"/>
         <appender-ref ref="consoleAppender" />
         <appender-ref ref="fileAppenderInfo" />
         <appender-ref ref="fileAppenderWarn" />
         <appender-ref ref="fileAppenderError" />
-    </root>
+    </root>-->
 </log4j:configuration>

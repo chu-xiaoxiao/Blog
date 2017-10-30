@@ -124,6 +124,7 @@
      -->
     <tx:annotation-driven transaction-manager="txManager" />
 
+<!--
     <tx:advice id="baseServiceAdvice" transaction-manager="txManager">
         <tx:attributes>
 
@@ -139,6 +140,7 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
+-->
 
     <!--注册自定义reaml-->
     <bean id="bosRealm" class="com.zyc.realm.BOSrealm"/>

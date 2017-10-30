@@ -44,7 +44,7 @@
 <link rel="stylesheet" href="/css/fenye.css">
 
 <link rel="stylesheet" type="text/css"
-	href="//dist/css/wangEditor.min.css">
+	href="/dist/css/wangEditor.min.css">
 <!-- <script src="/js/jquery.js"></script> -->
 <script
 	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
