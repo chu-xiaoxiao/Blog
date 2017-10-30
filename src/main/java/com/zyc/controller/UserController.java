@@ -106,6 +106,9 @@ public class UserController {
 		Subject subject = SecurityUtils.getSubject();
 		//检测验证码是否正确
 		Session session = subject.getSession();
+		//清除可能存在原有的权限
+        session.setAttribute("roles",null);
+        session.setAttribute("powers",null);
 		String verifyCode = ((String) session.getAttribute("veudyCode")).toLowerCase();
 		if(!verifyCode.equals(veudyCode.toLowerCase())){
 			modelAndView.setViewName("/user/logIn");
@@ -144,21 +147,6 @@ public class UserController {
         }
 		return modelAndView;
 	}
-/*	@RequestMapping(value="/modifyTouXiang")
-	public ModelAndView modifyTouxiang(@RequestParam(value="touxiang",required=false) MultipartFile file,HttpServletRequest request){
-		ModelAndView modelAndView = new ModelAndView();
-        User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-		String path = request.getSession().getServletContext().getRealPath("imgs");
-		String filename = "/home/imgs/file/tempTouxiang/"+user.getId()+user.getUsername()+".png";
-		File temp = new File(path,filename);
-		try {
-			file.transferTo(temp);
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		modelAndView.setViewName("redirect:/WenZhang/findAll.do");
-		return modelAndView;
-	}*/
 	@RequestMapping(value="/findByName")
 	public void findByName(HttpServletRequest request,HttpServletResponse response){
 		User user = userService.findByName(request.getParameter("username"));
@@ -180,6 +168,8 @@ public class UserController {
 	public ModelAndView logout(HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
 		request.getSession().removeAttribute("user");
+		request.getSession().removeAttribute("roles");
+		request.getSession().removeAttribute("powers");
 		modelAndView.setViewName("/user/logIn");
 		return modelAndView;
 	}

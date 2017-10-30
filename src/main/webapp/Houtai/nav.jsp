@@ -241,7 +241,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>信息管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改头像</a>
+                                    <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改用户信息</a>
                                 </li>
                                 <shiro:hasRole name="administrator">
                                 <li>

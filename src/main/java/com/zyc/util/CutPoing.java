@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 @Aspect
 @Component("cutPoing")
 public class CutPoing {
+
     @Autowired
     @Qualifier("logRecordServiceImplements")
     LogRecordService logRecordService;

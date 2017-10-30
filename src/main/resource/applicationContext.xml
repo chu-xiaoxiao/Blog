@@ -189,8 +189,4 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
     <!--开启shiro注解 end-->
-
-
-
-
 </beans>
