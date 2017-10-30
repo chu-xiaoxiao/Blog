@@ -167,10 +167,11 @@ public class UserController {
 	@RequestMapping(value="/logout")
 	public ModelAndView logout(HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
-		request.getSession().removeAttribute("user");
-		request.getSession().removeAttribute("roles");
-		request.getSession().removeAttribute("powers");
-		modelAndView.setViewName("/user/logIn");
+		SecurityUtils.getSubject().logout();
+
+        request.getSession().setAttribute("roles",null);
+        request.getSession().setAttribute("powers",null);
+		modelAndView.setViewName("redirect:/wenzhang/index.do");
 		return modelAndView;
 	}
 
