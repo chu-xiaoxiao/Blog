@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/SSM/Houtai/index.do">后台管理</a>
+                <a class="navbar-brand" href="/Houtai/index.do">后台管理</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -216,7 +216,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/SSM/user/logout.do"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/user/logout.do"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -235,17 +235,17 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="/SSM/Houtai/index.do"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="/Houtai/index.do"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>信息管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/SSM/Houtai/ModifyTouxiang.jsp">修改用户信息</a>
+                                    <a href="/Houtai/ModifyTouxiang.jsp">修改用户信息</a>
                                 </li>
                                 <shiro:hasRole name="administrator">
                                 <li>
-                                    <a href="/SSM/Houtai/modifyJuziImg.do">修改页面句子和图片</a>
+                                    <a href="/Houtai/modifyJuziImg.do">修改页面句子和图片</a>
                                 </li>
                                 </shiro:hasRole>
                             </ul>
@@ -261,10 +261,10 @@
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/SSM/Houtai/findByPage.do">文章修改删除</a>
+                                    <a href="/Houtai/findByPage.do">文章修改删除</a>
                                 </li>
                                 <li>
-                                    <a href="/SSM/Houtai/listjuzi.do"> 查看句库</a>
+                                    <a href="/Houtai/listjuzi.do"> 查看句库</a>
 
                                 </li>
                                 <shiro:hasRole name="administrator">
@@ -272,11 +272,11 @@
                                     <a href="file.jsp">文件浏览</a>
                                 </li>
                                 <li>
-                                    <a href="/SSM/Houtai/iplist.do">查看访问ip</a>
+                                    <a href="/Houtai/iplist.do">查看访问ip</a>
                                 </li>
 
                                 <li>
-                                    <a href="/SSM/Houtai/OSInfo.jsp">查看当前运行信息</a>
+                                    <a href="/Houtai/OSInfo.jsp">查看当前运行信息</a>
                                 </li>
                                 </shiro:hasRole>
                             </ul>
@@ -286,16 +286,16 @@
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i>网页工具<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/SSM/Houtai/simulationRequest.jsp">请求模拟</a>
+                                    <a href="/Houtai/simulationRequest.jsp">请求模拟</a>
                                 </li>
                                 <li>
-                                    <a href="/SSM/Houtai/City.jsp">三级联动</a>
+                                    <a href="/Houtai/City.jsp">三级联动</a>
                                 </li>
                                 <li>
                                     <a href="#">地图相关 <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="/SSM/Houtai/map/markMap.do">ip访问分布</a>
+                                            <a href="/Houtai/map/markMap.do">ip访问分布</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -316,7 +316,7 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i>快捷导航<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/SSM/">博客主页</a>
+                                    <a href="/">博客主页</a>
                                 </li>
                                 <li>
                                     <a href="https://github.com/zhangxiaoq00/Blog">GitHub</a>

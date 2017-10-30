@@ -36,18 +36,18 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 	
 	<!-- Animate.css -->
-	<link rel="stylesheet" href="/SSM/wenzhang/mar/css/animate.css">
+	<link rel="stylesheet" href="/wenzhang/mar/css/animate.css">
 	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="/SSM/wenzhang/mar/css/icomoon.css">
+	<link rel="stylesheet" href="/wenzhang/mar/css/icomoon.css">
 	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="/SSM/wenzhang/mar/css/bootstrap.css">
+	<link rel="stylesheet" href="/wenzhang/mar/css/bootstrap.css">
 	<!-- Flexslider  -->
-	<link rel="stylesheet" href="/SSM/wenzhang/mar/css/flexslider.css">
+	<link rel="stylesheet" href="/wenzhang/mar/css/flexslider.css">
 	<!-- Theme style  -->
-	<link rel="stylesheet" href="/SSM/wenzhang/mar/css/style.css">
+	<link rel="stylesheet" href="/wenzhang/mar/css/style.css">
 
 	<!-- Modernizr JS -->
-	<script src="/SSM/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
+	<script src="/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -71,13 +71,13 @@
 					<c:forEach items="${page.lists }" var="wenzhang1">
 						<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
 							<div class="blog-entry">
-	<!-- 							<a href="#" class="blog-img"><img src="/SSM/wenzhang/mar/css/images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a> -->
+	<!-- 							<a href="#" class="blog-img"><img src="/wenzhang/mar/css/images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a> -->
 								<div class="desc">
-									<h3><a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a></h3>
+									<h3><a href="/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a></h3>
 									<span><small>${wenzhang1.wenzhangriqi}</small></span>
 									<p><c:if test="${fn:length(wenzhang1.wenzhangchunwenben)>100 }">${fn:substring(fn:replace(wenzhang1.wenzhangchunwenben,"<","") ,0,100)} ...</c:if>
 	 								<c:if test="${fn:length(wenzhang1.wenzhangchunwenben)<=100 }">${fn:replace(wenzhang1.wenzhangchunwenben,"<","")}</c:if></p>
-									<a href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+									<a href="/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }" class="lead">Read More <i class="icon-arrow-right3"></i></a>
 								</div>
 							</div>
 						</div>
@@ -105,18 +105,18 @@
 	</div>
 
 	<!-- jQuery -->
-	<script src="/SSM/wenzhang/mar/js/jquery.min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
-	<script src="/SSM/wenzhang/mar/js/jquery.easing.1.3.js"></script>
+	<script src="/wenzhang/mar/js/jquery.easing.1.3.js"></script>
 	<!-- Bootstrap -->
-	<script src="/SSM/wenzhang/mar/js/bootstrap.min.js"></script>
+	<script src="/wenzhang/mar/js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
-	<script src="/SSM/wenzhang/mar/js/jquery.waypoints.min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.waypoints.min.js"></script>
 	<!-- Flexslider -->
-	<script src="/SSM/wenzhang/mar/js/jquery.flexslider-min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.flexslider-min.js"></script>
 	
 	<!-- MAIN JS -->
-	<script src="/SSM/wenzhang/mar/js/main.js"></script>
+	<script src="/wenzhang/mar/js/main.js"></script>
 
 	</body>
 </html>

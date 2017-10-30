@@ -17,40 +17,40 @@
 <title>后台管理</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
+<link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- MetisMenu CSS -->
-<link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
+<link href="/assets/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
 <!-- DataTables CSS -->
 <link
-	href="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
+	href="/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
 <link
-	href="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.css"
+	href="/assets/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/SSM/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/SSM/assets/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/assets/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" href="/SSM/css/jquery-confirm.css">
-<link rel="stylesheet" href="/SSM/css/fenye.css">
+<link rel="stylesheet" href="/css/jquery-confirm.css">
+<link rel="stylesheet" href="/css/fenye.css">
 
 <link rel="stylesheet" type="text/css"
-	href="/SSM//dist/css/wangEditor.min.css">
-<!-- <script src="/SSM/js/jquery.js"></script> -->
+	href="//dist/css/wangEditor.min.css">
+<!-- <script src="/js/jquery.js"></script> -->
 <script
 	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="/SSM/js/jquery-confirm.js"></script>
+<script src="/js/jquery-confirm.js"></script>
 
-<script type="text/javascript" src="/SSM/dist/js/wangEditor.js"></script>
+<script type="text/javascript" src="/dist/js/wangEditor.js"></script>
 
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -59,18 +59,18 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<link rel="stylesheet" type="text/css" href="/SSM/css/fileupload/Huploadify.css"/>
-<script src="/SSM/js/fileupload/jquery.Huploadify.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/fileupload/Huploadify.css"/>
+<script src="/js/fileupload/jquery.Huploadify.js"></script>
 <script type="text/javascript">
 //修改富文本编辑器初始化						
 $(function() {
 	var editor = new wangEditor('editor-trigger1');
-	editor.config.uploadImgUrl = '/SSM/Houtai/upLoadImg.do';
+	editor.config.uploadImgUrl = '/Houtai/upLoadImg.do';
 	editor.config.mapAk = 'ByDEc7m5D1gKYKOGTqiltNNjqHvqQmmj';
 	editor.create();
 	
 	var editor1 = new wangEditor('editor-trigger');
-	editor1.config.uploadImgUrl = '/SSM/Houtai/upLoadImg.do';
+	editor1.config.uploadImgUrl = '/Houtai/upLoadImg.do';
 	editor1.config.mapAk = 'ByDEc7m5D1gKYKOGTqiltNNjqHvqQmmj';
 	editor1.create();
 	//当总页数不为零时加载分页
@@ -82,7 +82,7 @@ $(function() {
                 numberOfPages: ${page.allPage}>5?"5":${page.allPage},
             totalPages:${page.allPage},
         onPageClicked : function (event, originalEvent, type, page) {
-            $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage="+(page-1));
+            $("#frompage").attr("action","/Houtai/findByPage.do?currentPage="+(page-1));
             $("#frompage").submit();
 			}
 		};
@@ -99,7 +99,7 @@ $(function() {
 			showUploadedPercent:true,//是否实时显示上传的百分比，如20%
 			showUploadedSize:true,
 			removeTimeout: 1000,
-			uploader:'/SSM/Houtai/addFile.do',
+			uploader:'/Houtai/addFile.do',
 			buttonText:'添加附件',
 			onUploadStart:function(){
 				//alert('开始上传');
@@ -122,7 +122,7 @@ $(function() {
 			showUploadedPercent:true,//是否实时显示上传的百分比，如20%
 			showUploadedSize:true,
 			removeTimeout: 1000,
-			uploader:'/SSM/Houtai/addFile.do?',
+			uploader:'/Houtai/addFile.do?',
 			buttonText:'添加附件',
 			onUploadStart:function(){
 				//alert('开始上传');
@@ -138,7 +138,7 @@ $(function() {
 			}
 		});
 	$("#sieze").change(function() {
-        $("#frompage").attr("action","/SSM/Houtai/findByPage.do?currentPage=0");
+        $("#frompage").attr("action","/Houtai/findByPage.do?currentPage=0");
 		$("#frompage").submit();
 	});
 	$("#addwenzhang").click(function(){
@@ -158,7 +158,7 @@ $(function() {
 		    theme: 'supervan' ,// 'material', 'bootstrap'
 		    buttons:{
 		    	ok:function(){
-		    		location.href="/SSM/Houtai/delete.do?wenzhangid="+id;
+		    		location.href="/Houtai/delete.do?wenzhangid="+id;
 		    	},
 				cancel:function(){
 					return;
@@ -170,7 +170,7 @@ $(function() {
 		var id = $(this).val();
 		 $.ajax({
 	        type:"post",
-	        url:"/SSM/Houtai/modifywenzhang.do?wenzhangid="+id,
+	        url:"/Houtai/modifywenzhang.do?wenzhangid="+id,
 	        data:null,
 	        dataType:"text",
 	        beforeSend: function(XMLHttpRequest){},
@@ -256,7 +256,7 @@ $(function() {
 									<tr>
 										<td id="wenzhangid">${wenzhang1.wenzhangid}</td>
 										<td><a
-											href="/SSM/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a>
+											href="/wenzhang/xiangxi.do?wenzhangid=${wenzhang1.wenzhangid }">${wenzhang1.wenzhangbiaoti}</a>
 										</td>
 										<td>${wenzhang1.wenzhangleixing}</td>
 										<td>${wenzhang1.wenzhangriqi}</td>
@@ -284,21 +284,21 @@ $(function() {
 	</div>
 	<jsp:include page="modal.html"></jsp:include>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="/SSM/assets/vendor/metisMenu/metisMenu.min.js"></script>
+	<script src="/assets/vendor/metisMenu/metisMenu.min.js"></script>
 
 	<!-- DataTables JavaScript -->
-	<script src="/SSM/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+		src="/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 	<script
-		src="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
+		src="/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-	<script src="/SSM/assets/dist/js/sb-admin-2.js"></script>
-	<script type="text/javascript" src="/SSM/js/bootstrap-paginator.min.js"></script>
-	<script src="/SSM/js/jqueryForm.js"></script>
+	<script src="/assets/dist/js/sb-admin-2.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-paginator.min.js"></script>
+	<script src="/js/jqueryForm.js"></script>
 </body>
 </html>

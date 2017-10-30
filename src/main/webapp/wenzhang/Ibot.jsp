@@ -13,18 +13,18 @@
 	rel="stylesheet">
 
 <!-- Animate.css -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/animate.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/animate.css">
 <!-- Icomoon Icon Fonts-->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/icomoon.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/icomoon.css">
 <!-- Bootstrap  -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/bootstrap.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/bootstrap.css">
 <!-- Flexslider  -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/flexslider.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/flexslider.css">
 <!-- Theme style  -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/style.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/style.css">
 
 <!-- Modernizr JS -->
-<script src="/SSM/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
+<script src="/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
 <!-- FOR IE9 below -->
 <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -50,18 +50,18 @@
 </body>
 
 	<!-- jQuery -->
-	<script src="/SSM/wenzhang/mar/js/jquery.min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
-	<script src="/SSM/wenzhang/mar/js/jquery.easing.1.3.js"></script>
+	<script src="/wenzhang/mar/js/jquery.easing.1.3.js"></script>
 	<!-- Bootstrap -->
-	<script src="/SSM/wenzhang/mar/js/bootstrap.min.js"></script>
+	<script src="/wenzhang/mar/js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
-	<script src="/SSM/wenzhang/mar/js/jquery.waypoints.min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.waypoints.min.js"></script>
 	<!-- Flexslider -->
-	<script src="/SSM/wenzhang/mar/js/jquery.flexslider-min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.flexslider-min.js"></script>
 	
 	<!-- MAIN JS -->
-	<script src="/SSM/wenzhang/mar/js/main.js"></script>
+	<script src="/wenzhang/mar/js/main.js"></script>
 	<!-- 机器人消息处理 -->
-	<script type="text/javascript" src="/SSM/js/ibot.js"></script>
+	<script type="text/javascript" src="/js/ibot.js"></script>
 </html>

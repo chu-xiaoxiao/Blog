@@ -10,41 +10,41 @@
 <title>Insert title here</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
+<link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
+<link href="/assets/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
 <!-- DataTables CSS -->
 <link
-	href="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
+	href="/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
 <link
-	href="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.css"
+	href="/assets/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/SSM/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/SSM/assets/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/assets/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" href="/SSM/css/jquery-confirm.css">
-<link rel="stylesheet" href="/SSM/css/fenye.css">
+<link rel="stylesheet" href="/css/jquery-confirm.css">
+<link rel="stylesheet" href="/css/fenye.css">
 
 <link rel="stylesheet" type="text/css"
-	href="/SSM//dist/css/wangEditor.min.css">
-<!-- <script src="/SSM/js/jquery.js"></script> -->
+	href="//dist/css/wangEditor.min.css">
+<!-- <script src="/js/jquery.js"></script> -->
 <script
 	src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="/SSM/js/jquery-confirm.js"></script>
+<script src="/js/jquery-confirm.js"></script>
 <!-- 上传文件css -->
-<link rel="stylesheet" type="text/css" href="/SSM/css/fileupload/Huploadify.css"/>
+<link rel="stylesheet" type="text/css" href="/css/fileupload/Huploadify.css"/>
 <script type="text/javascript">
 $(function(){
 	for(var i=1;i<=3;i++){
@@ -56,7 +56,7 @@ $(function(){
 		showUploadedPercent:true,//是否实时显示上传的百分比，如20%
 		showUploadedSize:true,
 		removeTimeout: 1000,
-		uploader:'/SSM/Houtai/modifyJuziImgAction.do?id='+i,
+		uploader:'/Houtai/modifyJuziImgAction.do?id='+i,
 		onUploadStart:function(){
 				
 			},
@@ -94,7 +94,7 @@ $(function(){
                  Basic Form Elements
              </div>
              <div class="form-group">
-             <form action="/SSM/Houtai/modifyJuziaction.do">
+             <form action="/Houtai/modifyJuziaction.do">
             	<c:set value="${1 }" var="count"></c:set>
             	<c:forEach items="${requestScope.juzis }" var="juzi">
 	                <div class="form-group">
@@ -112,22 +112,22 @@ $(function(){
 	
 </body>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="/SSM/assets/vendor/metisMenu/metisMenu.min.js"></script>
+	<script src="/assets/vendor/metisMenu/metisMenu.min.js"></script>
 
 	<!-- DataTables JavaScript -->
-	<script src="/SSM/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+		src="/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 	<script
-		src="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
+		src="/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-	<script src="/SSM/assets/dist/js/sb-admin-2.js"></script>
-	<script src="/SSM/js/jquery.paginate.js"></script>
-	<script src="/SSM/js/jqueryForm.js"></script>
+	<script src="/assets/dist/js/sb-admin-2.js"></script>
+	<script src="/js/jquery.paginate.js"></script>
+	<script src="/js/jqueryForm.js"></script>
 	<!-- 上传文件js -->
-		<script src="/SSM/js/fileupload/jquery.Huploadify.js"></script>
+		<script src="/js/fileupload/jquery.Huploadify.js"></script>
 </html>

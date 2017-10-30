@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <!-- 日期相关函数 -->
-	<script src="/SSM/js/datejisuan.js"></script>
+	<script src="/js/datejisuan.js"></script>
      <div class="chat-panel panel panel-default">
          <div class="panel-heading">
              <i class="fa fa-comments fa-fw"></i> Chat
@@ -46,7 +46,7 @@
              <ul class="chat" id="showxiaoxi" >
                  <li class="right clearfix">
                      <span class="chat-img pull-right">
-                         <img src="/SSM/imgs/touxiang.png" alt="User Avatar" class="img-circle" hight="50px" width="50px"/>
+                         <img src="/imgs/touxiang.png" alt="User Avatar" class="img-circle" hight="50px" width="50px"/>
                      </span>
                      <div class="chat-body clearfix">
                          <div class="header">

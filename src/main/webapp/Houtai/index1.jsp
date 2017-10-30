@@ -19,21 +19,21 @@
 	<title>SB Admin 2 - Bootstrap Admin Theme</title>
 
 	<!-- Bootstrap Core CSS -->
-	<link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
+	<link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
 		  rel="stylesheet">
 
 	<!-- MetisMenu CSS -->
-<link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
+<link href="/assets/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/SSM/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Morris Charts CSS -->
-<link href="/SSM/assets/vendor/morrisjs/morris.css" rel="stylesheet">
+<link href="/assets/vendor/morrisjs/morris.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/SSM/assets/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/assets/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
 <!-- jQuery -->
@@ -47,11 +47,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 <!-- 机器人消息处理 -->
-<script type="text/javascript" src="/SSM/js/ibot.js" charset="UTF-8" > </script>
+<script type="text/javascript" src="/js/ibot.js" charset="UTF-8" > </script>
 <!-- 图表引入 -->
-<script src="/SSM/js/chart/Chart.js"></script>
+<script src="/js/chart/Chart.js"></script>
 <!-- 日期计算 -->
-<script src="/SSM/js/datejisuan.js"></script>
+<script src="/js/datejisuan.js"></script>
 
 <script type="text/javascript">
 	$(function(){
@@ -108,7 +108,7 @@
     });
     function getNews(type){
         $.ajax({
-            url:"/SSM/Houtai/getNews/"+type+".do",
+            url:"/Houtai/getNews/"+type+".do",
             type:"get",
             dataType:"json",
             success:function(result){
@@ -155,7 +155,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="/SSM/Houtai/iplist.do">
+						<a href="/Houtai/iplist.do">
 							<div class="panel-footer">
 								<span class="pull-left">View Details</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -177,7 +177,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="/SSM/Houtai/findByPage.do">
+						<a href="/Houtai/findByPage.do">
 							<div class="panel-footer">
 								<span class="pull-left">View Details</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -199,7 +199,7 @@
 								</div>
 							</div>
 						</div>
-						<a href="/SSM/Houtai/listjuzi.do">
+						<a href="/Houtai/listjuzi.do">
 							<div class="panel-footer">
 								<span class="pull-left">View Details</span> <span
 									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -420,12 +420,12 @@
 
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="/SSM/assets/vendor/metisMenu/metisMenu.min.js"></script>
+	<script src="/assets/vendor/metisMenu/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-	<script src="/SSM/assets/dist/js/sb-admin-2.js"></script>
+	<script src="/assets/dist/js/sb-admin-2.js"></script>
 </body>
 </html>

@@ -110,7 +110,7 @@ public class HoutaiController {
 				if (!new File(dir, file).isDirectory()) {
 					int dotIndex = file.lastIndexOf('.');
 					String ext = dotIndex > 0 ? file.substring(dotIndex + 1) : "";
-					out.print("<li class=\"file ext_" + ext + "\"><a rel=\"" + dir + file + "\">" + file + "</a><a href='/SSM/Houtai/download1"+dir+file+".do?filepath="+dir+file+"&filename="+file.toString()+"'>下载</a><a href='/SSM/Houtai/delete1"+dir+file+".do?filepath="+dir+file+"'>删除</a></li>");
+					out.print("<li class=\"file ext_" + ext + "\"><a rel=\"" + dir + file + "\">" + file + "</a><a href='/Houtai/download1"+dir+file+".do?filepath="+dir+file+"&filename="+file.toString()+"'>下载</a><a href='/Houtai/delete1"+dir+file+".do?filepath="+dir+file+"'>删除</a></li>");
 				}
 			}
 			out.print("</ul>");
@@ -155,7 +155,7 @@ public class HoutaiController {
 		String mintime=request.getParameter("mintime");
 		String maxdate1=request.getParameter("maxdate1");
 		String maxtime1 =request.getParameter("maxtime1");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date fmindate = null;
 		Date fmaxdate = null;
 		if(mindate!=null&&!"".equals(mindate)){
@@ -231,7 +231,7 @@ public class HoutaiController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/listjuzi.do") 
+	@RequestMapping("/listjuzi.do")
 	public ModelAndView listjuzi(ModelAndView modelAndView,HttpServletRequest request){
 		Integer currentPage = null;
 		Integer size = null;
@@ -659,7 +659,7 @@ public class HoutaiController {
 						System.out.println(localFile.getAbsolutePath());
 						file1.transferTo(localFile);
 						// output.print(request.getServletContext().getContextPath()+"/imgs/"+fileName);
-						output.print("<a href=/SSM/Houtai/download" + path + ".do?filename=" + myFileName + ">"
+						output.print("<a href=/Houtai/download" + path + ".do?filename=" + myFileName + ">"
 								+ myFileName + "</a>");
 					}
 				}
@@ -703,7 +703,7 @@ public class HoutaiController {
 						File localFile = new File(path);
 						System.out.println(localFile.getAbsolutePath());
 						file1.transferTo(localFile);
-						output.print("<a href=/SSM/Houtai/download" + path + ".do?filename=" + myFileName + ">"
+						output.print("<a href=/Houtai/download" + path + ".do?filename=" + myFileName + ">"
 								+ myFileName + "</a>");
 					}
 				}

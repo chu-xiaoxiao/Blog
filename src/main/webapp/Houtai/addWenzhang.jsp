@@ -4,11 +4,11 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css"
-	href="/SSM//dist/css/wangEditor.min.css">
+	href="//dist/css/wangEditor.min.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="/SSM/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
 <link
-	href="/SSM/css/bootstrap.css"
+	href="/css/bootstrap.css"
 	rel="stylesheet" />
 <style type="text/css">
 #editor-trigger {
@@ -29,7 +29,7 @@
 <body>
 	<div class="modal-body"">
 		<div>
-			<form action="/SSM/Houtai/addWenZhang.do" method="post" id="form1"
+			<form action="/Houtai/addWenZhang.do" method="post" id="form1"
 				class="form-horizontal">
 				<div class="form-group">
 					<label class="col-sm-2 control-label">文章题目</label>
@@ -57,16 +57,16 @@
 				</div>
 			</form>
 		</div>
-		<a href ="/SSM/wenzhang/ListWenZhang.jsp">回主页</a>
+		<a href ="/wenzhang/ListWenZhang.jsp">回主页</a>
 	</div>
-	<script type="text/javascript" src="/SSM//dist/js/lib/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="/SSM/dist/js/wangEditor.js"></script>
+	<script type="text/javascript" src="//dist/js/lib/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="/dist/js/wangEditor.js"></script>
 	<script type="text/javascript">
 		// 阻止输出log
 		// wangEditor.config.printLog = false;
 
 		var editor = new wangEditor('editor-trigger');
-		editor.config.uploadImgUrl = '/SSM/wenzhang/upLoadImg.do';
+		editor.config.uploadImgUrl = '/wenzhang/upLoadImg.do';
 		  editor.config.mapAk = 'ByDEc7m5D1gKYKOGTqiltNNjqHvqQmmj';
 		editor.create();
 		function show() {

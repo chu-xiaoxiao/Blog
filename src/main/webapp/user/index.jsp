@@ -12,7 +12,7 @@
 
 <title>墨染琉璃殇-后台管理</title>
 <link
-	href="/SSM/css/bootstrap.css"
+	href="/css/bootstrap.css"
 	rel="stylesheet" />
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -22,7 +22,7 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script type="text/javascript" src="/SSM/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -30,13 +30,13 @@
 						$("#nextPage").click(function() {
 											var nextPage = ${page.currentPage};
 											if (nextPage >= ${page.allPage}) {
-												$("#form1").attr("action","/SSM/wenzhang/findByPage.do?currentPage=${page.allPage}");
+												$("#form1").attr("action","/wenzhang/findByPage.do?currentPage=${page.allPage}");
 												$("#currentPage").attr("value","${page.allPage}");
 											} else {
 												$("#form1")
 														.attr(
 																"action",
-																"/SSM/wenzhang/findByPage.do?currentPage=${page.currentPage+1}");
+																"/wenzhang/findByPage.do?currentPage=${page.currentPage+1}");
 												$("#currentPage").attr("value","${page.currentPage+1}");
 											}
 											$("#form1").submit();
@@ -46,13 +46,13 @@
 											if (lastPage <= 1) {
 												$("#form1")
 														.attr("action",
-																"/SSM/wenzhang/findByPage.do?currentPage=1");
+																"/wenzhang/findByPage.do?currentPage=1");
 												$("#currentPage").attr("value","1");
 											} else {
 												$("#form1")
 														.attr(
 																"action",
-																"/SSM/wenzhang/findByPage.do?currentPage=${page.currentPage-1}");
+																"/wenzhang/findByPage.do?currentPage=${page.currentPage-1}");
 												$("#currentPage").attr("value","${page.currentPage-1}");
 											}
 											$("#form1").submit();
@@ -88,13 +88,13 @@
 					<td>${wenzhang1.wenzhangleixing}</td>
 					<td>${wenzhang1.wenzhangriqi}</td>
 					<td><a
-						href="/SSM/wenzhang/modifywenzhang.do?wenzhangid=${wenzhang1.id}">修改</a>/
-						<a href="/SSM/wenzhang/delete.do?wenzhangid=${wenzhang1.id}">删除</a></td>
+						href="/wenzhang/modifywenzhang.do?wenzhangid=${wenzhang1.id}">修改</a>/
+						<a href="/wenzhang/delete.do?wenzhangid=${wenzhang1.id}">删除</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<form action="/SSM/wenzhang/findByPage.do" method="post" id="fom1"
+	<form action="/wenzhang/findByPage.do" method="post" id="fom1"
 		 class="form-inline">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">文章题目</label>
@@ -142,9 +142,9 @@
 			</select> 条记录 <br>
 		</div>
 	</form>
-	<a href = "/SSM/wenzhang/addWenzhang.jsp">添加文章</a>
-	<a href ="/SSM/user/modifytouxiang.jsp">修改头像</a>
-	<a href="/SSM/user/addUser.jsp">添加用户</a>
-	<a href ="/SSM">主页</a>
+	<a href = "/wenzhang/addWenzhang.jsp">添加文章</a>
+	<a href ="/user/modifytouxiang.jsp">修改头像</a>
+	<a href="/user/addUser.jsp">添加用户</a>
+	<a href ="">主页</a>
 </body>
 </html>

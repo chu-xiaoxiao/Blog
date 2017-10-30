@@ -12,7 +12,7 @@
 
 <title>墨染琉璃殇-后台管理</title>
 <link
-	href="/SSM/css/bootstrap.css"
+	href="/css/bootstrap.css"
 	rel="stylesheet" />
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">

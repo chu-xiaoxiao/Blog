@@ -46,21 +46,21 @@
 	rel="stylesheet">
 
 <!-- Animate.css -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/animate.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/animate.css">
 <!-- Icomoon Icon Fonts-->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/icomoon.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/icomoon.css">
 <!-- Bootstrap  -->
-<!-- <link rel="stylesheet" href="/SSM/wenzhang/mar/css/bootstrap.css"> -->
-<link rel="stylesheet" href="/SSM/css/bootstrap.css">
+<!-- <link rel="stylesheet" href="/wenzhang/mar/css/bootstrap.css"> -->
+<link rel="stylesheet" href="/css/bootstrap.css">
 <!-- Flexslider  -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/flexslider.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/flexslider.css">
 <!-- Theme style  -->
-<link rel="stylesheet" href="/SSM/wenzhang/mar/css/style.css">
+<link rel="stylesheet" href="/wenzhang/mar/css/style.css">
 <!-- wangeditor --> 
 <link rel="stylesheet" type="text/css"
-	href="/SSM//dist/css/wangEditor.min.css">
+	href="//dist/css/wangEditor.min.css">
 <!-- Modernizr JS -->
-<script src="/SSM/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
+<script src="/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
 <!-- FOR IE9 below -->
 <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -80,7 +80,7 @@
 					</div>
 					<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 						<img class="img-responsive"
-							src="/SSM/wenzhang/mar/images/img-<%=new Random().nextInt(6)%>.jpg"
+							src="/wenzhang/mar/images/img-<%=new Random().nextInt(6)%>.jpg"
 							alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
 					</div>
 				</div>
@@ -110,18 +110,18 @@
 	</div>
 
 	<!-- jQuery -->
-	<script src="/SSM/wenzhang/mar/js/jquery.min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
-	<script src="/SSM/wenzhang/mar/js/jquery.easing.1.3.js"></script>
+	<script src="/wenzhang/mar/js/jquery.easing.1.3.js"></script>
 	<!-- Bootstrap -->
-	<script src="/SSM/wenzhang/mar/js/bootstrap.min.js"></script>
+	<script src="/wenzhang/mar/js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
-	<script src="/SSM/wenzhang/mar/js/jquery.waypoints.min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.waypoints.min.js"></script>
 	<!-- Flexslider -->
-	<script src="/SSM/wenzhang/mar/js/jquery.flexslider-min.js"></script>
+	<script src="/wenzhang/mar/js/jquery.flexslider-min.js"></script>
 
 	<!-- MAIN JS -->
-	<script src="/SSM/wenzhang/mar/js/main.js"></script>
+	<script src="/wenzhang/mar/js/main.js"></script>
 
 </body>
 </html>

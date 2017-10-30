@@ -7,12 +7,12 @@
             $("#showxiaoxi").append('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">I</strong><small class="pull-right text-muted"><i class="fa fa-clock-o fa-fw"></i>'+time+'</small></div><p>'+$("#xiaoxi").val()+'</p></div></li>');
             $('#chatpanel').scrollTop( $('#chatpanel')[0].scrollHeight );
             $.ajax({
-                url:"/SSM/Ibot/getmsg.do",
+                url:"/Ibot/getmsg.do",
                 data:{xiaoxi:$("#xiaoxi").val()},
                 dataType:"json",
                 success:function(result){
                     var result1 ="";
-                    result1+='<li class="right clearfix"><span class="chat-img pull-right"><img src="/SSM/imgs/touxiang.png" alt="User Avatar" class="img-circle" hight="50px" width="50px"/></span><div class="chat-body clearfix"><div class="header"><small class=" text-muted"><i class="fa fa-clock-o fa-fw"></i>'+result.time+'</small><strong class="pull-right primary-font">墨染琉璃殇</strong></div><p>'+result.text;
+                    result1+='<li class="right clearfix"><span class="chat-img pull-right"><img src="/imgs/touxiang.png" alt="User Avatar" class="img-circle" hight="50px" width="50px"/></span><div class="chat-body clearfix"><div class="header"><small class=" text-muted"><i class="fa fa-clock-o fa-fw"></i>'+result.time+'</small><strong class="pull-right primary-font">墨染琉璃殇</strong></div><p>'+result.text;
                     if(result.url!=undefined){
                         result1 +="<p><a href='"+result.url+"'>详细信息</a></p>"
                     }

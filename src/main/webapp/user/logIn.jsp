@@ -20,32 +20,32 @@
     <script
             src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- Bootstrap Core CSS -->
-    <link href="/SSM/assets/vendor/bootstrap/css/bootstrap.min.css"
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
           rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="/SSM/assets/vendor/metisMenu/metisMenu.min.css"
+    <link href="/assets/vendor/metisMenu/metisMenu.min.css"
           rel="stylesheet">
 
     <!-- DataTables CSS -->
     <link
-            href="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
+            href="/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
             rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
     <link
-            href="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.css"
+            href="/assets/vendor/datatables-responsive/dataTables.responsive.css"
             rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/SSM/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/SSM/assets/vendor/font-awesome/css/font-awesome.min.css"
+    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css"
           rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="/SSM/css/jquery-confirm.css">
-    <script src="/SSM/js/jquery-confirm.js"></script>
+    <link rel="stylesheet" href="/css/jquery-confirm.css">
+    <script src="/js/jquery-confirm.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             var username;
@@ -59,7 +59,7 @@
                     return;
                 }
                 $.ajax({
-                    url: "/SSM/user/findByName.do",
+                    url: "/user/findByName.do",
                     data: {
                         username: $("#username").val()
                     },
@@ -131,7 +131,7 @@
                     return;
                 }
                 $.ajax({
-                    url: "/SSM/user/findByName.do",
+                    url: "/user/findByName.do",
                     data: {
                         username: $("#username").val()
                     },
@@ -197,16 +197,16 @@
     <script type="text/javascript">
         function getVerifCode() {
             $.ajax({
-                url: "/SSM/user/getVerifyCode.do",
+                url: "/user/getVerifyCode.do",
                 type: "get",
                 success: function (data) {
-                   $("#verifCode").html('<img src="/SSM/user/getVerifyCode.do"/>');
+                   $("#verifCode").html('<img src="/user/getVerifyCode.do"/>');
                 }
             });
         }
         function getVerifCodeByEmail() {
             $.ajax({
-                url: "/SSM/user/getVerifyCodeFromMail.do?useremail="+$("#useremail").val(),
+                url: "/user/getVerifyCodeFromMail.do?useremail="+$("#useremail").val(),
                 type: "get",
                 beforeSend:function(){
                     $("#emailMsg").html("正在发送验证码...");
@@ -233,7 +233,7 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    <form action="/SSM/user/logIn.do" method="post"
+                    <form action="/user/logIn.do" method="post"
                           class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="firstname" class="col-sm-2 control-label">用户名</label>
@@ -260,7 +260,7 @@
                         <div class="form-group">
                             <label for="password" class="col-sm-2 control-label">  </label>
                             <div class="col-lg-8">
-                                <div class="col-lg-6"  id="verifCode"><img src="/SSM/user/getVerifyCode.do"/></div>
+                                <div class="col-lg-6"  id="verifCode"><img src="/user/getVerifyCode.do"/></div>
                                 <div class="col-lg-6"><a href="###" onclick="getVerifCode()">看不清？</a></div>
                             </div>
                         </div>
@@ -288,7 +288,7 @@
                 <h4 class="modal-title" id="myModalLabel">注册</h4>
             </div>
             <div class="modal-body" id="modaltext">
-                <form action="/SSM/user/adduser.do" class="form-horizontal" id="registerfrom"
+                <form action="/user/adduser.do" class="form-horizontal" id="registerfrom"
                       role="form">
                     <div class="form-group" id="vilidatezhanghao">
                         <label for="username" class="col-sm-2 control-label">用户名</label>
@@ -345,20 +345,20 @@
 </div>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/SSM/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script src="/SSM/assets/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="/assets/vendor/metisMenu/metisMenu.min.js"></script>
 
 <!-- DataTables JavaScript -->
-<script src="/SSM/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script
-        src="/SSM/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        src="/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 <script
-        src="/SSM/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
+        src="/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/SSM/assets/dist/js/sb-admin-2.js"></script>
+<script src="/assets/dist/js/sb-admin-2.js"></script>
 </body>
 
 </html>

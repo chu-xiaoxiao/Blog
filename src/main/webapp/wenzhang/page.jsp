@@ -12,13 +12,13 @@
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="/SSM//dist/css/wangEditor.min.css">
-  
+  <link rel="stylesheet" type="text/css" href="/dist/css/wangEditor.min.css">
+
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-  <script type="text/javascript" src="/SSM/js/jquery.js"></script>
+  <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -28,13 +28,13 @@
 										function() {
 											var nextPage = ${page.currentPage};
 											if (nextPage >= ${page.allPage}) {
-												$("#form1").attr("action","/SSM/wenzhang/findByPage.do?currentPage=${page.allPage}");
+												$("#form1").attr("action","/wenzhang/findByPage.do?currentPage=${page.allPage}");
 												$("#currentPage").attr("value","${page.allPage}");
 											} else {
 												$("#form1")
 														.attr(
 																"action",
-																"/SSM/wenzhang/findByPage.do?currentPage=${page.currentPage+1}");
+																"/wenzhang/findByPage.do?currentPage=${page.currentPage+1}");
 												$("#currentPage").attr("value","${page.currentPage+1}");
 											}
 											$("#form1").submit();
@@ -46,13 +46,13 @@
 											if (lastPage <= 1) {
 												$("#form1")
 														.attr("action",
-																"/SSM/wenzhang/findByPage.do?currentPage=1");
+																"/wenzhang/findByPage.do?currentPage=1");
 												$("#currentPage").attr("value","1");
 											} else {
 												$("#form1")
 														.attr(
 																"action",
-																"/SSM/wenzhang/findByPage.do?currentPage=${page.currentPage-1}");
+																"/wenzhang/findByPage.do?currentPage=${page.currentPage-1}");
 												$("#currentPage").attr("value","${page.currentPage-1}");
 											}
 											$("#form1").submit();
@@ -63,7 +63,7 @@
 				$("#currentPage").change(function() {
 							$("#fom1").submit();
 						});
-						
+
 					})
 </script>
 </head>
@@ -78,9 +78,9 @@
       <div id="menubar">
         <ul id="menu">
           <!-- put class="current" in the li tag for the selected page - to highlight which page you're on -->
-          <li><a href="/SSM/index.jsp">Home</a></li>
+          <li><a href="/index.jsp">Home</a></li>
           <li class="current"><a href="page.html">A Page</a></li>
-          <li><a href="/SSM/wenzhang/randWenZhang.do">Rand A Page</a></li>
+          <li><a href="/wenzhang/randWenZhang.do">Rand A Page</a></li>
           <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
@@ -90,13 +90,13 @@
         <img class="paperclip" src="style/paperclip.png" alt="paperclip" />
         <div class="sidebar">
         <!-- insert your sidebar items here -->
-       <img src="/SSM/imgs/touxiang.png"  src="/SSM/imgs/touxiang.png" width="200px" height="200px">
+       <img src="/imgs/touxiang.png"  src="/imgs/touxiang.png" width="200px" height="200px">
         </div>
         <img class="paperclip" src="style/paperclip.png" alt="paperclip" />
         <div class="sidebar">
           <h3>Newsletter</h3>
           <p>If you would like to receive our newletter, please enter your email address and click 'Subscribe'.</p>
-          					<form action="/SSM/wenzhang/findByPage2.do" method="post" id="fom1">
+          					<form action="/wenzhang/findByPage2.do" method="post" id="fom1">
 						<p style="padding: 0 0 9px 0;">
 							文章标题<input type="text" class="search" name="wenzhangbiaoti"
 								value="${page.wenZhangSearch.name}" /> 文章类型<input type="text"

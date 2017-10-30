@@ -35,7 +35,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-----start-search-bar-section--------->
 			<div class="buttom"> 
 				<div class="seach_bar">
-					<p>you can go to <span><a href="/SSM/Houtai/index.do">home</a></span> page or search here</p>
+					<p>you can go to <span><a href="/Houtai/index.do">home</a></span> page or search here</p>
 					<!-----start-sear-box--------->
 					<div class="search_box">
 					<form>
