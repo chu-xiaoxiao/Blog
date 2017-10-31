@@ -6,6 +6,7 @@
 			+ path + "/";
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -186,13 +187,15 @@ $(function(){
                     <span style="float:right" ><input type="button" value="导出至xls" class="btn btn-primary" id="exportxls"></span>
                     <div id="exportalert"></div>
 				</form>
-				<hr class="dirver"/>
-				<form action="/Houtai/updataJuzi.do" role="form">
-					<div class="form-group">
-						<label for="name"> 爬取网站</label> <input name="juziurl" type="text" class="form-control" />
-					</div>
-					<input type="submit" value="爬取" class="btn btn-primary">
-				</form>
+				<shiro:hasRole name="administrator">
+					<hr class="dirver"/>
+					<form action="/Houtai/updataJuzi.do" role="form">
+						<div class="form-group">
+							<label for="name"> 爬取网站</label> <input name="juziurl" type="text" class="form-control" />
+						</div>
+						<input type="submit" value="爬取" class="btn btn-primary">
+					</form>
+				</shiro:hasRole>
 			</div>
 			<!-- 条件查询 -->
 			<div></div>

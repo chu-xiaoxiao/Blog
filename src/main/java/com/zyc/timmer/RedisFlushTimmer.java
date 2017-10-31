@@ -2,20 +2,17 @@ package com.zyc.timmer;
 
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.SpiderUtil;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import us.codecraft.webmagic.Spider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import java.io.IOException;
 import java.util.TimerTask;
 
 /**
  * Created by YuChen Zhang on 17/09/26.
  */
 public class RedisFlushTimmer extends TimerTask {
-    Logger logger = LogManager.getLogger(RedisFlushTimmer.class);
+    private static Logger logger = LogManager.getLogger(RedisFlushTimmer.class);
     private ServletContext servletContext;
     private static boolean isRunning = false;
 

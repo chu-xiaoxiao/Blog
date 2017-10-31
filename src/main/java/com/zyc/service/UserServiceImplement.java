@@ -6,9 +6,10 @@ import com.zyc.mapper.UsertoroleMapper;
 import com.zyc.model.Role;
 import com.zyc.model.UserExample;
 import com.zyc.model.Usertorole;
+import com.zyc.util.CRDU;
 import com.zyc.util.LogAop;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -24,7 +25,7 @@ import java.util.List;
 @Service("userServiceImplement")
 @Transactional
 public class UserServiceImplement implements UserService{
-    Logger logger = LogManager.getLogger(UserService.class);
+    private static Logger logger = LogManager.getLogger(UserService.class);
 
 	@Resource
 	public UserMapper userMapper;
@@ -46,6 +47,7 @@ public class UserServiceImplement implements UserService{
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
+	@LogAop(tableName = "user",CRDU = CRDU.Insert,logRecord = "注册用户")
 	public int insertuUser(User user) {
 
 		//注册用户
@@ -77,6 +79,7 @@ public class UserServiceImplement implements UserService{
 
 	@Override
 	@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+	@LogAop(tableName = "user",CRDU = CRDU.Update,logRecord = "修改用户信息")
 	public void modifyUserInfo(User user) {
 		userMapper.updateByPrimaryKeySelective(user);
 	}

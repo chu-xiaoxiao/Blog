@@ -67,6 +67,7 @@ public class UserController {
         role.setRoleid(3);
         user = userService.findByName(user.getUsername());
         roleService.authorization(user,role);
+        session.setAttribute("user",user);
         modelAndView.setViewName("redirect:/index.jsp");
         return modelAndView;
     }

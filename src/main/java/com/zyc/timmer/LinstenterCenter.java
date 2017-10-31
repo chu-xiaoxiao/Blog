@@ -1,8 +1,8 @@
 package com.zyc.timmer;
 
 import com.zyc.spider.SpiderUtil;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,7 +14,7 @@ import java.util.Timer;
  */
 public class LinstenterCenter implements ServletContextListener {
     private Timer timer = new Timer(true);;
-    Logger logger = LogManager.getLogger(LinstenterCenter.class);
+    private static Logger logger = LogManager.getLogger(LinstenterCenter.class);
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         timer =  new Timer(true);

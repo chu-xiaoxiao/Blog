@@ -9,8 +9,9 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.JedisURIHelper;
 
@@ -23,7 +24,7 @@ import java.util.*;
 
 public class NewsSpider {
 
-    Logger logger = LogManager.getLogger(NewsSpider.class);
+    private static Logger logger = LogManager.getLogger(NewsSpider.class);
 
     /**
      * 新浪新闻api爬取

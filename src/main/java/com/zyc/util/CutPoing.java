@@ -5,6 +5,8 @@ import com.zyc.model.Logrecord;
 import com.zyc.model.User;
 import com.zyc.service.LogRecordService;
 import org.aopalliance.intercept.Joinpoint;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,6 +30,8 @@ import java.lang.reflect.Method;
 @Component("cutPoing")
 public class CutPoing {
 
+    private static Logger logger = LogManager.getLogger(CutPoing.class);
+
     @Autowired
     @Qualifier("logRecordServiceImplements")
     LogRecordService logRecordService;
@@ -39,11 +43,11 @@ public class CutPoing {
 
     @Around( "execution(* com.zyc.service.*.* (..))")
     public Object doAround(ProceedingJoinPoint joinpoint){
-        System.out.println("日志aop开始========");
+        logger.info("日志aop开始========");
         Object result = null;
         try {
              result = joinpoint.proceed();
-            System.out.println("日志aop结束======");
+            logger.info("日志aop结束======");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

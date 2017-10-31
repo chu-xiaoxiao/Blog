@@ -10,8 +10,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -36,7 +37,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 @Component("juZiSpider")
 public class JuZiSpider implements JuziService,PageProcessor{
 
-    Logger logger = LogManager.getLogger(JuZiSpider.class);
+    private static Logger logger = LogManager.getLogger(JuZiSpider.class);
 
 	private Site site = Site.me()
 			.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")

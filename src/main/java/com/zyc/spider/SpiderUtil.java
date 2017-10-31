@@ -2,8 +2,9 @@ package com.zyc.spider;
 
 import com.zyc.util.JedisPoolUtil;
 import com.zyc.util.MyException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;

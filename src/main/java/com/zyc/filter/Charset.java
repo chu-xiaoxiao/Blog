@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.zyc.model.Ip;
 import com.zyc.service.IPService;
 import com.zyc.util.IPUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Component;
 		}
 					, urlPatterns = { "/*" }, servletNames = { "springMVC" })
 public class Charset implements Filter {
-
+	private static Logger logger = LogManager.getLogger(Charset.class);
     @Autowired
     @Qualifier("iPServiceImplements")
     private IPService iPservice;
@@ -60,7 +61,7 @@ public class Charset implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-        Logger logger = LogManager.getLogger(Charset.class);
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		HttpServletRequest request1 = (HttpServletRequest) request;

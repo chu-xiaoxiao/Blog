@@ -9,10 +9,12 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import ch.qos.logback.classic.db.names.TableName;
 import com.zyc.mapper.WenzhangMapper;
 import com.zyc.model.*;
 import com.zyc.util.CRDU;
 import com.zyc.util.LogAop;
+import javafx.scene.control.Tab;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,7 @@ public class WenzhangServiceImplements implements WenzhangService{
 
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
+	@LogAop(tableName = "wenzhang",CRDU = CRDU.Insert,logRecord = "添加文章")
 	public int addWenzhang(Wenzhang wenzhang, User user) {
 	    wenzhang.setWenzhangauthor(user.getId());
 		return wenzhangMapper.insertSelective(wenzhang);
@@ -44,6 +47,7 @@ public class WenzhangServiceImplements implements WenzhangService{
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
+    @LogAop(tableName = "wenzhang",CRDU = CRDU.Delete,logRecord = "删除文章")
 	public void deleteWenzhang(Integer id,User user) {
         wenzhangMapper.deleteByPrimaryKey(id);
 	}

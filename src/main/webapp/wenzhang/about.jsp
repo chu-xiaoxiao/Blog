@@ -86,6 +86,11 @@
 				</div>
 			</div>
 
+			<!-- UY BEGIN -->
+			<div id="uyan_frame"></div>
+			<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2133305"></script>
+			<!-- UY END -->
+
 			<jsp:include page="/wenzhang/ourservice.html"></jsp:include>
 
 			<div class="fh5co-narrow-content">

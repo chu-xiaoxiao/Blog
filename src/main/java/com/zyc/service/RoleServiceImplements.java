@@ -5,8 +5,9 @@ import com.zyc.mapper.UserMapper;
 import com.zyc.mapper.UsertoroleMapper;
 import com.zyc.model.*;
 import com.zyc.util.MyException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Service("roleServiceImplements")
 public class RoleServiceImplements implements  RoleService {
-    Logger logger = LogManager.getLogger(RoleService.class);
+    private static Logger logger = LogManager.getLogger(RoleService.class);
     @Autowired
     RoleMapper roleMapper;
 

@@ -2,8 +2,8 @@ package com.zyc.spider;
 
 import com.zyc.util.HttpclientUtil;
 import com.zyc.util.JedisPoolUtil;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class TodayInHistorySpider {
     private String getDocumentFrom;
-    private Logger logger = LogManager.getLogger(TodayInHistorySpider.class);
+    private static Logger logger = LogManager.getLogger(TodayInHistorySpider.class);
     private static List<Map.Entry<String,String>> todayInHistorySpider;
     /**
      * 从uri中获取历史上今天的数据
