@@ -5,10 +5,7 @@ import com.zyc.model.User;
 import com.zyc.service.RoleService;
 import com.zyc.service.UserService;
 import com.zyc.service.WenzhangService;
-import com.zyc.util.EncodeMD5;
-import com.zyc.util.MailUtil;
-import com.zyc.util.MyException;
-import com.zyc.util.VerifyCodeUtils;
+import com.zyc.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -107,9 +104,6 @@ public class UserController {
 		Subject subject = SecurityUtils.getSubject();
 		//检测验证码是否正确
 		Session session = subject.getSession();
-		//清除可能存在原有的权限
-        session.setAttribute("roles",null);
-        session.setAttribute("powers",null);
 		String verifyCode = ((String) session.getAttribute("veudyCode")).toLowerCase();
 		if(!verifyCode.equals(veudyCode.toLowerCase())){
 			modelAndView.setViewName("/user/logIn");
@@ -219,7 +213,7 @@ public class UserController {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} 
-                        output.print(path+"/"+user.getId()+user.getUsername()+".png");
+                        output.print(path+"/"+user.getId()+user.getUsername()+".png?"+new Date().getTime());
                     }  
                 }  
             }  
