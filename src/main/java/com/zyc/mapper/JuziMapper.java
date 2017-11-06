@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.zyc.model.Juzi;
 import com.zyc.model.JuziExample;
 import com.zyc.model.JuziTypeKey;
+import org.springframework.stereotype.Repository;
+
 
 public interface JuziMapper {
     int countByExample(JuziExample example);

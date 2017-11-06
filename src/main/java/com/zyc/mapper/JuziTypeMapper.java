@@ -5,6 +5,7 @@ import com.zyc.model.JuziTypeExample;
 import com.zyc.model.JuziTypeKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 public interface JuziTypeMapper {
     int countByExample(JuziTypeExample example);
