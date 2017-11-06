@@ -270,21 +270,32 @@
             <artifactId>shiro-ehcache</artifactId>
             <version>1.2.2</version>
         </dependency>
+        <!-- shiro-cas集成依赖包 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-cas</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core -->
+        <dependency>
+            <groupId>org.jasig.cas.client</groupId>
+            <artifactId>cas-client-core</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+
+        <!--ehcache 缓存以及shiro缓存依赖-->
+        <dependency>
+            <artifactId>ehcache-core</artifactId>
+            <groupId>net.sf.ehcache</groupId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>1.2.2</version>
+        </dependency>
         <!--shior 以及shiro spring 依赖 end-->
-        <!--mybatic generator 分页 start-->
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.2</version>
-            <type>jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-        <!--mybatic generator 分页 end-->
+
         <!--java mail start-->
         <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
         <dependency>

@@ -3,9 +3,11 @@
 <configuration status="warn">
 
     <appenders>
-        <console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
-
+        <console  name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="GBK" pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
         </console>
 
         <RollingFile name="RollingFileInfo" fileName="${sys:catalina.home}/logs/hpaasvc/info.log"
@@ -50,7 +52,6 @@
         <!--过滤掉spring和hibernate的一些无用的debug信息-->
         <logger name="org.springframework" level="INFO" />
         <logger name="org.hibernate" level="INFO" />
-        <logger name="Console" level="INFO"/>
         <root level="all">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>

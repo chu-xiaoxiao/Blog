@@ -91,34 +91,15 @@ public class WenZhangController {
 	 * @throws IOException
 	 */
 
-	@RequestMapping(value = { "/wenzhang/index.**", "/wenzhang/blogs.**" })
+	@RequestMapping(value = { "/wenzhang/index.do" })
 	public ModelAndView finWenZhangByPageIndex(HttpServletRequest request) throws IOException {
 		User user = (User) request.getSession().getAttribute("user");
 		ModelAndView modelAndView = new ModelAndView();
-		WenzhangExample wenzhangExample = new WenzhangExample();
-		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
-        if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
-            criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
-        }
-        if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
-			criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
-        }
-        wenzhangExample.getOredCriteria().add(criteria);
-        Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
-		page = wenzhangService.findWenzhangBySearch(page,user);
-		modelAndView.addObject("page",page);
-        modelAndView.addObject("wenzhangbiaoti",request.getParameter("wenzhangbiaoti"));
-        modelAndView.addObject("wenzhangleixing",request.getParameter("wenzhangleixing"));
 		/*
 		 * 加载配置文件显示主页的图片以及图片对应文字
 		 */
 		if (request.getRequestURL().toString().contains("index")) {
 			Properties properties = new Properties();
-			/*
-			 * properties.load(new
-			 * InputStreamReader(request.getServletContext().getResourceAsStream
-			 * ("/WEB-INF/index.properties"), "utf-8"));
-			 */
 			File file = new File("/home/imgs/conf/index.properties");
 			if (!file.exists()) {
 				System.out.println(file.getAbsolutePath());
@@ -134,15 +115,31 @@ public class WenZhangController {
 			for (Object s : properties.keySet()) {
 				juzis.put((String) s, new String(properties.get(s).toString().getBytes(), "utf-8"));
 			}
-			modelAndView.setViewName("/wenzhang/index");
 			modelAndView.addObject("juzis", juzis);
 		}
-		if (request.getRequestURL().toString().contains("blog")) {
-			modelAndView.setViewName("/wenzhang/blog");
-		}
+		modelAndView.setViewName("/wenzhang/index");
 		return modelAndView;
 	}
-
+	@RequestMapping("/wenzhang/blogs.do")
+	public ModelAndView blogs(HttpServletRequest request,ModelAndView modelAndView){
+		User user = (User) request.getSession().getAttribute("user");
+		WenzhangExample wenzhangExample = new WenzhangExample();
+		WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+		if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
+			criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
+		}
+		if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
+			criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
+		}
+		wenzhangExample.getOredCriteria().add(criteria);
+		Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
+		page = wenzhangService.findWenzhangBySearch(page,user);
+		modelAndView.addObject("page",page);
+		modelAndView.addObject("wenzhangbiaoti",request.getParameter("wenzhangbiaoti"));
+		modelAndView.addObject("wenzhangleixing",request.getParameter("wenzhangleixing"));
+		modelAndView.setViewName("/wenzhang/blog");
+		return modelAndView;
+	}
 	/**
 	 * 某一篇文章的详细内容
 	 * 
