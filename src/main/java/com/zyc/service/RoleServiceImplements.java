@@ -37,7 +37,7 @@ public class RoleServiceImplements implements  RoleService {
         //获取用户
         User user = new User();
         UserExample userExample = new UserExample();
-        userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(username));
+        userExample.createCriteria().andUsernameEqualTo(username);
         List<User> users = userMapper.selectByExample(userExample);
         if(users.size()>0) {
             user = users.get(0);
@@ -46,7 +46,7 @@ public class RoleServiceImplements implements  RoleService {
         }
         //查询当前用户所拥有的角色
         UsertoroleExample usertoroleExample = new UsertoroleExample();
-        usertoroleExample.getOredCriteria().add(usertoroleExample.createCriteria().andUseridEqualTo(user.getId()));
+        usertoroleExample.createCriteria().andUseridEqualTo(user.getId());
         List<Usertorole> usertoroles = usertoroleMapper.selectByExample(usertoroleExample);
         List<Integer> roleid = new ArrayList<Integer>();
         for(Usertorole temp : usertoroles){
@@ -55,7 +55,7 @@ public class RoleServiceImplements implements  RoleService {
 
         List<Role> roles = new ArrayList<Role>();
         RoleExample roleExample = new RoleExample();
-        roleExample.getOredCriteria().add(roleExample.createCriteria().andRoleidIn(roleid));
+        roleExample.createCriteria().andRoleidIn(roleid);
         roles = roleMapper.selectByExample(roleExample);
         return roles;
     }
@@ -72,7 +72,7 @@ public class RoleServiceImplements implements  RoleService {
         Usertorole usertorole = new Usertorole();
         //根据注册用户查询id
         UserExample userExample = new UserExample();
-        userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(user.getUsername()));
+        userExample.createCriteria().andUsernameEqualTo(user.getUsername());
         User user1 = userMapper.selectByExample(userExample).get(0);
         //根据id封装权限
         usertorole.setUserid(user.getId());

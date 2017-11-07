@@ -27,7 +27,7 @@ public class CityServiceImplement implements CityService{
             throw new MyException("暂不支持国外城市区级查询");
         }
         CityExample cityExample = new CityExample();
-        cityExample.getOredCriteria().add(cityExample.createCriteria().andParentidEqualTo(city.getId()));
+        cityExample.createCriteria().andParentidEqualTo(city.getId());
         return cityMapper.selectByExample(cityExample);
     }
 

@@ -1,6 +1,7 @@
 package com.zyc.filter;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.zyc.model.Ip;
 import com.zyc.service.IPService;
 import com.zyc.util.IPUtils;
+import net.sf.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Logger;
@@ -71,7 +73,14 @@ public class Charset implements Filter {
 			request1.getSession().setAttribute("temp", 1);
 			Ip ip = new Ip();
 			ip.setIp(request.getRemoteAddr());
-			iPservice.addIP(ip);
+			if(!IPUtils.isLoopbackaddress(ip.getIp())) {
+				ip.setDate(new Date());
+				JSONObject ipLocal = IPUtils.getLocationByGode(ip.getIp());
+				ip.setLocation(ipLocal.get(ipLocal.get("adcode")+"province")+","+ipLocal.get("city"));
+				ip.setX(ipLocal.get("rectangle").toString().split(";")[0]);
+				ip.setY(ipLocal.get("rectangle").toString().split(";")[1]);
+				iPservice.addIP(ip);
+			}
 		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

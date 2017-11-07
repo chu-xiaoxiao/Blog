@@ -83,13 +83,26 @@ public class IPUtils {
      * @throws IOException
      */
 	public static JSONObject getLocationByGode(String ip) throws IOException {
-        if(ip.contains("0:0:0:0:0:0:0:1")||ip.contains("127")){
-            return null;
-        }
+		if(IPUtils.isLoopbackaddress(ip)){
+			return null;
+		}
         HttpclientUtil httpclientUtil = new HttpclientUtil();
         String result = httpclientUtil.getDocumentFromUriGet("http://restapi.amap.com/v3/ip?key=5e6c1c249358728248c5acef46ba179c&ip="+ip);
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(result);
         return jsonObject;
     }
+
+	/**
+	 * 判断是否为本机回环地址
+	 * @param ip
+	 * @return
+	 */
+    public static boolean isLoopbackaddress(String ip){
+		if(ip.contains("0:0:0:0:0:0:0:1")||ip.contains("127")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

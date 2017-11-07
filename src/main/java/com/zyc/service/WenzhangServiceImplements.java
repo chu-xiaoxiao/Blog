@@ -76,7 +76,7 @@ public class WenzhangServiceImplements implements WenzhangService{
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public Integer countWenzhang(User user) {
 	    WenzhangExample wenzhangExample = new WenzhangExample();
-	    wenzhangExample.getOredCriteria().add(wenzhangExample.createCriteria().andWenzhangauthorEqualTo(user.getId()));
+	   wenzhangExample.createCriteria().andWenzhangauthorEqualTo(user.getId());
 		return Math.toIntExact(wenzhangMapper.countByExample(wenzhangExample));
 	}
 }	

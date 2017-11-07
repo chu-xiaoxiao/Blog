@@ -131,7 +131,6 @@ public class WenZhangController {
 		if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
 			criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
 		}
-		wenzhangExample.getOredCriteria().add(criteria);
 		Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
 		page = wenzhangService.findWenzhangBySearch(page,user);
 		modelAndView.addObject("page",page);

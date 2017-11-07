@@ -30,7 +30,7 @@ public class PowerServiceImplements implements  PowerService{
         }
         //获取当前用户角色的所有权限id
         RoletopowerExample roletopowerExample = new RoletopowerExample();
-        roletopowerExample.getOredCriteria().add(roletopowerExample.createCriteria().andRoleidIn(roleid));
+        roletopowerExample.createCriteria().andRoleidIn(roleid);
         List<Roletopower> roletopowers = roletopowerMapper.selectByExample(roletopowerExample);
         List<Integer> poserid = new ArrayList<Integer>();
         for(Roletopower temp : roletopowers){
@@ -38,7 +38,7 @@ public class PowerServiceImplements implements  PowerService{
         }
         //根据id获取所有的权限
         PowerExample powerExample = new PowerExample();
-        powerExample.getOredCriteria().add(powerExample.createCriteria().andPoweridIn(poserid));
+        powerExample.createCriteria().andPoweridIn(poserid);
         List<Power> powers = powerMapper.selectByExample(powerExample);
 
         return powers;

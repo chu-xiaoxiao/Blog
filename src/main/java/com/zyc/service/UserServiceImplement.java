@@ -59,14 +59,14 @@ public class UserServiceImplement implements UserService{
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public User logIn(User user) {
 		UserExample userExample = new UserExample();
-		userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(user.getUsername()).andUserpasswordEqualTo(user.getUserpassword()));
+		userExample.createCriteria().andUsernameEqualTo(user.getUsername()).andUserpasswordEqualTo(user.getUserpassword());
 		return userMapper.selectByExample(userExample).get(0);
 	}
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
     public User findByName(String name) {
 		UserExample userExample = new UserExample();
-		userExample.getOredCriteria().add(userExample.createCriteria().andUsernameEqualTo(name));
+		userExample.createCriteria().andUsernameEqualTo(name);
 		List<User> result =  userMapper.selectByExample(userExample);
 		User user = null;
 		if(result.size()>0){

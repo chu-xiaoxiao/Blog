@@ -24,7 +24,7 @@ public class DownloadController {
      * @param request
      * @param filename
      * @return
-     * @throws IOException
+     * @throws IOExceptioncreateCriteria
      */
     @RequestMapping(value = "/download/home/imgs/file/{pathbiaoti}/{path}.*")
     public void download(HttpServletResponse response, @PathVariable("pathbiaoti") String pathbiaoti,

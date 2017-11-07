@@ -31,7 +31,8 @@ public class JuZiPipeline implements Pipeline,JuZiPipelineI{
 		List<Juzi> juzis = (List<Juzi>)arg0.get("juziResult");
 		JuziTypeKey juziType = (JuziTypeKey)arg0.get("juziType");
 	    JuziTypeExample juziTypeExample = new JuziTypeExample();
-	    juziTypeExample.getOredCriteria().add(juziTypeExample.createCriteria().andLeixingmingEqualTo(juziType.getLeixingming()));
+
+	    JuziTypeExample.Criteria criteria = juziTypeExample.createCriteria().andLeixingmingEqualTo(juziType.getLeixingming());
 	    if(juziTypeMapper.selectByExample(juziTypeExample).size()>0){
 	    	juziType = juziTypeMapper.selectByExample(juziTypeExample).get(0);
 	    }else{
