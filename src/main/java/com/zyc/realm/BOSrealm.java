@@ -72,7 +72,7 @@ public class BOSrealm extends CasRealm implements Serializable {
         List<Role> roles = null;
         try {
             roles = roleService.getRolesByUserName(user.getUsername());
-        } catch (MyException e) {
+        }  catch (MyException e) {
             e.printStackTrace();
         }
         //根据用户角色授权操作

@@ -10,7 +10,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>墨染琉璃殇-后台管理</title>
+	<title>${sessionScope.user.usernickname}-后台管理页面</title>
 <link
 	href="/css/bootstrap.css"
 	rel="stylesheet" />

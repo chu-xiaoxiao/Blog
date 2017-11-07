@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <title>${sessionScope.user.usernickname}-后台管理页面</title>
     <!-- Bootstrap Core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
           rel="stylesheet">
@@ -47,7 +47,7 @@
     <script type="text/javascript" src="/dist/js/wangEditor.js"></script>
     <script type="text/javascript" src="/js/dateFormat.js"></script>
     <script type="text/javascript">
-        function init(){
+        function init() {
             $.ajax({
                 method: "get",
                 url: "/Houtai/getOS.do",
@@ -61,7 +61,7 @@
                     $("#JVMmessage").append("<div>JVM版本:" + data.JVMInfo.jvm_version + "</div>");
                     $("#JVMmessage").append("<div>JVM启动时间:" + TimeObjectUtil.longMsTimeConvertToDateTime(data.JVMInfo.jvm_start_time) + "</div>");
                     $("#JVMmessage").append("<div>JVMClassPath:</div>");
-                    $.each(strTemp,function(i,n){
+                    $.each(strTemp, function (i, n) {
                         $("#JVMmessage").append("<div>--" + n + "</div>");
                     });
                     $("#OSmessage").append("<div>操作系统架构:" + data.OSInfo.Architecture + "</div>");
@@ -82,10 +82,10 @@
                     $("#memoryMessage").append("<div>JVM内存初值:" + data.JvmMemoryInfo.init / 1024 / 1024 + "M</div>");
                     $("#memoryMessage").append("<div>JVM内存最大值:" + data.JvmMemoryInfo.max / 1024 / 1024 + "M</div>");
                     $("#memoryMessage").append("<div>JVM内存当前使用量:" + (data.JvmMemoryInfo.used / 1024 / 1024).toFixed(2) + "M</div>");
-                    $("#memoryBar").attr("aria-valuenow",data.JvmMemoryInfo.used);
-                    $("#memoryBar").attr("aria-valuemax",data.JvmMemoryInfo.max);
-                    $("#memoryBar").css("width",(data.JvmMemoryInfo.used/data.JvmMemoryInfo.max)*100+"%");
-                    $("#printMemroy").text(((data.JvmMemoryInfo.used/data.JvmMemoryInfo.max)*100).toFixed(2)+"% Complete")
+                    $("#memoryBar").attr("aria-valuenow", data.JvmMemoryInfo.used);
+                    $("#memoryBar").attr("aria-valuemax", data.JvmMemoryInfo.max);
+                    $("#memoryBar").css("width", (data.JvmMemoryInfo.used / data.JvmMemoryInfo.max) * 100 + "%");
+                    $("#printMemroy").text(((data.JvmMemoryInfo.used / data.JvmMemoryInfo.max) * 100).toFixed(2) + "% Complete")
                 }
             });
         }
@@ -132,7 +132,8 @@
                         <strong>内存使用量</strong>
                         <span class="pull-right text-muted" id="printMemroy">40% Complete</span>
                         <div class="progress progress-striped active">
-                            <div class="progress-bar progress-bar-sakura" role="progressbar" aria-valuenow="" aria-valuemin="0"
+                            <div class="progress-bar progress-bar-sakura" role="progressbar" aria-valuenow=""
+                                 aria-valuemin="0"
                                  aria-valuemax="100" style="width: 0%" id="memoryBar">
                             </div>
                         </div>

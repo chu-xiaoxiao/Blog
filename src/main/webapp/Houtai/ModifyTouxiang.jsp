@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>Insert title here</title>
+    <title>${sessionScope.user.usernickname}-后台管理页面</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
@@ -103,7 +103,7 @@
         <div class="panel-heading">修改用户信息</div>
         <div class="panel-body">
             <form action="/user/modifyUserinfo.do" method="post" role="form">
-                <input type="hidden" name = "id" value="${sessionScope.user.id}">
+                <input type="hidden" name="id" value="${sessionScope.user.id}">
                 <div class="form-group">
                     <label for="usernickname" class="col-sm-2 control-label">用户昵称:</label>
                     <div class="col-lg-8">

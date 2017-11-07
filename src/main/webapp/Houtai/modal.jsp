@@ -1,3 +1,4 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!-- 添加文本模式框 -->
 	<div class="modal fade" id="myModa1" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">

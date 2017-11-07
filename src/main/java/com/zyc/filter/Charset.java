@@ -61,9 +61,8 @@ public class Charset implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-
-		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		HttpServletRequest request1 = (HttpServletRequest) request;
 		if(request1.getRequestURL().toString().contains("do")||request1.getRequestURL().toString().contains("action")){
 			logger.info("IP:"+IPUtils.getIpaddr(request1)+"\t"+request1.getRequestURL());

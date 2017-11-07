@@ -684,15 +684,10 @@ public class HoutaiController {
      * @return
      */
     @RequestMapping(value = "/modifywenzhangaction")
-    public ModelAndView modifyWenZhang(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView modifyWenZhang(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
     	User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         Wenzhang wenZhang = new Wenzhang();
-        wenZhang.setWenzhangneirong(request.getParameter("wenzhangneirong"));
+        wenZhang.setWenzhangneirong(new String(request.getParameter("wenzhangneirong").getBytes("iso-8859-1"),"UTF-8"));
         wenZhang.setWenzhangbiaoti(request.getParameter("wenzhangbiaoti"));
         wenZhang.setWenzhangleixing(request.getParameter("wenzhangleixing"));
         wenZhang.setWenzhangid(Integer.parseInt(request.getParameter("wenzhangid1")));

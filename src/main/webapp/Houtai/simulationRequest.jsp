@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <title>${sessionScope.user.usernickname}-后台管理页面</title>
     <!-- Bootstrap Core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
           rel="stylesheet">
@@ -49,21 +49,21 @@
         $(function () {
             $("#requestPost").click(function () {
                 var requestType = $("#requestType").val();
-                var params = "url="+$("#inputUrl").val();
+                var params = "url=" + $("#inputUrl").val();
                 var flag = true;
-                for(var i=1;i<=countpara;i++){
-                    if(flag){
-                        params+="%3F";
+                for (var i = 1; i <= countpara; i++) {
+                    if (flag) {
+                        params += "%3F";
                         flag = false;
                     }
-                    params+=($("#paramname"+i).val()+"="+$("#paramvalue"+i).val())+"%26";
+                    params += ($("#paramname" + i).val() + "=" + $("#paramvalue" + i).val()) + "%26";
                 }
                 if (requestType == "get") {
                     $.ajax({
                         url: "/webutil/simulationGet.do",
-                        data:params,
+                        data: params,
                         dataType: "json",
-                        type:"post",
+                        type: "post",
                         success: function (date) {
                             $("#resultResponse").val(JSON.stringify(date.result));
                         }
@@ -73,7 +73,7 @@
                         url: "/webutil/simulationPost.do",
                         data: params,
                         dataType: "json",
-                        type:"post",
+                        type: "post",
                         success: function (date) {
                             $("#resultResponse").val(JSON.stringify(date.result));
                         }
@@ -83,7 +83,7 @@
             })
             $("#addParam").click(function () {
                 countpara++;
-                $("#paramses").append('<label class="control-label">参数'+countpara+'</label> <div class="controls" > <input type="text" placeholder="输入参数名称" class="form-control" id="paramname'+countpara+'"> <input type="text" placeholder="输入参数值" class="form-control" id="paramvalue'+countpara+'"> </div>');
+                $("#paramses").append('<label class="control-label">参数' + countpara + '</label> <div class="controls" > <input type="text" placeholder="输入参数名称" class="form-control" id="paramname' + countpara + '"> <input type="text" placeholder="输入参数值" class="form-control" id="paramvalue' + countpara + '"> </div>');
             });
         });
     </script>
