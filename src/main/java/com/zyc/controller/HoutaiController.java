@@ -728,14 +728,13 @@ public class HoutaiController {
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         ModelAndView modelAndView = new ModelAndView();
         WenzhangExample wenzhangExample = new WenzhangExample();
-        WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+        wenzhangExample.createCriteria();
         if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
-            criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
+            wenzhangExample.getOredCriteria().get(0).andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
         }
         if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
-            criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
+			wenzhangExample.getOredCriteria().get(0).andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
         }
-        wenzhangExample.getOredCriteria().add(criteria);
         Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
         page = wenzhangService.findWenzhangBySearch(page,user);
         modelAndView.addObject("page",page);
@@ -758,15 +757,14 @@ public class HoutaiController {
     public void finWenZhangByPage2(HttpServletRequest request, HttpServletResponse response) throws net.sf.json.JSONException, ClientProtocolException, IOException {
         ModelAndView modelAndView = new ModelAndView();
         WenzhangExample wenzhangExample = new WenzhangExample();
-        WenzhangExample.Criteria criteria = wenzhangExample.createCriteria();
+		wenzhangExample.createCriteria();
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
         if(request.getParameter("wenzhangbiaoti")!=null&&!"".equals(request.getParameter("wenzhangbiaoti"))){
-            criteria.andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
+			wenzhangExample.getOredCriteria().get(0).andWenzhangbiaotiLike("%"+request.getParameter("wenzhangbiaoti")+"%");
         }
         if(request.getParameter("wenzhangleixing")!=null&&!"".equals(request.getParameter("wenzhangleixing"))) {
-            criteria.andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
+			wenzhangExample.getOredCriteria().get(0).andWenzhangleixingLike("%"+request.getParameter("wenzhangleixing")+"%");
         }
-        wenzhangExample.getOredCriteria().add(criteria);
         Page2<Wenzhang,WenzhangExample> page = new Page2<Wenzhang,WenzhangExample>(wenzhangExample,request.getParameter("currentPage"),request.getParameter("sieze"));
         page = wenzhangService.findWenzhangBySearch(page,user);
         modelAndView.addObject("page",page);
