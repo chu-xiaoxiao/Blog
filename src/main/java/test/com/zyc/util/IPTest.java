@@ -1,10 +1,12 @@
 package test.com.zyc.util;
 
 import com.zyc.mapper.IpMapper;
+import com.zyc.model.GroupCount;
 import com.zyc.model.Ip;
 import com.zyc.model.IpExample;
 import com.zyc.service.IPService;
 import com.zyc.util.IPUtils;
+import net.sf.ehcache.search.aggregator.Count;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -113,5 +115,13 @@ public class IPTest {
         String ip = "123.206.8.180";
         JSONObject jsonObject = IPUtils.getLocationByGode(ip);
         System.out.println(jsonObject);
+    }
+    @Test
+    public void testIpGorup(){
+        List<GroupCount> result = ipService.selectCountByContry();
+        for(GroupCount temp :result){
+            System.out.print((String)temp.getGroup());
+            System.out.println(temp.getCount());
+        }
     }
 }

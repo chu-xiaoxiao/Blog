@@ -76,7 +76,7 @@ public class Charset implements Filter {
 			if(!IPUtils.isLoopbackaddress(ip.getIp())) {
 				ip.setDate(new Date());
 				JSONObject ipLocal = IPUtils.getLocationByGode(ip.getIp());
-				ip.setLocation(ipLocal.get(ipLocal.get("adcode")+"province")+","+ipLocal.get("city"));
+				ip.setLocation(ipLocal.get("infocode")+","+ipLocal.get("province")+","+ipLocal.get("city"));
 				ip.setX(ipLocal.get("rectangle").toString().split(";")[0]);
 				ip.setY(ipLocal.get("rectangle").toString().split(";")[1]);
 				iPservice.addIP(ip);

@@ -1,5 +1,6 @@
 package com.zyc.mapper;
 
+import com.zyc.model.GroupCount;
 import com.zyc.model.Ip;
 import com.zyc.model.IpExample;
 import com.zyc.model.Ip_Date;
@@ -125,4 +126,6 @@ public interface IpMapper {
     int updateByPrimaryKey(Ip record);
 
     List<Ip_Date> selectCountByDay (Integer count);
+
+    List<GroupCount> selectCountByX();
 }

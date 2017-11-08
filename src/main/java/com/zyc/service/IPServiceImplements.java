@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.zyc.mapper.IpMapper;
-import com.zyc.model.Ip;
-import com.zyc.model.IpExample;
+import com.zyc.model.*;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zyc.model.Ip_Date;
-import com.zyc.model.Page2;
 import com.zyc.util.IPUtils;
 
 import net.sf.json.JSONException;
@@ -58,5 +55,11 @@ public class IPServiceImplements implements IPService {
     public void updateIPByKey(Ip ip) {
         iPMapper.updateByPrimaryKeySelective(ip);
     }
+
+	@Override
+	public List<GroupCount> selectCountByContry() {
+        List<GroupCount> result = iPMapper.selectCountByX();
+		return result;
+	}
 
 }

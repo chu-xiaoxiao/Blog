@@ -43,7 +43,7 @@ public class WenzhangServiceImplements implements WenzhangService{
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<Wenzhang> findAllWenzhang() {
-		return wenzhangMapper.selectByExample(new WenzhangExample());
+		return wenzhangMapper.selectByExampleLeftSub(new WenzhangExample());
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)

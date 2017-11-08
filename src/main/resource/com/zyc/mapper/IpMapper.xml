@@ -255,4 +255,7 @@
   <select id="selectCountByDay" parameterType="int" resultType="com.zyc.model.Ip_Date">
     select date,count(1) as count from IP  GROUP BY DATE_FORMAT(date,"%b %d %Y") order by date desc limit #{count}
   </select>
+  <select id="selectCountByX" resultType="com.zyc.model.GroupCount">
+    select CONCAT(x,"_",y) as 'group',count(1) as count from IP where x is not null group by x
+  </select>
 </mapper>
