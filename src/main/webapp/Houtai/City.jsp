@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${sessionScope.user.usernickname}-后台管理页面</title>
     <!-- Bootstrap Core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
@@ -170,22 +171,32 @@
 
 <body>
 <div id="wrapper">
-    <jsp:include page="nav.jsp"></jsp:include>
-</div>
-<div id="page-wrapper">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            省市区三级联动
+    <jsp:include page="/Houtai/nav.jsp" />
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">省市区三级联动</h1>
+            </div>
+            <!-- /.col-lg-12 -->
         </div>
-        <div class="panel-body">
-            <div class="table-responsive">
-                <form action="###" method="post" class="form-horizontal" role="form" id="cityLiandong">
-                    <select id="continent" class="form-control"></select>洲
-                    <select id="country" class="form-control"></select>国
-                    <select id="provinces" class="form-control"></select>省
-                    <select id="city" class="form-control"></select>市
-                    <select id="area" class="form-control"></select>区
-                </form>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    省市区三级联动
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <form action="###" method="post" class="form-horizontal" role="form" id="cityLiandong">
+                            <select id="continent" class="form-control"></select>洲
+                            <select id="country" class="form-control"></select>国
+                            <select id="provinces" class="form-control"></select>省
+                            <select id="city" class="form-control"></select>市
+                            <select id="area" class="form-control"></select>区
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
