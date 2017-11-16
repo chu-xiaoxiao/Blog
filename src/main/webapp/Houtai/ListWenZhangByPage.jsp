@@ -203,7 +203,7 @@
 
 <body>
 <div id="wrapper">
-<jsp:include page="nav.jsp"></jsp:include>
+<jsp:include page="includes/nav.jsp"></jsp:include>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -293,7 +293,7 @@
     <!-- /.panel -->
 </div>
 </div>
-<jsp:include page="modal.jsp"></jsp:include>
+<jsp:include page="includes/modal.jsp"></jsp:include>
 <!-- Bootstrap Core JavaScript -->
 <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 

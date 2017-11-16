@@ -38,7 +38,7 @@
 
     <!-- jQuery -->
     <script
-            src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+            src="/js/jquery.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -131,7 +131,7 @@
 <body>
 <div id="wrapper">
     <!-- Navigation -->
-    <jsp:include page="/Houtai/nav.jsp" />
+    <jsp:include page="/Houtai/includes/nav.jsp" />
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -408,7 +408,7 @@
                 <!-- /.panel -->
                 <!-- /.col-lg-8 -->
                 <!-- 聊天注入 -->
-                <jsp:include page="/Houtai/ibot.jsp"></jsp:include>
+                <jsp:include page="/Houtai/includes/ibot.jsp"></jsp:include>
             </div>
             <!-- /.col-lg-4 -->
         </div>

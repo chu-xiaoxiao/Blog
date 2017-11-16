@@ -274,7 +274,7 @@
                         </li>
                         <shiro:hasRole name="administrator">
                             <li>
-                                <a href="file.jsp">文件浏览</a>
+                                <a href="../Houtai/file.jsp">文件浏览</a>
                             </li>
                             <li>
                                 <a href="/Houtai/iplist.do">查看访问ip</a>

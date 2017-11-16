@@ -14,7 +14,7 @@
     <script type="text/javascript"
             src="http://webapi.amap.com/maps?v=1.4.0&key=06f4dc2a23f3e7e8a778f573d682e4f6"></script>
     <title>${sessionScope.user.usernickname}-后台管理页面</title>
-    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
+    <script src="/webapi.amap.com/ui/1.0/main.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
@@ -44,14 +44,14 @@
     <link rel="stylesheet" href="/css/fenye.css">
     <!-- <script src="/js/jquery.js"></script> -->
     <script
-            src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+            src="/js/jquery.js"></script>
     <script src="/js/jquery-confirm.js"></script>
     <script type="text/javascript">
         $(function () {
                 var map = new AMap.Map('container', {
                     resizeEnable: true,
-                    zoom: 11,
-                    center: [116.397428, 39.90923]
+                    zoom: 5,
+                    center: [106.866406,35.252902]
                 });
                  AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],
                 function(){
@@ -122,15 +122,15 @@
 
 <body>
 <div id="wrapper">
-    <jsp:include page="nav.jsp"></jsp:include>
+    <jsp:include page="includes/nav.jsp"></jsp:include>
 </div>
 <div id="page-wrapper">
     <div class="panel panel-default">
         <div class="panel-heading">
             ip访问分布
         </div>
-        <div class="panel-body">
-            <div id="container" style="width:1200px; height:800px"></div>
+        <div class="panel-body" style="padding-bottom: 50%">
+            <div id="container" style="width: 95%;padding-bottom: 95%; height: 0;"></div>
         </div>
     </div>
 </div>

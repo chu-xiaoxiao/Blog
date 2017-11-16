@@ -65,13 +65,20 @@ public class BOSrealm extends CasRealm implements Serializable {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
         String username = (String) principalCollection.getPrimaryPrincipal();
-        User user =userService.findByName(username);
+        User user =userService.findByPrimaryKey(Integer.parseInt(username));
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("user",user);
         //用户赋予角色操作
         List<Role> roles = null;
         try {
             roles = roleService.getRolesByUserName(user.getUsername());
+            if(roles==null||roles.size()==0){
+                Role role = new Role();
+                role.setRoleid(3);
+                roleService.authorization(user,role);
+                roles = new ArrayList<Role>();
+                roles.add(role);
+            }
         }  catch (MyException e) {
             e.printStackTrace();
         }

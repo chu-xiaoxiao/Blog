@@ -10,4 +10,5 @@ public interface UserService {
 	User logIn(User user);
 	User findByName(String name);
 	void modifyUserInfo(User user);
+	User findByPrimaryKey(Integer id);
 }

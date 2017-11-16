@@ -10,8 +10,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>${sessionScope.user.usernickname}-后台管理页面</title>
     <!-- Bootstrap Core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
@@ -69,7 +67,6 @@
                 $("#frompage").submit();
             });
             $("#exportxls").click(function () {
-
                 var flag = false;
                 if ($("#juzi").val() != "") {
                     flag = true;
@@ -97,11 +94,9 @@
                 input1.attr("name", "exportData");
                 input1.attr("value", (new Date()).getMilliseconds());
                 $("body").append(form);//将表单放置在web中
-
                 form.submit();//表单提交
                 $("#exportalert").attr("class", "alert alert-success alert-dismissable");
                 $("#exportalert").html('<strong>导出成功。。。。。</strong>');
-
             });
         });
     </script>
@@ -109,7 +104,7 @@
 
 <body>
 <div id="wrapper">
-    <jsp:include page="nav.jsp"></jsp:include>
+    <jsp:include page="includes/nav.jsp"></jsp:include>
 </div>
 <div id="page-wrapper">
     <div class="panel panel-default">

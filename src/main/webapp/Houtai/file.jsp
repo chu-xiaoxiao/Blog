@@ -59,7 +59,7 @@
     </script>
 </head>
 <body>
-<jsp:include page="/Houtai/nav.jsp"></jsp:include>
+<jsp:include page="/Houtai/includes/nav.jsp"></jsp:include>
 
 <!-- Page Content -->
 <div id="page-wrapper">

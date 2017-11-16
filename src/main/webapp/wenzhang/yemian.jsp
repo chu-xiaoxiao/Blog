@@ -16,7 +16,6 @@
 			   			<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
 			   				<div class="slider-text-inner">
 			   					<h1>${juzi.value }</h1>
-			   					<h2>By ZYC </h2>
 			   				</div>
 			   			</div>
 			   		</div>

@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="/wenzhang/mar/css/style.css">
 <!-- wangeditor --> 
 <link rel="stylesheet" type="text/css"
-	href="//dist/css/wangEditor.min.css">
+	href="/dist/css/wangEditor.min.css">
 <!-- Modernizr JS -->
 <script src="/wenzhang/mar/js/modernizr-2.6.2.min.js"></script>
 <!-- FOR IE9 below -->

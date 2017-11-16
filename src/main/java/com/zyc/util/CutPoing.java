@@ -41,7 +41,7 @@ public class CutPoing {
 
     }
 
-    @Around( "execution(* com.zyc.service.*.* (..))")
+/*    @Around( "execution(* com.zyc.service.*.* (..))")
     public Object doAround(ProceedingJoinPoint joinpoint){
         logger.info("日志aop开始========");
         Object result = null;
@@ -52,7 +52,7 @@ public class CutPoing {
             throwable.printStackTrace();
         }
         return result;
-    }
+    }*/
 
     @Around("execution(* com.zyc.service.*.* (..))&&@annotation(logAop)")
     public Object  doAroundWithParam(ProceedingJoinPoint joinPoint,LogAop logAop){

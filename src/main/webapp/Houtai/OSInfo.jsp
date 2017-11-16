@@ -1,5 +1,4 @@
-<%@page import="java.text.SimpleDateFormat" %>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ page language="java" pageEncoding="UTF-8" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -40,7 +39,7 @@
     <link rel="stylesheet" href="/css/fenye.css">
 
     <link rel="stylesheet" type="text/css"
-          href="//dist/css/wangEditor.min.css">
+          href="/dist/css/wangEditor.min.css">
     <!-- <script src="/js/jquery.js"></script> -->
     <script
             src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -103,7 +102,7 @@
 
 <body>
 <div id="wrapper">
-    <jsp:include page="nav.jsp"></jsp:include>
+    <jsp:include page="includes/nav.jsp"></jsp:include>
 </div>
 <div id="page-wrapper">
     <div class="row">
@@ -173,5 +172,6 @@
     <script src="/assets/dist/js/sb-admin-2.js"></script>
     <script type="text/javascript" src="/js/bootstrap-paginator.min.js"></script>
     <script src="/js/jqueryForm.js"></script>
+</div>
 </body>
 </html>
