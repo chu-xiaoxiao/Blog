@@ -7,49 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>${sessionScope.user.usernickname}-后台管理页面</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
-          rel="stylesheet">
-    <!-- MetisMenu CSS -->
-    <link href="/assets/vendor/metisMenu/metisMenu.min.css"
-          rel="stylesheet">
-
-    <!-- DataTables CSS -->
-    <link
-            href="/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
-            rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
-    <link
-            href="/assets/vendor/datatables-responsive/dataTables.responsive.css"
-            rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css"
-          rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="/css/jquery-confirm.css">
-    <link rel="stylesheet" href="/css/fenye.css">
-
-    <link rel="stylesheet" type="text/css"
-          href="/dist/css/wangEditor.min.css">
-    <!-- <script src="/js/jquery.js"></script> -->
-    <script
-            src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="/js/jquery-confirm.js"></script>
-
-    <script type="text/javascript" src="/dist/js/wangEditor.js"></script>
+    <jsp:include page="includes/basiccss.jsp"/>
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -60,6 +18,7 @@
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="/css/fileupload/Huploadify.css"/>
     <script src="/js/fileupload/jquery.Huploadify.js"></script>
+
     <script type="text/javascript">
         //修改富文本编辑器初始化
         $(function () {
@@ -294,22 +253,6 @@
 </div>
 </div>
 <jsp:include page="includes/modal.jsp"></jsp:include>
-<!-- Bootstrap Core JavaScript -->
-<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="/assets/vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- DataTables JavaScript -->
-<script src="/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script
-        src="/assets/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script
-        src="/assets/vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/assets/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="/js/bootstrap-paginator.min.js"></script>
-<script src="/js/jqueryForm.js"></script>
+<jsp:include page="includes/basicjs.jsp"/>
 </body>
 </html>

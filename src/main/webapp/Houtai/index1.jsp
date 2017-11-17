@@ -131,7 +131,7 @@
 <body>
 <div id="wrapper">
     <!-- Navigation -->
-    <jsp:include page="/Houtai/includes/nav.jsp" />
+    <jsp:include page="includes/nav.jsp" />
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">

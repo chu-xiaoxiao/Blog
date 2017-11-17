@@ -3,43 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>${sessionScope.user.usernickname}-后台管理页面</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css"
-          rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/assets/vendor/metisMenu/metisMenu.min.css"
-          rel="stylesheet">
-
-    <!-- DataTables CSS -->
-    <link
-            href="/assets/vendor/datatables-plugins/dataTables.bootstrap.css"
-            rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
-    <link
-            href="/assets/vendor/datatables-responsive/dataTables.responsive.css"
-            rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css"
-          rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="/css/jquery-confirm.css">
-    <link rel="stylesheet" href="/css/fenye.css">
-
-    <link rel="stylesheet" type="text/css" href="/css/fileupload/Huploadify.css"/>
-    <!-- <script src="/js/jquery.js"></script> -->
-    <script
-            src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="/js/jquery-confirm.js"></script>
+<jsp:include page="includes/basiccss.jsp"/>
     <script type="text/javascript">
         $(function () {
             $('#upload').Huploadify({
