@@ -1,10 +1,8 @@
-package com.zyc.util;
+package com.zyc.jedis;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
-import java.util.List;
 
 /**
  * Created by YuChen Zhang on 17/09/13.
