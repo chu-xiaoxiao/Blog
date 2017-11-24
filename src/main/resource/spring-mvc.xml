@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
@@ -20,6 +21,7 @@
     <context:component-scan base-package="com.zyc.spider" />
     <context:component-scan base-package="com.zyc.realm"/>
     <context:component-scan base-package="com.zyc.filter" />
+    <context:component-scan base-package="com.zyc.timmer" />
     <!--扫描包 end-->
     <!--自定义aop start-->
     <aop:aspectj-autoproxy/>
@@ -34,11 +36,11 @@
     <!--文件上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
+    <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
     <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
-        <property name="prefix" value="/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/"
+          p:suffix=".jsp"
+    />
 
 </beans>

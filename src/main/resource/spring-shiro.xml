@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath:shiro.properties" ignore-unresolvable="true"/>
     <!--注册自定义reaml-->
-    <bean id="bosRealm" class="com.zyc.realm.BOSrealm" >
-        <!--cas服务器地址-->
-        <property name="casServerUrlPrefix" value="${cas_service}" >
-        </property>
-        <!--回调地址-->
-        <property name="casService" value="${cas_client}/Houtai" />
-
-        <property name="cachingEnabled" value="true" />
-        <property name="authenticationCachingEnabled" value="true" />
-        <property name="authenticationCacheName" value="authenticationCache" />
-        <property name="authorizationCachingEnabled" value="true" />
-        <property name="authorizationCacheName" value="authorizationCache" />
-
-    </bean>
+    <!--cas服务器地址 casServerUrlPrefix-->
+    <!--回调地址 casService-->
+    <bean id="bosRealm" class="com.zyc.realm.BOSrealm"
+          p:casServerUrlPrefix="${cas_service}"
+          p:casService="${cas_client}/Houtai"
+          p:cachingEnabled="true"
+          p:authenticationCachingEnabled="true"
+          p:authenticationCacheName="authenticationCache"
+          p:authorizationCachingEnabled="true"
+          p:authorizationCacheName="authorizationCache"
+    />
 
     <!--注册安全管理器-->
+    <!--注入自定义realm-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"
+          p:realm-ref="bosRealm"
+          p:subjectFactory-ref="casSubjectFactory"
+          p:cacheManager-ref="shiroEhcacheManager"
+    />
 
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!--注入自定义realm-->
-        <property name="realm" ref="bosRealm"/>
-        <property name="subjectFactory" ref="casSubjectFactory" />
-        <property name="cacheManager" ref="shiroEhcacheManager"/>
-    </bean>
-
-    <bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory" />
+    <bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory"/>
 
     <!--配置shiroFIlter start-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -65,40 +61,37 @@
         <property name="filters">
             <map>
                 <!-- 添加casFilter到shiroFilter -->
-                <entry key="casFilter" value-ref="casFilter" />
-                <entry key="logout" value-ref="logout" />
+                <entry key="casFilter" value-ref="casFilter"/>
+                <entry key="logout" value-ref="logout"/>
             </map>
         </property>
-
     </bean>
 
-    <bean id="casFilter" class="org.apache.shiro.cas.CasFilter">
-        <!-- 配置验证错误时的失败页面 ，这里配置为登录页面 -->
-        <property name="failureUrl" value="${cas_service}/login?service=${cas_client}/Houtai" />
-    </bean>
+    <!-- 配置验证错误时的失败页面 ，这里配置为登录页面 -->
+    <bean id="casFilter" class="org.apache.shiro.cas.CasFilter"
+          p:failureUrl="${cas_service}/login?service=${cas_client}/Houtai"/>
+
     <!-- 退出登录过滤器 -->
-    <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-        <property name="redirectUrl" value="${cas_service}/logout?service=${cas_client}"/>
-    </bean>
+    <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter"
+          p:redirectUrl="${cas_service}/logout?service=${cas_client}"
+    />
     <!--配置shiroFIlter end-->
 
     <!--开启shiro注解 start-->
-    <bean id="defaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
-        <!--强制使用cglib创建action的代理对象-->
-        <property name="proxyTargetClass" value="true"/>
-    </bean>
+    <!--强制使用cglib创建action的代理对象-->
+    <bean id="defaultAdvisorAutoProxyCreator"
+          class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          p:proxyTargetClass="true"/>
+
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
           depends-on="lifecycleBeanPostProcessor"/>
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"
+          p:securityManager-ref="securityManager"/>
     <!--开启shiro注解 end-->
 
     <!-- 缓存管理器 使用Ehcache实现 -->
-    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <!--classpath是缓存属性的配置文件  -->
-        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
-    </bean>
+    <bean id="shiroEhcacheManager" class="com.zyc.realm.CustomCacheManager"/>
+
 </beans>
