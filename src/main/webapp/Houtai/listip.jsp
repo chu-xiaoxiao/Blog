@@ -125,5 +125,7 @@
     <!-- /#page-wrapper -->
 </div>
 <jsp:include page="includes/basicjs.jsp"/>
+<script type="text/javascript" src="/js/date/datedropper.min.js"></script>
+<script type="text/javascript" src="/js/date/timedropper.min.js"></script>
 </body>
 </html>
