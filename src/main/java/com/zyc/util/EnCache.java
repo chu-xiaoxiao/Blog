@@ -69,7 +69,7 @@ public class EnCache<K,V> implements Cache<K,V> {
     public Collection<Session> AllSession() throws Exception {
         Set<Session> sessions = new HashSet<Session>();
         try {
-            //TODO 注意事项：必须此缓存只存储Session，要不造成性能下降
+            //注意事项：必须此缓存只存储Session，要不造成性能下降
             cache = getCache();
             Collection<V> values = cache.values();
             for (V v : values) {

@@ -47,21 +47,18 @@ public class Charset implements Filter {
      * Default constructor. 
      */
     public Charset() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		// place your code here
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("UTF-8");

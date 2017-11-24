@@ -6,7 +6,6 @@ public class JuziTypeCount {
 
     public JuziTypeCount() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public JuziTypeCount(String leixingming, Integer count) {

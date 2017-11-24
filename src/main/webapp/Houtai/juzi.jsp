@@ -31,7 +31,9 @@
                 $("#frompage").attr("action", "/Houtai/listjuzi.do?currentpage=0&size=" + count);
                 $("#frompage").submit();
             });
+
             $("#exportxls").click(function () {
+
                 var flag = false;
                 if ($("#juzi").val() != "") {
                     flag = true;
@@ -49,19 +51,60 @@
                 }
                 $("#exportxls").attr("class", "btn btn-primary btn disabled");
                 $("#exportxls").val("正在生成xls文件,请耐心等待。。。");
-                var form = $("<form>");//定义一个form表单
-                form.attr("style", "display:none");
-                form.attr("target", "");
-                form.attr("method", "post");
-                form.attr("action", '/Houtai/exportExcle.do?juzi=' + $("#juzi").val() + '&chuchu=' + $("#chuchu").val() + '&juzileixing=' + $("#juzileixing").val());
-                var input1 = $("<input>");
-                input1.attr("type", "hidden");
-                input1.attr("name", "exportData");
-                input1.attr("value", (new Date()).getMilliseconds());
-                $("body").append(form);//将表单放置在web中
-                form.submit();//表单提交
-                $("#exportalert").attr("class", "alert alert-success alert-dismissable");
-                $("#exportalert").html('<strong>导出成功。。。。。</strong>');
+
+
+                $.ajax({
+                    type:"post",
+                    url:"/Houtai/exportExcle.do",
+                    data:{"juzi":$("#juzi").val(),"chuchu":$("#chuchu").val(),"juzileixing":$("#juzileixing").val()},
+                    success:function(data){
+                        if(data.indexOf("success")!=-1) {
+                            $("#exportalert").attr("class", "alert alert-success alert-dismissable");
+                            $("#exportalert").html('<strong>导出成功。。。。。正在下载</strong>');
+                            $("#exportxls").attr("class", "btn btn-primary btn");
+                            $("#exportxls").val("导出至xls");
+
+                            var form = $("<form>");//定义一个form表单
+                            form.attr("style", "display:none");
+                            form.attr("target", "");
+                            form.attr("method", "post");
+                            form.attr("action", '/Houtai/downloadExportExcle.do');
+
+                            var inputJuzi = $("<input>");
+                            inputJuzi.attr("style", "display:none");
+                            inputJuzi.attr("value", data.split("__")[1]);
+                            inputJuzi.attr("name", "filename");
+
+                            var inputChuchu = $("<input>");
+                            inputChuchu.attr("style", "display:none");
+                            inputChuchu.attr("value", data.split("__")[2]);
+                            inputChuchu.attr("name", "dname");
+
+
+                            form.append(inputJuzi);
+                            form.append(inputChuchu);
+
+                            form.submit().remove();
+                        }else if(data.indexOf("-0001")!=-1){
+                            $("#exportalert").attr("class", "alert alert-danger alert-dismissable");
+                            $("#exportalert").html('<strong>当前筛选条件下暂无符合条件的句子，导出失败</strong>');
+                            $("#exportxls").attr("class", "btn btn-primary btn");
+                            $("#exportxls").val("重新导出");
+                        }
+                        else{
+                            $("#exportalert").attr("class", "alert alert-danger alert-dismissable");
+                            $("#exportalert").html('<strong>导出失败。。。。。</strong>');
+                            $("#exportxls").attr("class", "btn btn-primary btn");
+                            $("#exportxls").val("重新导出");
+                        }
+                    },
+                    error:function(){
+                        $("#exportalert").attr("class", "alert alert-danger alert-dismissable");
+                        $("#exportalert").html('<strong>导出失败。。。。。</strong>');
+                        $("#exportxls").attr("class", "btn btn-primary btn");
+                        $("#exportxls").val("重新导出");
+                    }
+                });
             });
         });
     </script>

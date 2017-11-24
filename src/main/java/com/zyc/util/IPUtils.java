@@ -68,10 +68,8 @@ public class IPUtils {
 		try {
 			System.out.println(IPUtils.getLocatsion("123.206.8.180"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

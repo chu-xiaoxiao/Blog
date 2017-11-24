@@ -171,7 +171,6 @@ public class HoutaiController {
 			}else{
 				fmindate = dateFormat.parse(mindate+" "+mintime);
 				criteria.andDateGreaterThan(fmindate);
-				/*ipExample.getOredCriteria().add(ipExample.createCriteria().andDateGreaterThan(fmindate));*/
 			}
 		}
 		if(maxdate1!=null&&!"".equals(maxdate1)){
@@ -288,22 +287,22 @@ public class HoutaiController {
 
 
 	@RequestMapping(value="/exportExcle.do")
-	public void exportExcle(HttpServletRequest request, HttpServletResponse response, String juzi, String juzileixing, String chuchu) throws IOException, WriteException {
+	public void exportExcle(HttpServletRequest request, HttpServletResponse response, String juzi, String juzileixing, String chuchu) {
+	    //todo  行数过长
         File file2 = new File("/home/imgs/file/temp/"+new Date().getTime()+".xls");
         ExcleUtil excleUtil = new ExcleUtil();
         JuziExample juziExample = new JuziExample();
         Criteria criteria = juziExample.createCriteria();
         if(juzi!=null&&!"".equals(juzi)){
-            criteria=criteria.andJuzineirongLike("%"+juzi+"%");
+            criteria.andJuzineirongLike("%"+juzi+"%");
         }
         if(juzileixing!=null&&!"".equals(juzileixing)){
             Integer temp = Integer.parseInt(juzileixing);
-            criteria=criteria.andJuzileixingEqualTo(temp);
+            criteria.andJuzileixingEqualTo(temp);
         }
         if(chuchu!=null&&!"".equals(chuchu)){
-            criteria=criteria.andJuzichuchuLike("%"+chuchu+"%");
+            criteria.andJuzichuchuLike("%"+chuchu+"%");
         }
-        juziExample.getOredCriteria().add(criteria);
         List<Juzi> juzis = juziservice.findall(juziExample);
         Object[][] result = new Object[juzis.size()][3];
 
@@ -312,20 +311,48 @@ public class HoutaiController {
             result[i][1] = juzis.get(i).getJuzichuchu();
             result[i][2] = juzis.get(i).getJuziTypeKey().getLeixingming();
         }
-
-        excleUtil.writetoExcle(file2.getAbsolutePath(),juzis.get(0).getJuziTypeKey().getLeixingming(),result,true,"句子内容","句子出处","句子类型");
-
+        //判断当前是否有解结果
+        PrintWriter out = null;
+        if(result==null||result.length==0){
+            try {
+                out = response.getWriter();
+                out.print("failed:-0001");
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+        try {
+            out = response.getWriter();
+            excleUtil.writetoExcle(file2.getAbsolutePath(),juzis.get(0).getJuziTypeKey().getLeixingming(),result,true,"句子内容","句子出处","句子类型");
+            out.print("success__"+file2.getName()+"__"+juzis.get(0).getJuziTypeKey().getLeixingming());
+        } catch (IOException e) {
+            e.printStackTrace();
+            out.print("failed");
+        } catch (WriteException e) {
+            e.printStackTrace();
+            out.print("failed");
+        }
+        finally {
+            if(out!=null) {
+                out.close();
+            }
+        }
+    }
+    @RequestMapping("/downloadExportExcle.do")
+    public void downloadExportExcle(HttpServletRequest request, HttpServletResponse response,String filename,String dname) throws IOException {
+	    File file2 = new File("/home/imgs/file/temp/"+filename);
         OutputStream outputStream = response.getOutputStream();
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=dict.txt");
         response.setContentType("application/octet-stream; charset=utf-8");
-        response.setHeader("Content-Disposition","attachment;filename="+new String(juzis.get(0).getJuziTypeKey().getLeixingming().getBytes("gb2312"), "ISO8859-1" )+".xls");
+        response.setHeader("Content-Disposition","attachment;filename="+new String(dname.getBytes("gb2312"), "ISO8859-1" )+".xls");
         response.setContentLength(Integer.parseInt(String.valueOf(file2.length())));
         outputStream.write(FileUtils.readFileToByteArray(file2));
 
         outputStream.flush();
         outputStream.close();
-
         file2.delete();
     }
 	/**

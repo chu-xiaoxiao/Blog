@@ -8,7 +8,6 @@ public class WenZhangSearch {
 	 */
 	public WenZhangSearch() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param type

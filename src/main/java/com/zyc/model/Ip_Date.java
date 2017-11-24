@@ -16,7 +16,6 @@ public class Ip_Date {
 	private Integer count;
 	public Ip_Date() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

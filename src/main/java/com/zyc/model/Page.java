@@ -17,7 +17,6 @@ public class Page<T> {
 	private Integer end;
 	public Page() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Page(Integer currentPage, Integer sieze, Integer allPage,
 			List<T> lists) {

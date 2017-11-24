@@ -210,7 +210,6 @@ public class UserController {
 							file1.transferTo(localFile);
 							System.out.println(localFile.getAbsolutePath());
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} 
                         output.print(path+"/"+user.getId()+user.getUsername()+".png?"+new Date().getTime());
