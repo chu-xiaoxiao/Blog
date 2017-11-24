@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import redis.clients.jedis.Jedis;
 
@@ -19,7 +21,7 @@ import java.lang.reflect.Method;
 @Aspect
 public class JedisAop {
     private static final Logger logger = LogManager.getLogger(JedisAop.class);
-
+    @Autowired
     JedisDataSource jedisDataSource;
 
     @Before("execution(* com.zyc.jedis.JedisPoolUtil1.* (..))")
