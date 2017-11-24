@@ -1,14 +1,14 @@
 package com.zyc.spider;
 
+import com.zyc.jedis.JedisPoolUtil1;
 import com.zyc.util.HttpclientUtil;
-import com.zyc.util.JedisPoolUtil;
+import com.zyc.util.SpringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,6 +22,11 @@ public class TodayInHistorySpider {
     private String getDocumentFrom;
     private static Logger logger = LogManager.getLogger(TodayInHistorySpider.class);
     private static List<Map.Entry<String,String>> todayInHistorySpider;
+
+    JedisPoolUtil1 jedisPoolUtil1;
+    {
+        this.jedisPoolUtil1 = (JedisPoolUtil1) SpringUtil.getBean("jedisPoolUtil1");
+    }
     /**
      * 从uri中获取历史上今天的数据
      * @throws IOException
@@ -67,14 +72,12 @@ public class TodayInHistorySpider {
      * @throws IOException
      */
     public void setHistroyToRedis() throws IOException {
-        Jedis jedis = JedisPoolUtil.getJedis();
         List<String> dateAndText = new ArrayList<String>();
         //将返回的map组合为list集合
-        jedis.del("TodayInHistory");
+        jedisPoolUtil1.del("TodayInHistory");
         for(Map.Entry<String,String> temp :this.getHistoryFromURL()){
-            jedis.lpush("TodayInHistory",temp.getKey()+"__"+temp.getValue());
+            jedisPoolUtil1.lpush("TodayInHistory",temp.getKey()+"__"+temp.getValue());
         }
-        JedisPoolUtil.returnRes(jedis);
     }
 
     /**
@@ -83,15 +86,13 @@ public class TodayInHistorySpider {
      * @throws IOException
      */
     public Map<String,String> getTodayInHistory() throws IOException {
-        Jedis jedis = JedisPoolUtil.getJedis();
         Map<String,String> result = new HashMap<String,String>();
         //从redis中取出所有的历史上的今天的数据封装入map
-        List<String> tempResult = jedis.lrange("TodayInHistory",0,-1);
-        for(String temp :jedis.lrange("TodayInHistory",0,-1)){
+        List<String> tempResult = jedisPoolUtil1.lrange("TodayInHistory",0,-1);
+        for(String temp :jedisPoolUtil1.lrange("TodayInHistory",0,-1)){
             String[] temp1 = temp.split("__");
             result.put(temp1[0],temp1[1]);
         }
-        JedisPoolUtil.returnRes(jedis);
         return result;
     }
 

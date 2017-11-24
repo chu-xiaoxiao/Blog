@@ -51,11 +51,9 @@ public class JuZiSpider implements JuziService,PageProcessor{
 	private Pipeline Pipeline;
 	
 	@Autowired
-	@Qualifier("juziMapper")
 	JuziMapper juziMapper;
 	
 	@Autowired
-	@Qualifier("juziTypeMapper")
 	JuziTypeMapper juziTypeMapper;
 	
 	public void updateJuzi(String url){

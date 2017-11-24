@@ -1,11 +1,10 @@
 package com.zyc.spider;
 
-import com.zyc.util.JedisPoolUtil;
+import com.zyc.jedis.JedisPoolUtil1;
 import com.zyc.util.MyException;
+import com.zyc.util.SpringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Logger;
-import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,6 +15,13 @@ import java.util.Date;
  */
 public class SpiderUtil {
     private static Logger logger = LogManager.getLogger(SpiderUtil.class);
+
+    private static JedisPoolUtil1 jedisPoolUtil1;
+    static{
+        jedisPoolUtil1 = (JedisPoolUtil1) SpringUtil.getBean("jedisPoolUtil1");
+    }
+
+
     /**
      * 校验Redis中存储的日期是否和服务器一致
      * 不一致返回false
@@ -23,13 +29,10 @@ public class SpiderUtil {
      */
     public static Boolean validateDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd zzzz");
-        Jedis jedis = JedisPoolUtil.getJedis();
         //判断Redis中的日期是否与当前日期一致
-        if(simpleDateFormat.format(new Date()).equals(jedis.get("date"))){
-            JedisPoolUtil.returnRes(jedis);
+        if(simpleDateFormat.format(new Date()).equals(jedisPoolUtil1.get("date"))){
             return true;
         }else{
-            JedisPoolUtil.returnRes(jedis);
             return false;
         }
 
@@ -41,11 +44,9 @@ public class SpiderUtil {
      */
     public static Boolean flushDate(){
         Date date = new Date();
-        Jedis jedis = JedisPoolUtil.getJedis();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd zzzz");
-        jedis.set("date",simpleDateFormat.format(date));
+        jedisPoolUtil1.set("date",simpleDateFormat.format(date));
         logger.info("时间有差异刷新当前Redis中的时间戳"+simpleDateFormat.format(date));
-        JedisPoolUtil.returnRes(jedis);
         return true;
     }
 
