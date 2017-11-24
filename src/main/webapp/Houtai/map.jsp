@@ -10,10 +10,11 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <jsp:include page="includes/basiccss.jsp"/>
     <script type="text/javascript"
             src="http://webapi.amap.com/maps?v=1.4.0&key=06f4dc2a23f3e7e8a778f573d682e4f6"></script>
-    <jsp:include page="includes/basiccss.jsp"/>
 
+    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
 
     <script type="text/javascript">
         $(function () {

@@ -1,6 +1,7 @@
 package com.zyc.controller;
 
 import com.zyc.util.DownloadRecord;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

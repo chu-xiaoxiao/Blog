@@ -7,9 +7,7 @@ import com.zyc.model.*;
 import com.zyc.util.MyException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +49,9 @@ public class RoleServiceImplements implements  RoleService {
         List<Integer> roleid = new ArrayList<Integer>();
         for(Usertorole temp : usertoroles){
             roleid.add(temp.getRoleid());
+        }
+        if(roleid.size()==0){
+            return null;
         }
 
         List<Role> roles = new ArrayList<Role>();

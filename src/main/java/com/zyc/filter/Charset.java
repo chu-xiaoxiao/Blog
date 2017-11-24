@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 /**
  * Servlet Filter implementation class Charset
  */
-@Component("charset")
+@Component("ipLog")
 @WebFilter(dispatcherTypes = {
 				DispatcherType.REQUEST, 
 				DispatcherType.FORWARD, 
@@ -90,6 +90,6 @@ public class Charset implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+		logger.info("初始化ip记录过滤器");
 	}
 }

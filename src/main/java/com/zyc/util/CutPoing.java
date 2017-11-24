@@ -1,6 +1,5 @@
 package com.zyc.util;
 
-import com.zyc.mapper.LogrecordMapper;
 import com.zyc.model.Logrecord;
 import com.zyc.model.User;
 import com.zyc.service.LogRecordService;
@@ -19,8 +18,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.Soundbank;
-import java.lang.reflect.Method;
 
 /**
  *
@@ -40,19 +37,6 @@ public class CutPoing {
     public void controllerAspect(){
 
     }
-
-/*    @Around( "execution(* com.zyc.service.*.* (..))")
-    public Object doAround(ProceedingJoinPoint joinpoint){
-        logger.info("日志aop开始========");
-        Object result = null;
-        try {
-             result = joinpoint.proceed();
-            logger.info("日志aop结束======");
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        return result;
-    }*/
 
     @Around("execution(* com.zyc.service.*.* (..))&&@annotation(logAop)")
     public Object  doAroundWithParam(ProceedingJoinPoint joinPoint,LogAop logAop){

@@ -1,5 +1,6 @@
 package com.zyc.controller;
 
+import com.zyc.jedis.JedisPoolUtil1;
 import com.zyc.model.*;
 import com.zyc.model.JuziExample.Criteria;
 import com.zyc.service.*;
@@ -8,7 +9,7 @@ import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import com.zyc.util.DownloadRecord;
 import com.zyc.util.ExcleUtil;
-import com.zyc.util.JedisPoolUtil;
+import com.zyc.util.SpringUtil;
 import jxl.write.WriteException;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -26,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +47,7 @@ public class HoutaiController {
 		modelAndView.addObject("msg",exception.getStackTrace());
 		return modelAndView;
 	}
+
 	@Autowired
 	@Qualifier("iPServiceImplements")
 	private IPService iPservice;
@@ -67,6 +68,10 @@ public class HoutaiController {
 	@Qualifier("iPServiceImplements")
 	private IPService iPService;
 
+	JedisPoolUtil1 jedisPoolUtil1;
+	{
+		jedisPoolUtil1= (JedisPoolUtil1) SpringUtil.getBean("jedisPoolUtil1");
+	}
 	/**
 	 * 文件树状图
 	 * @param response
@@ -454,13 +459,13 @@ public class HoutaiController {
 	@RequestMapping(value = "/index.do")
 	public ModelAndView index(HttpServletRequest request)
 			throws ClientProtocolException, org.apache.http.ParseException, IOException {
+		request.getSession().getAttribute("user");
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		Integer ipResultCount = 10;// IP查询的数量
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("count", wenzhangService.countWenzhang(user));
 		modelAndView.addObject("countIp", iPService.countIP(new IpExample()));
 		JSONObject listip_date = new JSONObject();
-		Jedis jedis = JedisPoolUtil.getJedis();
 		List<Ip_Date> list = iPService.selectCountByDay(ipResultCount--);
 		for (int i = 0; i < ipResultCount / 2 + 1; i++) {
 			Ip_Date temp = null;
@@ -481,8 +486,7 @@ public class HoutaiController {
 		//获取句库计数
 		modelAndView.addObject("juziCount", juziservice.countJuZiByExample(new JuziExample()));
 		//获取当前服务器时间
-		modelAndView.addObject("nowDate",jedis.get("date"));
-		JedisPoolUtil.returnRes(jedis);
+		modelAndView.addObject("nowDate",jedisPoolUtil1.get("date"));
 		modelAndView.setViewName("/Houtai/index1");
 		return modelAndView;
 	}
@@ -582,7 +586,7 @@ public class HoutaiController {
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 			// 取得request中的所有文件名
 			Iterator<String> iter = multiRequest.getFileNames();
-			ServletOutputStream output = response.getOutputStream();
+			PrintWriter output = response.getWriter();
 			while (iter.hasNext()) {
 				// 取得上传文件
 				MultipartFile file1 = multiRequest.getFile(iter.next());
@@ -803,4 +807,10 @@ public class HoutaiController {
         wenzhangService.addWenzhang(wenZhang,user);
         return new ModelAndView("redirect:/Houtai/findByPage.do");
     }
+    @RequestMapping("loginSuccess.do")
+	public ModelAndView loginSuccess(ModelAndView modelAndView){
+		org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
+		String userid = (String) subject.getPrincipal();
+    	return modelAndView;
+	}
 }

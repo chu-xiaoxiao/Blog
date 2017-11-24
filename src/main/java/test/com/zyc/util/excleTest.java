@@ -19,6 +19,9 @@ public class excleTest {
     public void testExcle() throws IOException, WriteException {
         ExcleUtil excleUtil = new ExcleUtil();
         Object[][] result = new Object[][]{{"123","123"},{"234","234"}};
-
+    }
+    @Test
+    public void split(){
+        System.out.println("."+"123.pdf".split("\\.")[1]);
     }
 }

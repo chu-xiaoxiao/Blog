@@ -1,9 +1,7 @@
 package test.com.zyc.spider;
 
 import com.zyc.model.NewsType;
-import com.zyc.util.JedisPoolUtil;
 import org.junit.Test;
-import redis.clients.jedis.Jedis;
 
 /**
  * Created by YuChen Zhang on 17/09/25.

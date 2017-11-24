@@ -3,14 +3,12 @@ package test.com.zyc.spider;
 import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import com.zyc.util.HttpclientUtil;
-import com.zyc.util.JedisPoolUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
-import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.util.*;
