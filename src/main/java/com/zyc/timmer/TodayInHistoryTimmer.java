@@ -1,8 +1,11 @@
 package com.zyc.timmer;
 
 import com.zyc.spider.TodayInHistorySpider;
+import com.zyc.util.SpringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 import java.io.IOException;
@@ -11,21 +14,19 @@ import java.util.TimerTask;
 /**
  * Created by YuChen Zhang on 17/09/26.
  */
+@Component
 public class TodayInHistoryTimmer extends TimerTask {
     private static Logger logger = LogManager.getLogger(TodayInHistoryTimmer.class);
-    private ServletContext servletContext;
     private static boolean isRunning = false;
 
-    public TodayInHistoryTimmer(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
+    @Autowired
+    TodayInHistorySpider todayInHistorySpider;
 
     @Override
     public void run() {
         if(!isRunning){
             logger.info("获取历史上的今天>>>>>任务开启");
             isRunning=true;
-            TodayInHistorySpider todayInHistorySpider = new TodayInHistorySpider();
             try {
                 todayInHistorySpider.setHistroyToRedis();
                 isRunning=false;
@@ -44,14 +45,6 @@ public class TodayInHistoryTimmer extends TimerTask {
 
     public void setLogger(Logger logger) {
         this.logger = logger;
-    }
-
-    public ServletContext getServletContext() {
-        return servletContext;
-    }
-
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
     }
 
     public static boolean isIsRunning() {
