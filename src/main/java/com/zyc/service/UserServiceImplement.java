@@ -2,17 +2,13 @@ package com.zyc.service;
 
 import javax.annotation.Resource;
 
-import com.zyc.mapper.UsertoroleMapper;
-import com.zyc.model.Role;
 import com.zyc.model.UserExample;
-import com.zyc.model.Usertorole;
-import com.zyc.util.CRDU;
-import com.zyc.util.LogAop;
+import com.zyc.aop.CRDU;
+import com.zyc.aop.LogAop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
