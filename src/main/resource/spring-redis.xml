@@ -5,31 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
-
-    <bean id="redisDataSource" class="com.zyc.jedis.JedisDataSource"
-    p:jedishost="${jedis.host}"
-    p:port="${jedis.port}"
-    p:jedisPassword="${jedis.password}"
-    p:setMaxTotal="${jedis.setMaxTotal}"
-    p:maxWaitMillis="${jedis.maxWaitMillis}"
-    p:maxIdle="${jedis.maxIdle}"
-    p:mnEvictableIdleTimeMillis="${jedis.mnEvictableIdleTimeMillis}"
-    />
-
-    <bean id="jedisAop" class="com.zyc.jedis.JedisAop"
-    p:jedisDataSource-ref="redisDataSource"
-    />
-
-    <bean id="jedisPoolUtil1" class="com.zyc.jedis.JedisPoolUtil1" scope="prototype"/>
-
-<!--    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:host-name="${jedis.host}"
-          p:port="${jedis.port}"
-          p:password="${jedis.password}"    />
-          &lt;!&ndash;p:usePool="true"
-          p:poolConfig-ref="jedisPoolConfig"&ndash;&gt;
-
-&lt;!&ndash;
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
           p:maxWaitMillis="${jedis.maxWaitMillis}"
           p:maxIdle="${jedis.maxIdle}"
@@ -37,14 +12,42 @@
           p:minEvictableIdleTimeMillis="${jedis.mnEvictableIdleTimeMillis}"
           p:testWhileIdle="true"
           p:timeBetweenEvictionRunsMillis="30000"
-    />&ndash;&gt;
+    />
 
-    &lt;!&ndash; redis template definition &ndash;&gt;
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
-          p:connection-factory-ref="jedisConnectionFactory"
-          p:keySerializer="org.springframework.data.redis.serializer.StringRedisSerializer"
-          p:valueSerializer="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"
-          p:hashKeySerializer="org.springframework.data.redis.serializer.StringRedisSerializer"
-          p:hashValueSerializer="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"
-    />-->
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${jedis.host}"
+          p:port="${jedis.port}"
+          p:password="${jedis.password}"
+          p:usePool="true"
+          p:poolConfig-ref="jedisPoolConfig"
+    />
+
+    <!-- redis template definition -->
+    <bean id="redisTemplatestring" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory"   ref="jedisConnectionFactory" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory"   ref="jedisConnectionFactory" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+    </bean>
+
+    <bean id="jedisTemplateUtil" class="com.zyc.jedis.JedisTemplateUtil">
+        <property name="redisTemplate" ref="redisTemplatestring"/>
+        <property name="redisTemplateSerializable" ref="redisTemplate"/>
+    </bean>
+
+
 </beans>

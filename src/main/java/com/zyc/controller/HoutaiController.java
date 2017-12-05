@@ -1,6 +1,6 @@
 package com.zyc.controller;
 
-import com.zyc.jedis.JedisPoolUtil1;
+import com.zyc.jedis.JedisTemplateUtil;
 import com.zyc.model.*;
 import com.zyc.model.JuziExample.Criteria;
 import com.zyc.service.*;
@@ -9,7 +9,6 @@ import com.zyc.spider.NewsSpider;
 import com.zyc.spider.TodayInHistorySpider;
 import com.zyc.util.DownloadRecord;
 import com.zyc.util.ExcleUtil;
-import com.zyc.util.SpringUtil;
 import jxl.write.WriteException;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -68,10 +67,14 @@ public class HoutaiController {
 	@Qualifier("iPServiceImplements")
 	private IPService iPService;
 
-	JedisPoolUtil1 jedisPoolUtil1;
-	{
-		jedisPoolUtil1= (JedisPoolUtil1) SpringUtil.getBean("jedisPoolUtil1");
-	}
+	@Autowired
+    private JedisTemplateUtil jedisTemplateUtil;;
+
+    @Autowired
+    private TodayInHistorySpider todayInHistorySpider;
+
+    @Autowired
+	private NewsSpider newsSpider;
 	/**
 	 * 文件树状图
 	 * @param response
@@ -362,7 +365,6 @@ public class HoutaiController {
 	@RequestMapping(value="/getNews/{type}.*")
 	public void getnewsByType(HttpServletRequest request,HttpServletResponse response,@PathVariable("type") String type) throws IOException {
 		PrintWriter out = response.getWriter();
-		NewsSpider newsSpider = new NewsSpider();
 		List<String> result = newsSpider.getNews(NewsType.valueOf(type));
 		for(String temp : result){
 			out.print(temp);
@@ -507,13 +509,13 @@ public class HoutaiController {
 		/*//获取每日新闻
 		modelAndView.addObject("allNews", new NewsSpider().getNews(NewsType.ALLNEWS));*/
 		//获取历史上的今天
-		modelAndView.addObject("todayInHistory",new TodayInHistorySpider().getTodayInHistorySpider());
+		modelAndView.addObject("todayInHistory",todayInHistorySpider.getTodayInHistorySpider());
 		//获取文章类型计数
 		modelAndView.addObject("typecount", typeCount);
 		//获取句库计数
 		modelAndView.addObject("juziCount", juziservice.countJuZiByExample(new JuziExample()));
 		//获取当前服务器时间
-		modelAndView.addObject("nowDate",jedisPoolUtil1.get("date"));
+		modelAndView.addObject("nowDate", jedisTemplateUtil.get("date".getBytes(),0));
 		modelAndView.setViewName("/Houtai/index1");
 		return modelAndView;
 	}

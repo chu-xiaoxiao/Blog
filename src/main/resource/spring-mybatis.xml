@@ -43,7 +43,8 @@
         MyBatis定义数据源,同意加载配置
     -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-          p:dataSource-ref="dataSource"/>
+          p:dataSource-ref="dataSource"
+    />
 
     <!--
         3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
@@ -51,16 +52,29 @@
     -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
           p:basePackage="com.zyc.mapper"
-          p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
+          p:sqlSessionFactoryBeanName="sqlSessionFactory"
+    />
 
     <!--
         4. 事务管理 : DataSourceTransactionManager dataSource:引用上面定义的数据源
     -->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          p:dataSource-ref="dataSource"/>
+          p:dataSource-ref="dataSource"
+    />
 
     <!-- 5. 使用声明式事务2
          transaction-manager：引用上面定义的事务管理器
      -->
+
     <tx:annotation-driven transaction-manager="txManager"/>
+
+    <!--mybatis 二级缓存-->
+    <bean id="mybatisMapperCacheManager" class="com.zyc.mapper.MybatisMapperCacheManager">
+        <property name="mybatisMapperCacheManager">
+            <bean id="mybatisMapperCacheManager" class="com.zyc.util.RedisCache">
+                <property name="select" value="2" />
+            </bean>
+        </property>
+    </bean>
+
 </beans>

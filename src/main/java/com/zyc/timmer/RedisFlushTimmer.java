@@ -17,8 +17,10 @@ import java.util.TimerTask;
 public class RedisFlushTimmer extends TimerTask {
     private static Logger logger = LogManager.getLogger(RedisFlushTimmer.class);
     private static boolean isRunning = false;
+
     @Autowired
     NewsSpider newsSpider;
+
     public static boolean isIsRunning() {
         return isRunning;
     }

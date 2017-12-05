@@ -1,7 +1,5 @@
-package com.zyc.util;
+package com.zyc.aop;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.*;
 
 /**

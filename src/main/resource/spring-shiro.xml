@@ -26,6 +26,7 @@
           p:cacheManager-ref="shiroEhcacheManager"
     />
 
+
     <bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory"/>
 
     <!--配置shiroFIlter start-->
@@ -92,6 +93,12 @@
     <!--开启shiro注解 end-->
 
     <!-- 缓存管理器 使用Ehcache实现 -->
-    <bean id="shiroEhcacheManager" class="com.zyc.realm.CustomCacheManager"/>
+    <bean id="shiroEhcacheManager" class="com.zyc.realm.ShiroCacheManager">
+        <property name="redisCache">
+            <bean id="redisCache" class="com.zyc.util.RedisCache">
+                <property name="select" value="1"/>
+            </bean>
+        </property>
+    </bean>
 
 </beans>

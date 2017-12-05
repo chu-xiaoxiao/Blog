@@ -1,8 +1,9 @@
-package com.zyc.util;
+package com.zyc.aop;
 
 import com.zyc.model.Logrecord;
 import com.zyc.model.User;
 import com.zyc.service.LogRecordService;
+import com.zyc.util.IPUtils;
 import org.aopalliance.intercept.Joinpoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +34,7 @@ public class CutPoing {
     @Qualifier("logRecordServiceImplements")
     LogRecordService logRecordService;
 
-    @Pointcut("@annotation(com.zyc.util.LogAop)")
+    @Pointcut("@annotation(com.zyc.aop.LogAop)")
     public void controllerAspect(){
 
     }

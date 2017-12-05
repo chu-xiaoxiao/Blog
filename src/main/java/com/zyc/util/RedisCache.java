@@ -1,12 +1,12 @@
-package com.zyc.realm;
+package com.zyc.util;
 
-import com.zyc.jedis.JedisPoolUtil1;
+import com.zyc.jedis.JedisTemplateUtil;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.*;
@@ -16,16 +16,21 @@ import java.util.*;
  * @author MOTUI
  *
  */
-@Component
-public class ShiroRedisCache<K,V> implements Cache<K,V>{
+public class RedisCache<K,V> implements Cache<K,V>{
 
     @Autowired
-    @Qualifier("jedisPoolUtil1")
-    JedisPoolUtil1 jedisPoolUtil1;
+    @Qualifier("jedisTemplateUtil")
+    private JedisTemplateUtil jedisTemplateUtil;;
+
+    protected Integer select;
+
+    public void setSelect(Integer select) {
+        this.select = select;
+    }
 
     public Object get(Object key) throws CacheException {
         byte[] bs = SerializationUtils.serialize((Serializable) key);
-        byte[] value = jedisPoolUtil1.get(bs,1);
+        byte[] value = jedisTemplateUtil.get(bs,select);
         if (value == null) {
             return null;
         }
@@ -36,10 +41,10 @@ public class ShiroRedisCache<K,V> implements Cache<K,V>{
      * 将shiro的缓存保存到redis中
      */
     public Object put(Object key, Object value) throws CacheException {
-        jedisPoolUtil1.getJedis().select(1);
+
         //序列化   和  反序列化
-        jedisPoolUtil1.set(SerializationUtils.serialize((Serializable)key), SerializationUtils.serialize((Serializable)value),1,1*60*60);
-        byte[] bs = jedisPoolUtil1.get(SerializationUtils.serialize((Serializable)key),1);
+        jedisTemplateUtil.set(SerializationUtils.serialize((Serializable)key), SerializationUtils.serialize((Serializable)value),select*60*60,select);
+        byte[] bs = jedisTemplateUtil.get(SerializationUtils.serialize((Serializable)key),select);
 
         Object object = SerializationUtils.deserialize(bs);
 
@@ -47,11 +52,10 @@ public class ShiroRedisCache<K,V> implements Cache<K,V>{
     }
 
     public Object remove(Object key) throws CacheException {
-        jedisPoolUtil1.getJedis().select(1);
 
-        byte[] bs = jedisPoolUtil1.get(SerializationUtils.serialize((Serializable)key),1);
+        byte[] bs = jedisTemplateUtil.get(SerializationUtils.serialize((Serializable)key),select);
 
-        jedisPoolUtil1.del(SerializationUtils.serialize((Serializable)key),1);
+        jedisTemplateUtil.del(SerializationUtils.serialize((Serializable)key),select);
 
         return SerializationUtils.deserialize(bs);
     }
@@ -59,19 +63,19 @@ public class ShiroRedisCache<K,V> implements Cache<K,V>{
      * 清空所有缓存
      */
     public void clear() throws CacheException {
-        jedisPoolUtil1.clear();
+        jedisTemplateUtil.clear(select);
     }
 
     @Override
     public int size() {
-        return jedisPoolUtil1.size().intValue();
+        return jedisTemplateUtil.size(select).intValue();
     }
 
     /**
      * 获取所有的key
      */
     public Set keys() {
-        Set<byte[]> keys = jedisPoolUtil1.allKeys(new String("*").getBytes());
+        Set<byte[]> keys = jedisTemplateUtil.keys(new String("*").getBytes(),select);
 
         Set<Object> set = new HashSet<Object>();
 
@@ -90,17 +94,9 @@ public class ShiroRedisCache<K,V> implements Cache<K,V>{
         List<Object> values = new ArrayList<Object>();
 
         for (Object object : keys) {
-            byte[] bs =jedisPoolUtil1.get(SerializationUtils.serialize((Serializable)object));
+            byte[] bs = jedisTemplateUtil.get(SerializationUtils.serialize((Serializable)object),select);
             values.add(SerializationUtils.deserialize(bs));
         }
         return values;
     }
-
-/*    public SerializationUtils getSerializationUtils() {
-        return SerializationUtils;
-    }
-
-    public void setSerializationUtils(SerializationUtils SerializationUtils) {
-        this.SerializationUtils = SerializationUtils;
-    }*/
 }

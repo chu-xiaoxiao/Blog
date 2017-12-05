@@ -36,8 +36,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:applicationContext.xml,
-            classpath*:spring-shiro.xml
+            classpath*:applicationContext.xml
         </param-value>
     </context-param>
 
@@ -95,9 +94,9 @@
 
 
     <!--定时器启动监听器 start-->
-    <listener>
+    <!--<listener>
         <listener-class>com.zyc.timmer.LinstenterCenter</listener-class>
-    </listener>
+    </listener>-->
     <!--定时器启动监听器 end-->
     <!--ip过滤器 start-->
     <filter>

@@ -18,17 +18,15 @@
     <script type="text/javascript">
         $(function () {
             var options = {
-                    bootstrapMajorVersion: 3,
-                    currentPage: ${page2.currentPage+1},
-                    numberOfPages: ${page2.allPage} > 5 ? "5" :${page2.allPage},
-                totalPages
-            :${page2.allPage},
-            onPageClicked : function (event, originalEvent, type, page) {
-                $("#frompage").attr("action", "/Houtai/iplist.do?currentpage=" + (page - 1) + "&size=${requestScope.page2.size}");
-                $("#frompage").submit();
+                bootstrapMajorVersion: 3,
+                currentPage: ${page2.currentPage+1},
+                numberOfPages: ${page2.allPage} > 5 ? "5" :${page2.allPage},
+                totalPages:${page2.allPage},
+                onPageClicked:function(event, originalEvent, type, page) {
+                    $("#frompage").attr("action", "/Houtai/iplist.do?currentpage=" + (page - 1) + "&size=${requestScope.page2.size}");
+                    $("#frompage").submit();
+                }
             }
-        }
-            ;
             $('#fenye').bootstrapPaginator(options);
             $("a[id^=listsize]").click(function () {
                 var count = $(this).attr("id").split("_")[1];
@@ -42,7 +40,7 @@
             });
             $("#picktime").timeDropper({
                 meridians: false,
-                format: 'HH:mm',
+                format: 'HH:mm'
             });
             $("#pickdate1").dateDropper({
                 animate: false,
@@ -51,7 +49,7 @@
             });
             $("#picktime1").timeDropper({
                 meridians: false,
-                format: 'HH:mm',
+                format: 'HH:mm'
             });
         });
 
@@ -59,7 +57,7 @@
 </head>
 
 <body>
-<jsp:include page="/Houtai/includes/nav.jsp"></jsp:include>
+<jsp:include page="/Houtai/includes/nav.jsp" />
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="panel panel-default">

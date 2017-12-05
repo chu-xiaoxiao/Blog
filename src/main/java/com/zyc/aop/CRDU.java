@@ -1,4 +1,4 @@
-package com.zyc.util;
+package com.zyc.aop;
 
 /**
  * Created by YuChen Zhang on 17/10/26.

@@ -24,7 +24,7 @@
         </RollingFile>
 
         <RollingFile name="RollingFileWarn" fileName="${sys:catalina.home}/logs/hpaasvc/warn.log"
-                     filePattern="${sys:catalina.home}/logs/hpaasvc/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+                     filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
             <Filters>
                 <ThresholdFilter level="WARN"/>
                 <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>

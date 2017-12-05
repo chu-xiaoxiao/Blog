@@ -10,24 +10,83 @@
 
     <properties>
         <!-- spring版本号 -->
-        <spring.version>4.0.2.RELEASE</spring.version>
+        <spring.version>4.2.0.RELEASE</spring.version>
         <!-- mybatis版本号 -->
         <mybatis.version>3.2.6</mybatis.version>
-        <!-- log4j日志文件管理包版本 -->
-        <slf4j.version>1.7.7</slf4j.version>
-        <log4j.version>1.2.17</log4j.version>
+        <!--junit3 版本号-->
+        <junit3.version>3.8.1</junit3.version>
+        <!--junit4 版本号-->
+        <junit4.version>4.10</junit4.version>
+        <!--aspectjrt 版本号-->
+        <aspectj.version>1.5.3</aspectj.version>
+        <!--aspectjweaver版本号-->
+        <aspectjweaver.version>1.8.6</aspectjweaver.version>
+        <!--aopalliance 版本号-->
+        <aopalliance.version>1.0</aopalliance.version>
+        <!--cglib 版本号-->
+        <cglib.version>3.2.4</cglib.version>
+        <!--spring-boot-starter-aop 版本号-->
+        <spring-boot-starter-aop.version>1.4.1.RELEASE</spring-boot-starter-aop.version>
+        <!--mybatis-spring 版本号-->
+        <mybatis-spring.version>1.2.2</mybatis-spring.version>
+        <!--mysql-connector-java 版本号-->
+        <mysql-connector-java.version>5.1.30</mysql-connector-java.version>
+        <!--commons-dbcp 版本号-->
+        <commons-dbcp.version>1.2.2</commons-dbcp.version>
+        <!--jstl 版本号-->
+        <jstl.version>1.2</jstl.version>
+        <!--log4j 版本号-->
+        <log4j.version>2.0.1</log4j.version>
+        <!--fastjson 版本号-->
+        <fastjson.version>1.1.41</fastjson.version>
+        <!--jackson-mapper-asl 版本号-->
+        <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
+        <!--commons-fileupload 版本号-->
+        <commons-fileupload.version>1.3.1</commons-fileupload.version>
+        <!--commons-io版本号-->
+        <commons-io.version>2.4</commons-io.version>
+        <!--commons-codec版本号-->
+        <commons-codec.version>1.9</commons-codec.version>
+        <!--webmagic 版本号-->
+        <weblogic.version>0.7.3</weblogic.version>
+        <!--net.sf.json 版本号-->
+        <net.sf.json.version>2.4</net.sf.json.version>
+        <!--c3p0 版本号-->
+        <c3p0.version>0.9.5.2</c3p0.version>
+        <!--spring-data-redis 版本号-->
+        <spring-data-redis.version>1.6.2.RELEASE</spring-data-redis.version>
+        <!--jedis 版本号-->
+        <jedis.version>2.9.0</jedis.version>
+        <!--hamcrest 版本号-->
+        <hamcrest.version>1.3</hamcrest.version>
+        <!--shiro 版本号-->
+        <shiro.version>1.2.2</shiro.version>
+        <!--shiro-core 版本号-->
+        <shiro-core.version>1.4.0</shiro-core.version>
+        <!--shiro-cas 版本号-->
+        <shiro-cas.version>1.3.2</shiro-cas.version>
+        <!--ehcache 版本号-->
+        <encache.version>2.5.0</encache.version>
+        <!--cas-client 版本号-->
+        <cas-client.version>3.3.3</cas-client.version>
+        <!--mail 版本号-->
+        <mail.version>1.4</mail.version>
+        <!--snakeyaml 版本号-->
+        <snakeyaml.version>1.17</snakeyaml.version>
+        <!--jxl 版本号-->
+        <jxl.version>2.6.12</jxl.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>${junit3.version}</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>${junit4.version}</version>
         </dependency>
         <!-- spring核心包 -->
         <dependency>
@@ -85,27 +144,27 @@
         <dependency>
             <groupId>aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.5.3</version>
+            <version>${aspectj.version}</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.8.6</version>
+            <version>${aspectjweaver.version}</version>
         </dependency>
         <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
-            <version>1.0</version>
+            <version>${aopalliance.version}</version>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-            <version>3.2.4</version>
+            <version>${cglib.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>1.4.1.RELEASE</version>
+            <version>${spring-boot-starter-aop.version}</version>
         </dependency>
         <!--自定义aop end-->
         <!-- mybatis核心包 -->
@@ -118,142 +177,119 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>1.2.2</version>
+            <version>${mybatis-spring.version}</version>
         </dependency>
 
         <!-- 导入Mysql数据库链接jar包 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.30</version>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
 
         <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
+            <version>${commons-dbcp.version}</version>
         </dependency>
         <!-- JSTL标签类 -->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
         <!-- 日志文件管理包 -->
         <!-- log start -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.0.1</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.0.1</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- 格式化对象，方便输出日志 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.1.41</version>
+            <version>${fastjson.version}</version>
         </dependency>
 
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
         <!-- log end -->
         <!-- 映入JSON -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
+            <version>${jackson-mapper-asl.version}</version>
         </dependency>
         <!-- 上传组件包 -->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.3.1</version>
+            <version>${commons-fileupload.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.9</version>
+            <version>${commons-codec.version}</version>
         </dependency>
         <!-- wegmabic -->
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>
-            <version>0.7.3</version>
+            <version>${weblogic.version}</version>
         </dependency>
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-extension</artifactId>
-            <version>0.7.3</version>
+            <version>${weblogic.version}</version>
         </dependency>
         <!-- jsonlib -->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
-            <version>2.4</version>
+            <version>${net.sf.json.version}</version>
             <classifier>jdk15</classifier>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.5.2</version>
+            <version>${c3p0.version}</version>
         </dependency>
         <!--redis-->
-
-        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>2.0.1.RELEASE</version>
+            <version>${spring-data-redis.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
         <!--redis end-->
 
         <!--hamcrest-->
-        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
-            <version>1.3</version>
+            <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
         <!--hamcrest end-->
@@ -264,46 +300,46 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>1.4.0</version>
+            <version>${shiro-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
-            <version>1.2.2</version>
+            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.2.2</version>
+            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>1.2.2</version>
+            <version>${shiro.version}</version>
         </dependency>
         <!-- shiro-cas集成依赖包 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-cas</artifactId>
-            <version>1.3.2</version>
+            <version>${shiro-cas.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core -->
         <dependency>
             <groupId>org.jasig.cas.client</groupId>
             <artifactId>cas-client-core</artifactId>
-            <version>3.3.3</version>
+            <version>${cas-client.version}</version>
         </dependency>
 
         <!--ehcache 缓存以及shiro缓存依赖-->
         <dependency>
             <artifactId>ehcache-core</artifactId>
             <groupId>net.sf.ehcache</groupId>
-            <version>2.5.0</version>
+            <version>${encache.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>1.2.2</version>
+            <version>${shiro.version}</version>
         </dependency>
         <!--shior 以及shiro spring 依赖 end-->
 
@@ -312,7 +348,7 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4</version>
+            <version>${mail.version}</version>
         </dependency>
         <!--java mail end-->
         <!--yaml yml读取 start-->
@@ -320,7 +356,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.17</version>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <!--yaml yml读取 end-->
 

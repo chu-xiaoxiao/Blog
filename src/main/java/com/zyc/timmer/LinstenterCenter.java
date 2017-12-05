@@ -55,10 +55,10 @@ public class LinstenterCenter implements ApplicationListener<ContextRefreshedEve
         logger.info("加入定时器任务栈<<<<<<<<Redis刷新定时器");
     }
     private void startRedisLoginFlushTimmer(){
-        logger.info("定时器开启>>>>>>>>>>key清扫");
+        logger.info("定时器开启>>>>>>>>>失效key清扫");
         int redisFlushPeriod = 1000*60;
         timer.schedule(redisLoginFlushTimmer,0,redisFlushPeriod);
-        logger.info("加入定时器任务栈<<<<<<<<key清扫");
+        logger.info("加入定时器任务栈<<<<<<<<失效key清扫");
     }
 
     @Override

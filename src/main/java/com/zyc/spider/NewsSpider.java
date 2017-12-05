@@ -1,10 +1,9 @@
 package com.zyc.spider;
 
-import com.zyc.jedis.JedisPoolUtil1;
+import com.zyc.jedis.JedisTemplateUtil;
 import com.zyc.model.NewsType;
 import com.zyc.util.HttpclientUtil;
 import com.zyc.util.MyException;
-import com.zyc.util.SpringUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -12,22 +11,27 @@ import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import redis.clients.jedis.Jedis;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+@Service
 public class NewsSpider {
 
     private static Logger logger = LogManager.getLogger(NewsSpider.class);
 
-    JedisPoolUtil1 jedisPoolUtil1;
-    {
-        jedisPoolUtil1= (JedisPoolUtil1) SpringUtil.getBean("jedisPoolUtil1");
+    private JedisTemplateUtil jedisTemplateUtil;;
+
+    @Resource
+    public void setJedisTemplateUtil(JedisTemplateUtil jedisTemplateUtil) {
+        this.jedisTemplateUtil = jedisTemplateUtil;
     }
 
     /**
@@ -78,10 +82,10 @@ public class NewsSpider {
             url = this.replaceDateAndNum(url, new Date(), 10);
             JSONArray jsonArray = this.sina(url).getJSONArray("data");
             //清空当前Redis中的新闻纪录
-            jedisPoolUtil1.del((String) temp);
+            jedisTemplateUtil.del((String) temp,0);
             for (int i = 0; i < 10; i++) {
                 JSONObject jsonObject = JSONObject.fromObject(jsonArray.get(i).toString());
-                jedisPoolUtil1.lpush((String) temp, jsonObject.toString());
+                jedisTemplateUtil.leftPush((String) temp, jsonObject.toString());
                 logger.info(jsonObject.toString());
             }
         }
@@ -100,11 +104,11 @@ public class NewsSpider {
         if(!SpiderUtil.validateDate()) {
             SpiderUtil.flushDateAndData();
         }*/
-        List<String> getFromRedis = jedisPoolUtil1.lrange(newsType.getType(), 0, -1);
+        List<Object> getFromRedis = jedisTemplateUtil.range(newsType.getType(), 0, -1);
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
-        for (String temp : getFromRedis) {
-            jsonArray.add(temp);
+        for (Object temp : getFromRedis) {
+            jsonArray.add((String)temp);
         }
         jsonObject.put("date", jsonArray);
         result.add(jsonObject.toString());
