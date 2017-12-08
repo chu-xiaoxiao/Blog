@@ -37,8 +37,11 @@ public class TodayInHistorySpider {
         HttpclientUtil httpclientUtil = new HttpclientUtil();
         String result = httpclientUtil.getDocumentFromUriGet("http://www.todayonhistory.com/");
         Document document = Jsoup.parse(result);
-        Elements elements =  document.getElementsByClass("t");
+        Elements elements =  document.getElementsByClass("pic");
         for(Element element:elements){
+            if(!element.getElementsByTag("span").hasText()){
+                continue;
+            }
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
             Date date = null;
             try {
@@ -46,7 +49,11 @@ public class TodayInHistorySpider {
             } catch (ParseException e) {
             }
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            history.put(element.getElementsByClass("txt").attr("href"),element.getElementsByClass("txt").text()+"::"+simpleDateFormat.format(date));
+            String img = element.getElementsByClass("roundies").attr("data-original");
+            if(!img.contains("http")){
+                img = "http://www.todayonhistory.com"+img;
+            }
+            history.put(element.getElementsByClass("txt").attr("href"),element.getElementsByClass("txt").text()+"!@"+simpleDateFormat.format(date)+"!@"+img);
         }
         //将map.entry转换为list
         List<Map.Entry<String,String>> list = new ArrayList<>(history.entrySet());
@@ -54,8 +61,8 @@ public class TodayInHistorySpider {
         Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
             @Override
             public int compare(Map .Entry<String, String> o1, Map.Entry<String, String> o2) {
-                Integer t1 = Integer.parseInt(o1.getValue().split("::")[1].split("-")[0]);
-                Integer t2 = Integer.parseInt(o2.getValue().split("::")[1].split("-")[0]);
+                Integer t1 = Integer.parseInt(o1.getValue().split("!@")[1].split("-")[0]);
+                Integer t2 = Integer.parseInt(o2.getValue().split("!@")[1].split("-")[0]);
                 if(t1>t2){
                     return -1;
                 }else{

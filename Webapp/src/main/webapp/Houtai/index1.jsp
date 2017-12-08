@@ -3,7 +3,6 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-
             + path + "/";
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -266,42 +265,42 @@
                         <i class="fa fa-clock-o fa-fw"></i> 历史上的今天
                     </div>
                     <!-- /.panel-heading -->
-                    <div class="panel-body">
+                    <div class="panel-body" style="height:1000px; overflow:auto;">
                         <ul class="timeline">
                             <c:forEach items="${requestScope.todayInHistory}" var="historyTemp">
                                 <c:choose>
-                                    <c:when test="${fn:split(fn:split(historyTemp.value,'::')[1],'-')[0]%2==0}">
+                                    <c:when test="${fn:split(fn:split(historyTemp.value,'!@')[1],'-')[0]%2==0}">
                                         <li class="timeline-inverted">
                                             <div class="timeline-badge warning">
-                                                <i>${fn:split(fn:split(historyTemp.value,'::')[1],'-')[0]}</i>
+                                                <i>${fn:split(fn:split(historyTemp.value,'!@')[1],'-')[0]}</i>
                                             </div>
                                             <div class="timeline-panel">
                                                 <div class="timeline-heading">
-                                                    <h4 class="timeline-title">${fn:split(historyTemp.value,"::")[0]}</h4>
+                                                    <h4 class="timeline-title">${fn:split(historyTemp.value,"!@")[0]}</h4><span><a href="${historyTemp.key}" target="_blank"><p class="fa fa-chain">详细</p></a></span>
                                                 </div>
                                                 <div class="timeline-body">
                                                     <a href="${historyTemp.key}" target="_blank"><p class="fa fa-chain">
                                                         详细</p></a>
+                                                    <img src="${fn:split(historyTemp.value,"!@")[2]}" style=" width: auto;height: auto;max-width:85%;"/>
                                                 </div>
                                                 <hr>
-                                                    ${fn:split(historyTemp.value,"::")[1]}
+                                                    ${fn:split(historyTemp.value,"!@")[1]}
                                             </div>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>
                                             <div class="timeline-badge info">
-                                                <i>${fn:split(fn:split(historyTemp.value,'::')[1],'-')[0]}</i>
+                                                <i>${fn:split(fn:split(historyTemp.value,'!@')[1],'-')[0]}</i>
                                             </div>
                                             <div class="timeline-panel">
                                                 <div class="timeline-heading">
-                                                    <h4 class="timeline-title">${fn:split(historyTemp.value,"::")[0]}</h4>
+                                                    <h4 class="timeline-title">${fn:split(historyTemp.value,"!@")[0]}</h4><span><a href="${historyTemp.key}" target="_blank"><p class="fa fa-chain">详细</p></a></span>
                                                 </div>
                                                 <div class="timeline-body">
-                                                    <a href="${historyTemp.key}" target="_blank"><p class="fa fa-chain">
-                                                        详细</p></a>
+                                                    <img src="${fn:split(historyTemp.value,"!@")[2]}" style=" width: auto;height: auto;max-width:85%;"/>
                                                     <hr>
-                                                        ${fn:split(historyTemp.value,"::")[1]}
+                                                        ${fn:split(historyTemp.value,"!@")[1]}
                                                 </div>
                                             </div>
                                         </li>
