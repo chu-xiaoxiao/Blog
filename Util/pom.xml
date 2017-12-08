@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Blog</artifactId>
+        <groupId>com.zyc</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>Util</artifactId>
+    <packaging>jar</packaging>
+    <properties>
+        <!--commons-fileupload 版本号-->
+        <commons-fileupload.version>1.3.1</commons-fileupload.version>
+        <!--commons-io版本号-->
+        <commons-io.version>2.4</commons-io.version>
+        <!--commons-codec版本号-->
+        <commons-codec.version>1.9</commons-codec.version>
+        <!--hamcrest 版本号-->
+        <hamcrest.version>1.3</hamcrest.version>
+        <!--mail 版本号-->
+        <mail.version>1.4</mail.version>
+        <!--snakeyaml 版本号-->
+        <snakeyaml.version>1.17</snakeyaml.version>
+        <!--jxl 版本号-->
+        <jxl.version>2.6.12</jxl.version>
+        <!--httpclient 版本号-->
+        <httpclient.version>4.5.2</httpclient.version>
+    </properties>
+    <dependencies>
+        <!-- log end -->
+        <!-- 上传组件包 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
+        </dependency>
+
+        <!--hamcrest-->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--hamcrest end-->
+        <!--java mail start-->
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${mail.version}</version>
+        </dependency>
+        <!--java mail end-->
+        <!--yaml yml读取 start-->
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
+        <!--yaml yml读取 end-->
+        <!--jxl excle读取 start-->
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.12</version>
+        </dependency>
+        <!--jxl excle读取 end-->
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

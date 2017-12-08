@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="classpath:shiro.properties" ignore-unresolvable="true"/>
+    <!--注册自定义reaml-->
+    <!--cas服务器地址 casServerUrlPrefix-->
+    <!--回调地址 casService-->
+    <bean id="bosRealm" class="com.zyc.realm.BOSrealm"
+          p:casServerUrlPrefix="${cas_service}"
+          p:casService="${cas_client}/Houtai"
+          p:cachingEnabled="true"
+          p:authenticationCachingEnabled="true"
+          p:authenticationCacheName="authenticationCache"
+          p:authorizationCachingEnabled="true"
+          p:authorizationCacheName="authorizationCache"/>
+
+    <!--注册安全管理器-->
+    <!--注入自定义realm-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"
+          p:realm-ref="bosRealm"
+          p:subjectFactory-ref="casSubjectFactory"
+          p:cacheManager-ref="shiroRedisManager"/>
+
+
+    <bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory"/>
+
+    <!--配置shiroFIlter start-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--cas登陆连接-->
+        <property name="loginUrl" value="${cas_service}/login?service=${cas_client}/Houtai"/>
+        <!--注入安全管理器-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--        $lt;!$ndash;注入系统登录页面$ndash;$gt;
+                <property name="loginUrl" value="/user/logIn.jsp"/>-->
+        <!--        注入成功页面-->
+        <property name="successUrl" value="/Houtai/index.jsp"/>
+        <!--注入权限不足页面-->
+        <property name="unauthorizedUrl" value="/error/web/roleerror.jsp"/>
+        <!--url拦截规则-->
+
+        <property name="filterChainDefinitions">
+            <value>
+                <!--/Houtai/** = roles[administrator]-->
+                /Houtai = casFilter
+                /user/logout.do = logout
+                /Houtai/** = perms[author:author]
+                /assets/** =anon
+                /css/** = anon
+                /dist/** = anon
+                /imgs/** = anon
+                /js/** = anon
+                /user/** = anon
+                /wenzhang/** = anon
+            </value>
+        </property>
+
+        <property name="filters">
+            <map>
+                <!-- 添加casFilter到shiroFilter -->
+                <entry key="casFilter" value-ref="casFilter"/>
+                <entry key="logout" value-ref="logout"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 配置验证错误时的失败页面 ，这里配置为登录页面 -->
+    <bean id="casFilter" class="org.apache.shiro.cas.CasFilter"
+          p:failureUrl="${cas_service}/login?service=${cas_client}/Houtai"/>
+
+    <!-- 退出登录过滤器 -->
+    <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter"
+          p:redirectUrl="${cas_service}/logout?service=${cas_client}"
+    />
+    <!--配置shiroFIlter end-->
+
+    <!--开启shiro注解 start-->
+    <!--强制使用cglib创建action的代理对象-->
+    <bean id="defaultAdvisorAutoProxyCreator"
+          class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          p:proxyTargetClass="true"/>
+
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"
+          p:securityManager-ref="securityManager"/>
+    <!--开启shiro注解 end-->
+
+    <!-- 缓存管理器 使用Ehcache实现 -->
+    <bean id="shiroRedisManager" class="com.zyc.realm.ShiroCacheManager">
+        <property name="redisCache">
+            <bean id="redisCache" class="com.zyc.redis.RedisCache">
+                <property name="select" value="1"/>
+            </bean>
+        </property>
+    </bean>
+
+</beans>

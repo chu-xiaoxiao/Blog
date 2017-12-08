@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Blog</artifactId>
+        <groupId>com.zyc</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>Dao</artifactId>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <!-- mybatis版本号 -->
+        <mybatis.version>3.2.6</mybatis.version>
+        <!--mybatis-spring 版本号-->
+        <mybatis-spring.version>1.2.2</mybatis-spring.version>
+        <!--mysql-connector-java 版本号-->
+        <mysql-connector-java.version>5.1.30</mysql-connector-java.version>
+        <!--commons-dbcp 版本号-->
+        <commons-dbcp.version>1.2.2</commons-dbcp.version>
+        <!--c3p0 版本号-->
+        <c3p0.version>0.9.5.2</c3p0.version>
+        <!--spring-data-redis 版本号-->
+        <spring-data-redis.version>1.6.2.RELEASE</spring-data-redis.version>
+        <!--jedis 版本号-->
+        <jedis.version>2.9.0</jedis.version>
+
+    </properties>
+    <dependencies>
+        <!-- mybatis核心包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <!-- mybatis/spring包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+        <!-- 导入Mysql数据库链接jar包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
+        </dependency>
+        <!--c3p0-->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <!--redis-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>${spring-data-redis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zyc</groupId>
+            <artifactId>Util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <!--redis end-->
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

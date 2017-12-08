@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
+          p:maxWaitMillis="${jedis.maxWaitMillis}"
+          p:maxIdle="${jedis.maxIdle}"
+          p:minIdle="${jedis.maxIdle}"
+          p:minEvictableIdleTimeMillis="${jedis.mnEvictableIdleTimeMillis}"
+          p:testWhileIdle="true"
+          p:timeBetweenEvictionRunsMillis="30000"
+    />
+
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${jedis.host}"
+          p:port="${jedis.port}"
+          p:password="${jedis.password}"
+          p:usePool="true"
+          p:poolConfig-ref="jedisPoolConfig"
+    />
+
+    <!-- redis template definition -->
+    <bean id="redisTemplatestring" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory"   ref="jedisConnectionFactory" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory"   ref="jedisConnectionFactory" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+    </bean>
+
+    <bean id="jedisTemplateUtil" class="com.zyc.redis.JedisTemplateUtil">
+        <property name="redisTemplate" ref="redisTemplatestring"/>
+        <property name="redisTemplateSerializable" ref="redisTemplate"/>
+    </bean>
+
+</beans>
