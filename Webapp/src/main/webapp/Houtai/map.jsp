@@ -14,7 +14,7 @@
     <script type="text/javascript"
             src="http://webapi.amap.com/maps?v=1.4.0&key=06f4dc2a23f3e7e8a778f573d682e4f6"></script>
 
-    <script src="/webapi.amap.com/ui/1.0/main.js"/>
+    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
 
     <script type="text/javascript">
         $(function () {
