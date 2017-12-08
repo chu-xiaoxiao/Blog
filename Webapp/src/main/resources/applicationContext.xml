@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <!--redis 配置文件-->
+    <import resource="classpath*:spring-redis.xml" />
+    <!--springMVC 配置文件-->
+    <import resource="classpath*:spring-mvc.xml" />
+    <!--mybatis 数据源
+    spring mybatis 整合配置文件-->
+    <import resource="classpath*:spring-mybatis.xml"/>
+    <!--shiro 安全管理器 缓存
+    spring 整合shiro配置文件-->
+    <import resource="classpath*:spring-shiro.xml" />
+</beans>
